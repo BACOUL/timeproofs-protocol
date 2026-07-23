@@ -52,7 +52,7 @@ Primary workstreams: WS02, WS09, WS10.
 
 ## Phase P2 — Killer outcome demonstration and product validation
 
-Status: IN PROGRESS
+Status: CONTINUES IN PARALLEL, NON-BLOCKING
 
 Milestone progress:
 
@@ -78,25 +78,29 @@ Exit criteria:
 
 Primary workstreams: WS03, WS07, WS12, WS14, WS16, WS17.
 
-## Phase P3 — Five-minute developer integration
+## Phase P3 — TimeProofs Relay product alpha
 
-Status: NOT STARTED
+Status: IN PROGRESS
+
+Acceleration decision: Stripe refund connector work originally scheduled for P5 is pulled into P3 so the protocol immediately produces a runnable product.
 
 Objectives:
 
-- Node.js receiver SDK;
-- Python receiver SDK;
-- generic HTTP and webhook middleware;
-- MCP write-action wrapper;
-- local signing and evidence references;
-- documentation and copy-paste examples.
+- Node.js Evidence Bundle builders and Relay signing path;
+- authenticated generic HTTP and webhook middleware;
+- Stripe refund connector and test-mode walkthrough;
+- append-only local action store with predecessor bundle digests;
+- current outcome API with recalculable evaluations;
+- MCP write-action wrapper after the Relay API stabilizes;
+- Python receiver SDK after the runnable Node product.
 
 Exit criteria:
 
-- a new developer instruments a write action in under ten minutes without direct assistance;
-- SDK output passes the reference verifier;
+- a new developer runs the Relay and instruments a refund workflow in under ten minutes without direct assistance;
+- authenticated Stripe webhook fixtures produce PENDING, VERIFIED, and CONTRADICTED outcomes;
+- every Relay bundle passes the reference verifier and links to prior revisions;
 - privacy-safe defaults are enabled;
-- error and rollback behavior are documented.
+- error, replay, idempotency, and rollback behavior are documented.
 
 Primary workstreams: WS03, WS04, WS10.
 
@@ -124,9 +128,9 @@ Exit criteria:
 
 Primary workstreams: WS03, WS10, WS11, WS18.
 
-## Phase P5 — Systems-of-record connectors
+## Phase P5 — Systems-of-record connector expansion
 
-Status: NOT STARTED
+Status: STRIPE FOUNDATION ACCELERATED INTO P3; BROADER EXPANSION NOT STARTED
 
 Objectives:
 

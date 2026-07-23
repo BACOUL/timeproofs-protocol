@@ -2,7 +2,7 @@
 
 Generated from `governance/project-state.json`. Do not edit manually.
 
-## TP-MARKET-001 — Deploy the validation preview and collect first external product evidence
+## TP-MARKET-001 — Collect first external product evidence from the deployed validation preview
 
 - Workstream: `WS17_DISTRIBUTION`
 - Phase: `P2`
@@ -10,7 +10,7 @@ Generated from `governance/project-state.json`. Do not edit manually.
 
 ## Purpose
 
-Put the machine-derived Outcome Evidence Packet in front of independent participants and qualified practitioners, then measure comprehension, integration demand, and willingness to pay before expanding protocol or cloud scope.
+Put the deployed machine-derived Outcome Evidence Packet in front of independent participants and qualified practitioners, then measure comprehension, integration demand, and willingness to pay before expanding protocol or cloud scope.
 
 ## Acceptance criteria
 

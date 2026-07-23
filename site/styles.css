@@ -178,3 +178,51 @@ footer p { max-width: 55rem; margin: 0; text-align: right; font-size: 0.82rem; }
 .select-field select { width: 100%; border: 1px solid var(--border); border-radius: .7rem; padding: .75rem .8rem; color: var(--text); background: var(--surface-strong); font: inherit; }
 .select-field option { color: #07101d; background: #ffffff; }
 @media (max-width: 720px) { .field-grid { grid-template-columns: 1fr; } }
+
+.category-guard {
+  display: grid;
+  gap: .35rem;
+  max-width: 62rem;
+  margin: 1.35rem 0 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(110, 231, 255, .28);
+  border-left: 4px solid var(--accent);
+  border-radius: .85rem;
+  background: rgba(110, 231, 255, .045);
+}
+.category-guard strong { color: var(--text); }
+.category-guard span { color: var(--muted); line-height: 1.55; }
+.source-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  padding: 1rem 1.6rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, .012);
+}
+.source-chip {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: .28rem .58rem;
+  font-size: .68rem;
+  font-weight: 850;
+  letter-spacing: .045em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.source-chip.self-claimed { color: var(--unprovable); border-color: rgba(180, 167, 255, .38); background: rgba(180, 167, 255, .08); }
+.source-chip.gateway-observed { color: var(--accent); border-color: rgba(110, 231, 255, .36); background: rgba(110, 231, 255, .07); }
+.source-chip.receiver-attested { color: #9fd2ff; border-color: rgba(159, 210, 255, .36); background: rgba(159, 210, 255, .07); }
+.source-chip.system-of-record { color: var(--verified); border-color: rgba(98, 232, 168, .36); background: rgba(98, 232, 168, .07); }
+.source-chip.independently-settled { color: var(--pending); border-color: rgba(255, 212, 121, .38); background: rgba(255, 212, 121, .07); }
+.source-chip.unknown-source { color: var(--muted); }
+.timeline-title { margin-top: .42rem; }
+.return-hint { margin: -.25rem 0 .25rem; color: var(--muted); font-size: .82rem; }
+@media (max-width: 640px) {
+  .source-legend { padding-inline: 1rem; }
+  .source-chip { white-space: normal; }
+}

@@ -31,7 +31,11 @@ const requiredCopy = [
   'Experimental preview',
   'A valid signature proves provenance and integrity, not universal factual truth.',
   'Product comprehension test',
-  'Practitioner workflow test'
+  'Practitioner workflow test',
+  'TimeProofs is not a timestamping protocol.',
+  'AI agent claim',
+  'System-of-record evidence',
+  'Copy anonymous result'
 ];
 for (const text of requiredCopy) {
   if (!html.includes(text)) failures.push(`required limitation or validation copy missing: ${text}`);
@@ -63,6 +67,10 @@ for (const contract of [
 
 if (!html.includes('href="packets/refund-pending.html"')) failures.push('default packet link missing');
 if (!app.includes('personal_data_collected: false')) failures.push('anonymous export declaration missing');
+if (!app.includes('copyAnonymousResult')) failures.push('anonymous clipboard return path missing');
+for (const sourceClass of ['SELF_CLAIMED', 'GATEWAY_OBSERVED', 'SYSTEM_OF_RECORD', 'INDEPENDENTLY_SETTLED']) {
+  if (!app.includes(sourceClass)) failures.push(`source provenance badge mapping missing: ${sourceClass}`);
+}
 
 if (failures.length) {
   console.error('Site preview validation failed:');

@@ -2,11 +2,15 @@ import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { createHmac } from 'node:crypto';
 import {
   SIGNATURE_DOMAIN,
   buildSignatureInput,
   canonicalize,
   calculatePayloadDigest,
+  createEvidenceBundle,
+  createIssuerDescriptor,
+  createSignatureProof,
   digestValue,
   parseJsonStrict,
   verifyBundle,
@@ -15,6 +19,7 @@ import {
   EVENT_TYPE_RULES
 } from '../packages/core/src/index.mjs';
 import { evaluateBundle } from '../packages/verdict-engine/src/index.mjs';
+import { normalizeStripeRefundEvent, verifyStripeWebhookSignature } from '../packages/stripe-connector/src/index.mjs';
 
 const root = resolve(new URL('..', import.meta.url).pathname);
 let passed = 0;
@@ -223,7 +228,6 @@ await test('generated site reports match reference verifier outputs', async () =
   }
 });
 
-
 await test('conformance manifest and runner contract are valid machine-readable documents', async () => {
   for (const file of [
     'conformance/manifest-v0.1.json',
@@ -239,7 +243,6 @@ await test('reference implementation passes the complete conformance harness', a
   assert.equal(report.total, 35);
   assert.equal(report.failed, 0);
 });
-
 
 await test('Outcome Evidence Packets are derived from current machine results', async () => {
   const index = await loadBundle('site/packets/index.json');
@@ -281,6 +284,116 @@ await test('CLI returns a machine-readable VERIFIED verdict', async () => {
   );
   assert.equal(result.status, 0, result.stderr);
   assert.equal(JSON.parse(result.stdout).verdict, 'VERIFIED');
+});
+
+await test('Stripe webhook verification accepts a valid current HMAC signature', async () => {
+  const rawBody = '{"id":"evt_demo","object":"event"}';
+  const endpointSecret = 'whsec_test_only';
+  const timestamp = 1784815200;
+  const signature = createHmac('sha256', endpointSecret).update(`${timestamp}.${rawBody}`, 'utf8').digest('hex');
+  const result = verifyStripeWebhookSignature({
+    rawBody,
+    signatureHeader: `t=${timestamp},v1=${signature}`,
+    endpointSecret,
+    nowMilliseconds: timestamp * 1000
+  });
+  assert.equal(result.valid, true);
+  assert.equal(result.algorithm, 'hmac-sha256');
+});
+
+await test('Stripe webhook verification rejects a changed payload', async () => {
+  const rawBody = '{"id":"evt_demo","object":"event"}';
+  const endpointSecret = 'whsec_test_only';
+  const timestamp = 1784815200;
+  const signature = createHmac('sha256', endpointSecret).update(`${timestamp}.${rawBody}`, 'utf8').digest('hex');
+  assert.throws(() => verifyStripeWebhookSignature({
+    rawBody: `${rawBody} `,
+    signatureHeader: `t=${timestamp},v1=${signature}`,
+    endpointSecret,
+    nowMilliseconds: timestamp * 1000
+  }), (error) => error.code === 'STRIPE_SIGNATURE_INVALID');
+});
+
+async function stripeObservationBundle(exampleFile, bundleId) {
+  const stripeEvent = await loadBundle(`examples/stripe/${exampleFile}`);
+  const privateKeyPem = await load('test-vectors/keys/TEST_ONLY_gateway.private.pem');
+  const publicKeyPem = await load('test-vectors/keys/TEST_ONLY_gateway.public.pem');
+  const observation = normalizeStripeRefundEvent(stripeEvent, {
+    relayIssuerRef: 'timeproofs.stripe-relay',
+    recordedAt: new Date(stripeEvent.created * 1000 + 1000).toISOString(),
+    signatureVerification: {
+      valid: true,
+      algorithm: 'hmac-sha256',
+      timestamp: stripeEvent.created,
+      age_seconds: 1
+    }
+  });
+  const issuer = createIssuerDescriptor({
+    issuerId: 'timeproofs.stripe-relay',
+    displayName: 'TimeProofs Stripe Relay',
+    issuerType: 'GATEWAY',
+    identifiers: [{ scheme: 'dns', value: 'timeproofs.io' }],
+    keys: [{ key_id: 'gateway-test-01', algorithm: 'Ed25519', format: 'spki-pem', public_key: publicKeyPem }],
+    extensions: {
+      'org.timeproofs.connector.stripe': {
+        role: 'authenticated_webhook_relay',
+        provider: 'stripe'
+      }
+    }
+  });
+  const bundle = createEvidenceBundle({
+    bundleId,
+    actionId: `stripe:${stripeEvent.data.object.id}`,
+    createdAt: new Date(stripeEvent.created * 1000 + 2000).toISOString(),
+    issuers: [issuer],
+    events: observation.events,
+    evidence: observation.evidence,
+    relationships: observation.relationships,
+    extensions: {
+      'org.timeproofs.connector.stripe': {
+        upstream_event_id: stripeEvent.id,
+        upstream_signature_verified: true
+      }
+    }
+  });
+  for (const [index, event] of bundle.payload.events.entries()) {
+    bundle.proofs.push(createSignatureProof({
+      bundle,
+      target: { target_type: 'OUTCOME_EVENT', target_id: event.event_id },
+      issuerRef: 'timeproofs.stripe-relay',
+      keyId: 'gateway-test-01',
+      privateKeyPem,
+      proofId: `tpp_stripe_${index + 1}`,
+      createdAt: new Date(stripeEvent.created * 1000 + 3000 + index).toISOString()
+    }));
+  }
+  return { bundle, observation };
+}
+
+await test('Stripe pending refund becomes a structurally valid PENDING outcome bundle', async () => {
+  const { bundle, observation } = await stripeObservationBundle('refund-created-pending.json', 'tpb_stripe_pending_001');
+  assert.deepEqual(observation.events.map((event) => event.event_type), [
+    'commerce.refund.created',
+    'commerce.refund.settlement_pending'
+  ]);
+  assert.equal(verifyBundle(bundle).status, 'VALID');
+  assert.equal(evaluateBundle(bundle, 'refund-v0.1').verdict, 'PENDING');
+});
+
+await test('Stripe succeeded update becomes a structurally valid VERIFIED outcome bundle', async () => {
+  const { bundle, observation } = await stripeObservationBundle('refund-updated-succeeded.json', 'tpb_stripe_verified_001');
+  assert.deepEqual(observation.events.map((event) => event.event_type), ['commerce.refund.settled']);
+  assert.equal(verifyBundle(bundle).status, 'VALID');
+  assert.equal(evaluateBundle(bundle, 'refund-v0.1').verdict, 'VERIFIED');
+});
+
+await test('Stripe failed refund becomes a structurally valid CONTRADICTED outcome bundle', async () => {
+  const { bundle, observation } = await stripeObservationBundle('refund-failed.json', 'tpb_stripe_failed_001');
+  assert.deepEqual(observation.events.map((event) => event.event_type), ['commerce.refund.settlement_failed']);
+  assert.equal(verifyBundle(bundle).status, 'VALID');
+  const verdict = evaluateBundle(bundle, 'refund-v0.1');
+  assert.equal(verdict.verdict, 'CONTRADICTED');
+  assert.deepEqual(verdict.reasons, ['SETTLEMENT_FAILED']);
 });
 
 console.log(`\n${passed} tests passed.`);

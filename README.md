@@ -47,7 +47,10 @@ Implemented now:
 - a registered base Outcome Event vocabulary with collision-resistant extensions;
 - four machine-derived printable Outcome Evidence Packets;
 - an anonymous local comprehension experiment and validation report tooling;
-- a static refund demonstration site.
+- a static refund demonstration site;
+- a runnable local/VPC TimeProofs Relay with append-only bundle revisions;
+- authenticated Stripe refund webhook ingestion and outcome recalculation;
+- HTTP endpoints for current outcome, bundle, packet, issuer, and revision history.
 
 Not yet stable:
 
@@ -70,10 +73,29 @@ The operating system governs protocol, product, integrations, agentic commerce, 
 Requirements: Node.js 22 or later.
 
 ```bash
+npm ci
 npm test
 node packages/cli/bin/timeproofs.mjs verify test-vectors/valid/refund-verified.bundle.json
 node packages/cli/bin/timeproofs.mjs verdict test-vectors/valid/refund-pending.bundle.json --ruleset refund-v0.1
 ```
+
+
+### Run TimeProofs Relay
+
+```bash
+STRIPE_WEBHOOK_SECRET=whsec_test_only npm run relay:start
+```
+
+Containerized start:
+
+```bash
+export STRIPE_WEBHOOK_SECRET=whsec_test_only
+docker compose up --build
+```
+
+The local alpha listens on `127.0.0.1:8787`, creates an operator-controlled Ed25519 key in `.timeproofs-relay/`, and stores immutable bundle revisions locally. The container listens through port `8787` and persists the same data model in a named volume. Create an action with `POST /v1/actions`, then forward Stripe test-mode webhooks to `POST /v1/webhooks/stripe`.
+
+See [Relay HTTP API](integrations/RELAY_HTTP_API.md) and [local quick start](examples/relay/README.md).
 
 ## Repository map
 
@@ -83,6 +105,8 @@ schemas/           JSON Schema definitions
 packages/core/     Canonicalization, digests, signatures, verification
 packages/cli/      Reference command-line interface
 packages/verdict-engine/ Experimental versioned verdict rules
+packages/stripe-connector/ Authenticated Stripe refund normalization
+packages/relay/    Runnable local/VPC Relay and HTTP API
 test-vectors/      Interoperability fixtures
 examples/          Human-oriented scenarios
 site/              Static product and demo preview

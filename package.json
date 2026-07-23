@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "fixtures": "node scripts/generate-fixtures.mjs",
-    "test": "node scripts/generate-project-views.mjs && node scripts/generate-protocol-docs.mjs && node scripts/generate-evidence-packets.mjs && node tests/run-tests.mjs && node scripts/validate-protocol-alignment.mjs && node scripts/validate-conformance-harness.mjs && node scripts/run-conformance.mjs && node scripts/validate-project-os.mjs",
+    "test": "node scripts/generate-project-views.mjs && node scripts/generate-protocol-docs.mjs && node scripts/generate-evidence-packets.mjs && node tests/run-tests.mjs && node scripts/validate-protocol-alignment.mjs && node scripts/validate-conformance-harness.mjs && node scripts/run-conformance.mjs && node scripts/validate-site-preview.mjs && node scripts/validate-project-os.mjs",
     "verify:examples": "node packages/cli/bin/timeproofs.mjs verify test-vectors/valid/refund-verified.bundle.json --json",
     "verdict:examples": "node packages/cli/bin/timeproofs.mjs verdict test-vectors/valid/refund-verified.bundle.json --ruleset refund-v0.1 --json",
     "project:generate": "node scripts/generate-project-views.mjs",
@@ -20,7 +20,9 @@
     "conformance": "node scripts/validate-conformance-harness.mjs && node scripts/run-conformance.mjs",
     "conformance:json": "node scripts/run-conformance.mjs --json",
     "packets": "node scripts/generate-evidence-packets.mjs",
-    "validation:analyze": "node scripts/analyze-comprehension-results.mjs"
+    "validation:analyze": "node scripts/analyze-comprehension-results.mjs && node scripts/analyze-practitioner-feedback.mjs",
+    "site:validate": "node scripts/validate-site-preview.mjs",
+    "site:serve": "python3 -m http.server 8080 --directory site"
   },
   "engines": {
     "node": ">=22"

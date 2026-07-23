@@ -30,9 +30,10 @@ for (const response of responses) scoreCounts[response.score] += 1;
 const perfect = responses.filter((response) => response.score === 3).length;
 const passRate = responses.length === 0 ? null : perfect / responses.length;
 const status = responses.length < 10 ? 'INSUFFICIENT_SAMPLE' : passRate >= 0.8 ? 'PASS' : 'REFINE';
+const generatedAt = responses.length ? responses.map((response) => response.recorded_at).sort().at(-1) : null;
 const report = {
   experiment: 'timeproofs-outcome-comprehension-v0.1',
-  generated_at: new Date().toISOString(),
+  generated_at: generatedAt,
   status,
   accepted_responses: responses.length,
   rejected_responses: rejected.length,
@@ -44,7 +45,7 @@ const report = {
 };
 
 const rate = passRate === null ? 'not available' : `${Math.round(passRate * 100)}%`;
-const markdown = `# Outcome Comprehension Report\n\nGenerated: ${report.generated_at}\n\n- Status: **${status}**\n- Accepted responses: **${responses.length}**\n- Rejected responses: **${rejected.length}**\n- Perfect scores: **${perfect}**\n- Perfect-score rate: **${rate}**\n- Pass target: at least 10 responses and at least 80% scoring 3/3\n\nNo external validation claim may be made while the status is \`INSUFFICIENT_SAMPLE\`.\n`;
+const markdown = `# Outcome Comprehension Report\n\nGenerated from accepted response timestamps: ${report.generated_at ?? 'not available'}\n\n- Status: **${status}**\n- Accepted responses: **${responses.length}**\n- Rejected responses: **${rejected.length}**\n- Perfect scores: **${perfect}**\n- Perfect-score rate: **${rate}**\n- Pass target: at least 10 responses and at least 80% scoring 3/3\n\nNo external validation claim may be made while the status is \`INSUFFICIENT_SAMPLE\`.\n`;
 await mkdir(resolve(root, 'evidence/market'), { recursive: true });
 await writeFile(outputJson, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
 await writeFile(outputMarkdown, markdown, 'utf8');

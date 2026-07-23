@@ -50,10 +50,11 @@
     "Evidence Bundle v0.1 normative fields, schemas, verifier, stable codes, and test vectors aligned",
     "Outcome Event v0.1 normative vocabulary, extension namespaces, relationship semantics, and refund/email/appointment profiles aligned",
     "Implementation-independent v0.1 conformance manifest, runner contract, fixture integrity hashes, and reference harness completed",
-    "Machine-derived printable Outcome Evidence Packets and an anonymous local comprehension experiment completed for four refund outcomes"
+    "Machine-derived printable Outcome Evidence Packets and an anonymous local comprehension experiment completed for four refund outcomes",
+    "Deployment-ready GitHub Pages preview, structured anonymous practitioner experiment, deterministic market analyzers, and field-validation runbooks completed"
   ],
   "blockers": [
-    "The GitHub repository BACOUL/timeproofs-protocol must be created and this prepared history pushed before public preview deployment.",
+    "Deployment automation and preflight checks are ready, but the GitHub repository BACOUL/timeproofs-protocol must still be created and the prepared history pushed before external validation can begin.",
     "No external comprehension, integration-demand, or willingness-to-pay evidence has been collected yet.",
     "No second independent implementation exists yet; G1 remains incomplete but no longer blocks the validation preview.",
     "The protocol and cryptographic design have not received independent security review.",

@@ -161,3 +161,41 @@ downloadValidation?.addEventListener('click', () => {
   link.click();
   URL.revokeObjectURL(link.href);
 });
+
+const practitionerForm = document.querySelector('#practitioner-test');
+const practitionerOutput = document.querySelector('#practitioner-result');
+const downloadPractitioner = document.querySelector('#download-practitioner');
+let latestPractitionerResult = null;
+
+practitionerForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const values = Object.fromEntries(new FormData(practitionerForm));
+  latestPractitionerResult = {
+    experiment: 'timeproofs-practitioner-feedback-v0.1',
+    recorded_at: new Date().toISOString(),
+    role_category: values.role_category,
+    workflow_domain: values.workflow_domain,
+    authoritative_system: values.authoritative_system,
+    preferred_integration: values.preferred_integration,
+    premature_done_risk: values.premature_done_risk === 'true',
+    sandbox_interest: values.sandbox_interest === 'true',
+    paid_value_unit: values.paid_value_unit,
+    budget_signal: values.budget_signal,
+    personal_data_collected: false
+  };
+  practitionerOutput.className = 'validation-result passed';
+  practitionerOutput.textContent = latestPractitionerResult.sandbox_interest
+    ? 'Anonymous result ready. This records a sandbox-evaluation signal, not a customer or payment commitment.'
+    : 'Anonymous result ready. Negative and uncertain evidence is equally important.';
+  downloadPractitioner.disabled = false;
+});
+
+downloadPractitioner?.addEventListener('click', () => {
+  if (!latestPractitionerResult) return;
+  const blob = new Blob([`${JSON.stringify(latestPractitionerResult, null, 2)}\n`], { type: 'application/json' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `timeproofs-practitioner-${Date.now()}.json`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+});

@@ -116,3 +116,12 @@ The Outcome Evidence Packet, comprehension experiment, and demand validation pro
 This does not pass the interoperable protocol gate and does not permit an interoperability, production, compliance, or legal-validity claim. It prevents protocol overbuilding by requiring visible user comprehension, reusable integration demand, and willingness-to-pay evidence before further protocol breadth or managed infrastructure.
 
 The independent implementation remains required before `G1_PROTOCOL` can pass.
+
+## D-016 — External validation uses a static, anonymous, no-backend preview first
+
+Date: 2026-07-23
+Status: ACCEPTED
+
+The first market experiment is deployed as a static GitHub Pages preview. Browser forms send no data and collect no name, email, company, phone, address, analytics, or cookies. Participants deliberately export structured anonymous JSON and return it through the channel that shared the preview.
+
+This reduces privacy and infrastructure scope while preserving auditable evidence. It is an experiment surface, not a production service or a substitute for consented design-partner follow-up.

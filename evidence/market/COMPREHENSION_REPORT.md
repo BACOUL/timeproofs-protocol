@@ -1,6 +1,6 @@
 # Outcome Comprehension Report
 
-Generated: 2026-07-23T17:32:08.482Z
+Generated from accepted response timestamps: not available
 
 - Status: **INSUFFICIENT_SAMPLE**
 - Accepted responses: **0**

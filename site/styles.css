@@ -171,3 +171,10 @@ footer p { max-width: 55rem; margin: 0; text-align: right; font-size: 0.82rem; }
 .validation-result.passed { border-color: rgba(93,230,166,.45); color: var(--verified); background: rgba(93,230,166,.06); }
 .validation-result.needs-work { border-color: rgba(255,209,102,.45); color: var(--pending); background: rgba(255,209,102,.06); }
 @media (max-width: 640px) { .packet-actions { align-items: flex-start; flex-direction: column; } }
+.practitioner-section { background: rgba(255, 255, 255, 0.018); border-block: 1px solid var(--border); }
+.field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.select-field { display: grid !important; gap: .55rem !important; padding: 1rem 1.1rem; border: 1px solid var(--border); border-radius: 1rem; background: rgba(255,255,255,.018); }
+.select-field span { color: var(--text); font-weight: 750; }
+.select-field select { width: 100%; border: 1px solid var(--border); border-radius: .7rem; padding: .75rem .8rem; color: var(--text); background: var(--surface-strong); font: inherit; }
+.select-field option { color: #07101d; background: #ffffff; }
+@media (max-width: 720px) { .field-grid { grid-template-columns: 1fr; } }

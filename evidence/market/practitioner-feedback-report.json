@@ -1,0 +1,21 @@
+{
+  "experiment": "timeproofs-practitioner-feedback-v0.1",
+  "generated_at": null,
+  "status": "INSUFFICIENT_SAMPLE",
+  "accepted_responses": 0,
+  "rejected_responses": 0,
+  "premature_done_risks": 0,
+  "sandbox_commitments": 0,
+  "budget_signals": 0,
+  "target": {
+    "minimum_responses": 5,
+    "minimum_sandbox_commitments": 2
+  },
+  "roles": {},
+  "workflow_domains": {},
+  "authoritative_systems": {},
+  "preferred_integrations": {},
+  "paid_value_units": {},
+  "budget_ranges": {},
+  "rejected": []
+}

@@ -173,6 +173,105 @@
       </form>
     </section>
 
+
+    <section class="validation-section practitioner-section" id="practitioner-validate">
+      <div class="section-heading narrow">
+        <p class="eyebrow">Practitioner workflow test</p>
+        <h2>Is there a real workflow where an AI can say “done” too early?</h2>
+        <p>This structured local form collects no name, email, company, or free text. Download the anonymous JSON and return it through the same channel that shared this preview.</p>
+      </div>
+      <form id="practitioner-test" class="validation-form">
+        <div class="field-grid">
+          <label class="select-field"><span>Your role category</span>
+            <select name="role_category" required>
+              <option value="">Select one</option>
+              <option value="DEVELOPER">Developer / architect</option>
+              <option value="PRODUCT">Product owner / manager</option>
+              <option value="COMPLIANCE">Compliance / audit</option>
+              <option value="OPERATIONS">Operations / support</option>
+              <option value="SECURITY">Security / trust</option>
+              <option value="OTHER">Other practitioner</option>
+            </select>
+          </label>
+          <label class="select-field"><span>Workflow domain</span>
+            <select name="workflow_domain" required>
+              <option value="">Select one</option>
+              <option value="COMMERCE">Commerce / orders</option>
+              <option value="PAYMENTS">Payments / refunds</option>
+              <option value="MESSAGING">Messaging / email</option>
+              <option value="CALENDAR">Calendar / appointments</option>
+              <option value="DOCUMENTS">Documents / signatures</option>
+              <option value="SUPPORT">Customer support</option>
+              <option value="DEVOPS">Developer operations</option>
+              <option value="ADMINISTRATION">Administrative workflow</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </label>
+          <label class="select-field"><span>Authoritative final system</span>
+            <select name="authoritative_system" required>
+              <option value="">Select one</option>
+              <option value="PAYMENT_PROVIDER">Payment provider</option>
+              <option value="MERCHANT_BACKEND">Merchant backend</option>
+              <option value="CRM_ERP">CRM / ERP</option>
+              <option value="EMAIL_PROVIDER">Email provider</option>
+              <option value="CALENDAR_PROVIDER">Calendar provider</option>
+              <option value="DATABASE">Business database</option>
+              <option value="WORKFLOW_ENGINE">Workflow engine</option>
+              <option value="OTHER">Other system</option>
+            </select>
+          </label>
+          <label class="select-field"><span>Preferred integration</span>
+            <select name="preferred_integration" required>
+              <option value="">Select one</option>
+              <option value="MIDDLEWARE">Receiver middleware</option>
+              <option value="WEBHOOK_CONNECTOR">Webhook connector</option>
+              <option value="API">Verification API</option>
+              <option value="MCP">MCP integration</option>
+              <option value="PLATFORM_INTEGRATION">Platform-native integration</option>
+              <option value="UNSURE">Unsure</option>
+            </select>
+          </label>
+          <label class="select-field"><span>Most valuable paid capability</span>
+            <select name="paid_value_unit" required>
+              <option value="">Select one</option>
+              <option value="RETENTION">Long-term retention</option>
+              <option value="REVERIFICATION">Automatic re-verification</option>
+              <option value="CONNECTOR">System-of-record connector</option>
+              <option value="CONTRADICTION_ALERT">Contradiction / reversal alerts</option>
+              <option value="AUDIT_PACKET">Audit / dispute packet</option>
+              <option value="NONE_YET">None yet</option>
+            </select>
+          </label>
+          <label class="select-field"><span>Budget signal after a successful sandbox</span>
+            <select name="budget_signal" required>
+              <option value="">Select one</option>
+              <option value="NO_BUDGET">No budget</option>
+              <option value="NEEDS_PROOF">Would need stronger proof first</option>
+              <option value="UNDER_100_MONTH">Under €100 / month</option>
+              <option value="100_500_MONTH">€100–€500 / month</option>
+              <option value="OVER_500_MONTH">Over €500 / month</option>
+              <option value="UNKNOWN">Unknown</option>
+            </select>
+          </label>
+        </div>
+        <fieldset>
+          <legend>In this workflow, can an AI currently report completion before the authoritative final state exists?</legend>
+          <label><input type="radio" name="premature_done_risk" value="true" required> Yes</label>
+          <label><input type="radio" name="premature_done_risk" value="false"> No</label>
+        </fieldset>
+        <fieldset>
+          <legend>Would you evaluate a reusable sandbox integration for this workflow?</legend>
+          <label><input type="radio" name="sandbox_interest" value="true" required> Yes</label>
+          <label><input type="radio" name="sandbox_interest" value="false"> No</label>
+        </fieldset>
+        <div class="validation-actions">
+          <button class="button primary" type="submit">Prepare anonymous practitioner result</button>
+          <button class="button secondary" id="download-practitioner" type="button" disabled>Download anonymous result</button>
+        </div>
+        <output id="practitioner-result" class="validation-result" aria-live="polite"></output>
+      </form>
+    </section>
+
     <section class="protocol-section" id="protocol">
       <div class="section-heading narrow">
         <p class="eyebrow">Open protocol foundation</p>

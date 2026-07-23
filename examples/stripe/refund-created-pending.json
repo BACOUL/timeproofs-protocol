@@ -1,0 +1,19 @@
+{
+  "id": "evt_refund_pending_001",
+  "object": "event",
+  "type": "refund.created",
+  "created": 1784815200,
+  "data": {
+    "object": {
+      "id": "re_pending_001",
+      "object": "refund",
+      "amount": 7900,
+      "currency": "eur",
+      "charge": "ch_demo_001",
+      "payment_intent": "pi_demo_001",
+      "balance_transaction": null,
+      "status": "pending",
+      "failure_reason": null
+    }
+  }
+}

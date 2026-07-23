@@ -9,8 +9,8 @@ As of: 2026-07-23
 - Name: **TimeProofs Outcome Assurance**
 - Stage: `EXPERIMENTAL_FOUNDATION`
 - Current phase: **P3 — TimeProofs Relay product alpha** (`IN_PROGRESS`)
-- Current milestone: **P3-M1 — Stripe refund connector and relay foundation** (`IN_PROGRESS`)
-- Unique next action: **TP-BUILD-001 — Ship the first runnable TimeProofs Relay with Stripe refund evidence**
+- Current milestone: **P3-M2 — Relay packaging and Stripe test-mode walkthrough** (`IN_PROGRESS`)
+- Unique next action: **TP-BUILD-002 — Package and exercise TimeProofs Relay with Stripe test mode**
 
 ## Completed foundation
 
@@ -30,12 +30,14 @@ As of: 2026-07-23
 - Public GitHub repository created and complete prepared history imported on main
 - Experimental validation preview deployed publicly through GitHub Pages at https://bacoul.github.io/timeproofs-protocol/
 - First qualitative preview iteration completed: explicit non-timestamping category guard, source-provenance badges, and clipboard return path
-- Stripe refund connector foundation implemented with authenticated webhook verification, provider-event normalization, and pending/verified/failed outcome tests
+- Stripe refund connector foundation implemented with authenticated webhook verification, provider-event normalization, and pending/verified/failed/cancelled outcome tests
+- Runnable TimeProofs Relay alpha implemented with local HTTP API, operator-controlled Ed25519 keys, append-only file-backed revisions, Stripe webhook ingestion, idempotency, current outcomes, and portable packets
+- Relay container packaging, health check, persistent volume definition, and restart persistence tests implemented
 
 ## Current blockers
 
-- TimeProofs Relay HTTP service and append-only revision store are not implemented yet.
-- The Stripe connector has not yet been exercised against a live Stripe test-mode webhook endpoint.
+- The runnable Relay has not yet been exercised against Stripe CLI and a real Stripe test-mode webhook endpoint.
+- Docker packaging is committed and statically validated, but this execution environment has no Docker runtime for an image build test.
 - No second independent implementation exists yet; G1 remains incomplete.
 - The protocol and cryptographic design have not received independent security review.
 - The broad outcome-verification category already has direct competitors, so TimeProofs must earn differentiation through open multi-issuer interoperability and recalculable evidence history.

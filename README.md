@@ -55,6 +55,13 @@ Not yet stable:
 - SCITT/COSE integration;
 - production retention and verification services.
 
+
+## Project operating system
+
+This repository is also the official memory and control system for the global product. Before contributing, read [AGENTS.md](AGENTS.md) and [PROJECT_START_HERE.md](PROJECT_START_HERE.md).
+
+The operating system governs protocol, product, integrations, agentic commerce, site, SEO, GEO, AI-first discovery, security, privacy, business, competition, distribution, and operations. The current state and unique next action are generated from `governance/project-state.json`.
+
 ## Quick start
 
 Requirements: Node.js 22 or later.

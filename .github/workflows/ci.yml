@@ -1,4 +1,4 @@
-name: TimeProofs Protocol CI
+name: TimeProofs Protocol and Global Project CI
 
 on:
   push:
@@ -8,11 +8,16 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run project:generate
       - run: npm test
+      - name: Ensure generated views are committed
+        run: git diff --exit-code

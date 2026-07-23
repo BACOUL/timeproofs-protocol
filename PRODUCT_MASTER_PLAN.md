@@ -4,6 +4,8 @@ Status: ACTIVE PRODUCT AUTHORITY
 Version: 0.1  
 Date: 2026-07-23
 
+Global program authority: `governance/GLOBAL_MASTER_PLAN.md`
+
 ## 1. Mission
 
 TimeProofs verifies, tracks, and preserves evidence of the real outcomes of actions executed by AI agents.

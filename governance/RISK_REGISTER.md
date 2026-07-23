@@ -1,0 +1,21 @@
+# Risk Register
+
+Review cadence: every material PR and monthly strategy review.
+
+| ID | Risk | Likelihood | Impact | Current mitigation | Trigger for escalation |
+|---|---|---:|---:|---|---|
+| R-001 | Direct competitors establish the business-evidence category first | High | High | Differentiate through open interoperability, receiver/system-of-record evidence, contradiction rules, and multi-protocol lifecycle correlation | A competitor gains meaningful integrations, funding, or adoption in TimeProofs' target wedge |
+| R-002 | ACP, UCP, AP2, MCP, A2A, or major platforms absorb sufficient evidence functions | Medium | High | Complement upstream formats; specialize in cross-protocol verification, retention, and independent outcome assurance | Upstream protocol adds portable, receiver-attested, long-term outcome verification |
+| R-003 | Receiving services have no incentive to sign or expose evidence | High | Critical | Start with operator-installed middleware and connectors where the customer controls the system; quantify dispute and audit value | No design partner accepts receiver/system-of-record participation |
+| R-004 | The project overbuilds a protocol before validating demand | High | High | Killer demo, five-minute SDK, sandbox connector, willingness-to-pay gates before broad standardization | More protocol work is proposed without an adoption experiment |
+| R-005 | Cryptographic or canonicalization flaw undermines trust | Medium | Critical | Test vectors, second implementation, independent review, standard algorithms, domain separation | Any cross-implementation mismatch or signature ambiguity |
+| R-006 | Signed claims are marketed as factual or legal truth | Medium | Critical | Precise source classes, explicit limitations, review of all public claims | Badge or copy implies guaranteed truth, compliance, or legal validity |
+| R-007 | Privacy, retention, or right-to-erasure conflicts | Medium | High | Data minimization, opaque references, selective disclosure, key separation, retention policies | Production stores raw personal or payment data without approved policy |
+| R-008 | Solo-founder scope becomes unmanageable | High | High | One next action, phased roadmap, product boundaries, automation, defer enterprise breadth | More than two major phases execute concurrently |
+| R-009 | Product-led distribution fails and sales require heavy prospecting | Medium | High | Open tools, public verifier, integrations, developer content, AI-first discovery, design-partner experiments | No organic installations, demos, or inbound interest after developer gate |
+| R-010 | Unit economics fail at low per-proof pricing | Medium | High | Subscription plus usage, retention and connectors as paid value, cost instrumentation | Storage/signing/support costs exceed target gross-margin envelope |
+| R-011 | AgentReady legacy creates category and SEO confusion | High | Medium | Separate repository; staged site transition; preserve historical route; canonical naming | Search results or users still describe TimeProofs primarily as AgentReady after pivot launch |
+| R-012 | No independent implementation validates interoperability | Medium | Critical | Make second implementation an alpha exit criterion | Protocol launch is proposed with only the reference implementation |
+| R-013 | System-of-record connectors produce false confidence during outages or stale data | Medium | Critical | Explicit freshness, issuer, retrieval time, missing evidence and PENDING behavior | Connector failure can produce VERIFIED instead of INCOMPLETE/PENDING |
+| R-014 | Standards work consumes time without adoption return | Medium | Medium | Participate only after implementation evidence and user demand | Standards contribution proposed before protocol and developer gates |
+| R-015 | Competitor or naming conflicts weaken the TimeProofs brand | Medium | Medium | Trademark/domain review before global launch; precise category and object names | Legal conflict, domain confusion, or conflicting standard terminology appears |

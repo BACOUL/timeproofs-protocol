@@ -8,9 +8,9 @@ As of: 2026-07-23
 
 - Name: **TimeProofs Outcome Assurance**
 - Stage: `EXPERIMENTAL_FOUNDATION`
-- Current phase: **P2 — Killer outcome demonstration and market validation** (`IN_PROGRESS`)
-- Current milestone: **P2-M2 — External comprehension and demand validation** (`IN_PROGRESS`)
-- Unique next action: **TP-MARKET-001 — Collect first external product evidence from the deployed validation preview**
+- Current phase: **P3 — TimeProofs Relay product alpha** (`IN_PROGRESS`)
+- Current milestone: **P3-M1 — Stripe refund connector and relay foundation** (`IN_PROGRESS`)
+- Unique next action: **TP-BUILD-001 — Ship the first runnable TimeProofs Relay with Stripe refund evidence**
 
 ## Completed foundation
 
@@ -30,23 +30,25 @@ As of: 2026-07-23
 - Public GitHub repository created and complete prepared history imported on main
 - Experimental validation preview deployed publicly through GitHub Pages at https://bacoul.github.io/timeproofs-protocol/
 - First qualitative preview iteration completed: explicit non-timestamping category guard, source-provenance badges, and clipboard return path
+- Stripe refund connector foundation implemented with authenticated webhook verification, provider-event normalization, and pending/verified/failed outcome tests
 
 ## Current blockers
 
-- Two unstructured external reviews have been recorded but do not count toward the acceptance sample; no accepted structured comprehension, integration-demand, sandbox, or willingness-to-pay evidence exists yet.
-- No second independent implementation exists yet; G1 remains incomplete but no longer blocks the validation preview.
+- TimeProofs Relay HTTP service and append-only revision store are not implemented yet.
+- The Stripe connector has not yet been exercised against a live Stripe test-mode webhook endpoint.
+- No second independent implementation exists yet; G1 remains incomplete.
 - The protocol and cryptographic design have not received independent security review.
-- No external system-of-record connector has been validated on a real sandbox workflow.
+- The broad outcome-verification category already has direct competitors, so TimeProofs must earn differentiation through open multi-issuer interoperability and recalculable evidence history.
 
 ## Workstreams
 
 | ID | Workstream | Status |
 |---|---|---|
 | WS01_VISION | Vision, category, positioning, brand | ACTIVE |
-| WS02_PROTOCOL | Open protocol and interoperability | PAUSED |
+| WS02_PROTOCOL | Open protocol and interoperability | ACTIVE |
 | WS03_PRODUCT | Product software and developer experience | ACTIVE |
-| WS04_AGENT_INTEGRATIONS | Agent frameworks and action protocols | WATCHING |
-| WS05_AGENTIC_COMMERCE | Agentic commerce and in-chat transactions | WATCHING |
+| WS04_AGENT_INTEGRATIONS | Agent frameworks and action protocols | ACTIVE |
+| WS05_AGENTIC_COMMERCE | Agentic commerce and in-chat transactions | ACTIVE |
 | WS06_NON_COMMERCE | Non-commerce consequential actions | PLANNED |
 | WS07_DEMOS | Demonstrations and reference use cases | ACTIVE |
 | WS08_COMPETITION | Competition and category intelligence | ACTIVE |
@@ -59,9 +61,9 @@ As of: 2026-07-23
 | WS15_INTERNATIONAL | Internationalization and localization | PLANNED |
 | WS16_BUSINESS | Business model, pricing, and revenue | DISCOVERY |
 | WS17_DISTRIBUTION | Distribution and adoption | ACTIVE |
-| WS18_OPERATIONS | Operations, reliability, and evolution | PLANNED |
+| WS18_OPERATIONS | Operations, reliability, and evolution | ACTIVE |
 
-Status counts: ACTIVE=8, PAUSED=1, WATCHING=2, PLANNED=6, DISCOVERY=1.
+Status counts: ACTIVE=12, PLANNED=5, DISCOVERY=1.
 
 ## Release gates
 
@@ -70,9 +72,9 @@ Status counts: ACTIVE=8, PAUSED=1, WATCHING=2, PLANNED=6, DISCOVERY=1.
 | G0_OS | Global operating system | PASS |
 | G1_PROTOCOL | Interoperable protocol alpha | IN_PROGRESS |
 | G2_DEMO | Killer outcome demonstration | IN_PROGRESS |
-| G3_DEVELOPER | Five-minute developer integration | NOT_STARTED |
+| G3_DEVELOPER | Five-minute developer integration | IN_PROGRESS |
 | G4_SERVICE | Managed service security and operations | NOT_STARTED |
-| G5_MARKET | External adoption and payment evidence | IN_PROGRESS |
+| G5_MARKET | External adoption and payment evidence | NOT_STARTED |
 | G6_GLOBAL | Global public launch | NOT_STARTED |
 
 ## Required reading

@@ -36,17 +36,26 @@ export function evaluateRefund(bundle, ruleset = 'refund-v0.1') {
   const qualifying = events.filter((event) => STRONG_SOURCES.has(event.source_class) && proofCoversEvent(verification.valid_proofs, event));
   const settled = qualifying.filter((event) => event.event_type === 'commerce.refund.settled' && event.status === 'SUCCEEDED');
   const reversed = qualifying.filter((event) => ['commerce.refund.reversed', 'commerce.refund.settlement_reversed'].includes(event.event_type) && ['SUCCEEDED', 'REVERSED'].includes(event.status));
-  const failedSettlement = qualifying.filter((event) => event.event_type === 'commerce.refund.settled' && event.status === 'FAILED');
+  const failedSettlement = qualifying.filter((event) =>
+    (event.event_type === 'commerce.refund.settlement_failed' && event.status === 'FAILED') ||
+    (event.event_type === 'commerce.refund.settled' && event.status === 'FAILED')
+  );
+  const pendingSettlement = qualifying.filter((event) => event.event_type === 'commerce.refund.settlement_pending' && event.status === 'PENDING');
+  const cancelled = qualifying.filter((event) => event.event_type === 'commerce.refund.cancelled' && event.status === 'CANCELLED');
   const created = qualifying.filter((event) => event.event_type === 'commerce.refund.created' && event.status === 'SUCCEEDED');
   const accepted = events.filter((event) => ['commerce.refund.accepted', 'commerce.refund.created'].includes(event.event_type) && event.status === 'SUCCEEDED');
 
-  if (reversed.length > 0 || (settled.length > 0 && failedSettlement.length > 0)) {
+  if (reversed.length > 0 || cancelled.length > 0 || failedSettlement.length > 0) {
     return {
       ruleset,
       verdict: 'CONTRADICTED',
-      reasons: reversed.length > 0 ? ['OUTCOME_REVERSED'] : ['CONFLICTING_SETTLEMENT_EVIDENCE'],
+      reasons: reversed.length > 0
+        ? ['OUTCOME_REVERSED']
+        : cancelled.length > 0
+          ? ['OUTCOME_CANCELLED']
+          : ['SETTLEMENT_FAILED'],
       verification,
-      decisive_events: [...settled, ...failedSettlement, ...reversed].map((event) => event.event_id)
+      decisive_events: [...settled, ...failedSettlement, ...cancelled, ...reversed].map((event) => event.event_id)
     };
   }
 
@@ -60,13 +69,17 @@ export function evaluateRefund(bundle, ruleset = 'refund-v0.1') {
     };
   }
 
-  if (created.length > 0 || accepted.length > 0) {
+  if (pendingSettlement.length > 0 || created.length > 0 || accepted.length > 0) {
     return {
       ruleset,
       verdict: 'PENDING',
-      reasons: created.length > 0 ? ['REFUND_CREATED_WITHOUT_SETTLEMENT'] : ['REFUND_ACCEPTED_WITHOUT_SETTLEMENT'],
+      reasons: pendingSettlement.length > 0
+        ? ['SETTLEMENT_PENDING']
+        : created.length > 0
+          ? ['REFUND_CREATED_WITHOUT_SETTLEMENT']
+          : ['REFUND_ACCEPTED_WITHOUT_SETTLEMENT'],
       verification,
-      decisive_events: (created.length > 0 ? created : accepted).map((event) => event.event_id)
+      decisive_events: (pendingSettlement.length > 0 ? pendingSettlement : created.length > 0 ? created : accepted).map((event) => event.event_id)
     };
   }
 

@@ -29,10 +29,11 @@ As of: 2026-07-23
 - Deployment-ready GitHub Pages preview, structured anonymous practitioner experiment, deterministic market analyzers, and field-validation runbooks completed
 - Public GitHub repository created and complete prepared history imported on main
 - Experimental validation preview deployed publicly through GitHub Pages at https://bacoul.github.io/timeproofs-protocol/
+- First qualitative preview iteration completed: explicit non-timestamping category guard, source-provenance badges, and clipboard return path
 
 ## Current blockers
 
-- No external comprehension, integration-demand, or willingness-to-pay evidence has been collected yet.
+- Two unstructured external reviews have been recorded but do not count toward the acceptance sample; no accepted structured comprehension, integration-demand, sandbox, or willingness-to-pay evidence exists yet.
 - No second independent implementation exists yet; G1 remains incomplete but no longer blocks the validation preview.
 - The protocol and cryptographic design have not received independent security review.
 - No external system-of-record connector has been validated on a real sandbox workflow.

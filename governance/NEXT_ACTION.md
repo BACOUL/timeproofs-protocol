@@ -2,30 +2,30 @@
 
 Generated from `governance/project-state.json`. Do not edit manually.
 
-## TP-PROTO-003 — Establish implementation-independent conformance harness
+## TP-PROTO-004 — Build independent Python conformance implementation
 
 - Workstream: `WS02_PROTOCOL`
 - Phase: `P1`
-- Milestone: `P1-M3`
+- Milestone: `P1-M4`
 
 ## Purpose
 
-Define a language-neutral conformance contract and machine-readable expected results so a genuinely independent implementation can reproduce canonical bytes, digests, proof validation, structural statuses, and stable codes without relying on the Node.js reference code.
+Implement TP-JSON-0.1 independently in Python from the normative specifications, registries, fixture bytes, and committed conformance manifest, then reproduce every canonicalization, signature-input, digest, proof, structural status, and stable-code result without calling or translating the Node.js reference implementation.
 
 ## Acceptance criteria
 
-- A machine-readable conformance manifest covers canonicalization, valid bundles, invalid bundles, digests, proofs, structural statuses, and stable codes.
-- Expected outputs are generated or verified independently of incidental CLI text and file ordering.
-- A language-neutral runner contract defines inputs, outputs, comparison rules, and failure classification.
-- The second implementation plan states independence boundaries and forbids reuse of reference implementation logic.
-- The existing Node.js implementation passes the complete conformance harness deterministically.
-- Project status, decisions, risks, compatibility, security, and acceptance evidence are reconciled before merge.
+- A standalone Python package implements strict JSON input handling, canonicalization, SHA-256 digests, signature-input construction, Ed25519 proof verification, vocabulary checks, graph checks, and structural results.
+- The Python implementation has no runtime or generated-code dependency on Node.js or packages/core.
+- A JSON Lines adapter implements conformance/runner-contract-v0.1.json.
+- All 35 committed conformance cases pass exactly, including fixture byte hashes and normalized stable-code sets.
+- Independence boundaries and the first blind conformance run are documented in acceptance evidence.
+- Discrepancies are resolved through specification or implementation review and project state is reconciled before merge.
 
 ## Explicit non-scope
 
-- Writing the second Python implementation
+- Verdict Engine implementation in Python
 - Managed cloud service
-- Production protocol adapters
+- Production ACP, UCP, AP2, MCP, or A2A adapters
 - Public site migration
 - Commercial pricing
 

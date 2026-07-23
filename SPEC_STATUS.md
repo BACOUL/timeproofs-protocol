@@ -7,6 +7,7 @@
 | Outcome Event vocabulary | 0.1 | Normatively coherent experimental registry with refund, email, appointment, and extension profiles |
 | Structural verification | 0.1 | Reference implementation aligned with schemas and stable codes |
 | Signature model | 0.1 | Ed25519 experimental profile |
+| Conformance harness | 0.1 | 35 committed language-neutral cases; reference implementation passes; Python implementation pending |
 | Refund verdict rules | refund-v0.1 | Experimental, non-normative |
 | TP-COSE profile | — | Not started |
 | External evidence retrieval | — | Not started |

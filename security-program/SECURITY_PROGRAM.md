@@ -25,6 +25,7 @@ A verifier must fail safely. Missing, stale, unverifiable, revoked, contradictor
 - no custom cryptographic primitive;
 - strict parser and duplicate-key rejection;
 - deterministic test vectors;
+- immutable conformance manifest with fixture-byte hashes and reviewed integrity sidecar;
 - second implementation;
 - key rotation and revocation semantics;
 - freshness and evidence retrieval failure handling;

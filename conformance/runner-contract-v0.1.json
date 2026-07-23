@@ -1,0 +1,84 @@
+{
+  "contract_version": "0.1",
+  "protocol": {
+    "spec_version": "0.1",
+    "profile": "TP-JSON-0.1"
+  },
+  "transport": "JSON Lines over stdin/stdout",
+  "requirements": {
+    "one_request_per_line": true,
+    "one_response_per_line": true,
+    "response_order_matches_request_order": true,
+    "stderr_is_non_normative": true,
+    "exit_zero_when_all_requests_produced_responses": true,
+    "exit_nonzero_on_process_or_contract_failure": true
+  },
+  "operations": {
+    "canonicalize": {
+      "request": {
+        "operation": "canonicalize",
+        "case_id": "string",
+        "value": "any JSON value"
+      },
+      "response": {
+        "operation": "canonicalize",
+        "case_id": "same string",
+        "ok": "boolean",
+        "canonical_json": "string when ok",
+        "canonical_utf8_hex": "lowercase hex string when ok",
+        "canonical_sha256": "64 lowercase hex characters when ok",
+        "error_code": "stable string when not ok"
+      }
+    },
+    "signature_input": {
+      "request": {
+        "operation": "signature_input",
+        "case_id": "string",
+        "spec_version": "string",
+        "profile": "string",
+        "target_type": "string",
+        "target_digest": {
+          "algorithm": "string",
+          "value": "string"
+        }
+      },
+      "response": {
+        "operation": "signature_input",
+        "case_id": "same string",
+        "ok": "boolean",
+        "signing_input_utf8": "string when ok",
+        "signing_input_utf8_hex": "lowercase hex string when ok",
+        "signing_input_sha256": "64 lowercase hex characters when ok",
+        "error_code": "stable string when not ok"
+      }
+    },
+    "verify_bundle": {
+      "request": {
+        "operation": "verify_bundle",
+        "case_id": "string",
+        "input_path": "repository-relative string",
+        "input_sha256": "64 lowercase hex characters"
+      },
+      "response": {
+        "operation": "verify_bundle",
+        "case_id": "same string",
+        "ok": true,
+        "structural_status": "VALID | INVALID | INCOMPLETE",
+        "payload_digest": "digest object or null",
+        "error_codes": "sorted unique string array",
+        "warning_codes": "sorted unique string array",
+        "valid_proofs": "array sorted by proof_id",
+        "summary": "summary object or null"
+      }
+    }
+  },
+  "comparison": {
+    "ignore_object_member_order": true,
+    "preserve_array_order_unless_declared_set": true,
+    "ignore_diagnostic_message_text": true,
+    "ignore_diagnostic_paths": true,
+    "compare_error_codes_as_exact_set": true,
+    "compare_warning_codes_as_exact_set": true,
+    "compare_valid_proofs_as_exact_set_by_proof_id": true
+  }
+}

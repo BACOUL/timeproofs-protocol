@@ -96,3 +96,12 @@ Date: 2026-07-23
 Status: ACCEPTED
 
 Universal phase/status compatibility and registered event type phase/status semantics are structural interoperability rules. A verifier rejects impossible combinations while keeping overall action verdicts outside the Evidence Bundle layer. Relationship direction is also normative by relationship type.
+
+## D-014 — Conformance is defined by committed normalized outputs
+
+Date: 2026-07-23
+Status: ACCEPTED
+
+TimeProofs conformance is measured against a versioned, machine-readable manifest that binds fixture bytes and expected canonicalization, signature-input, digest, proof, structural-status, and stable-code outputs. CLI prose, diagnostic paths, error ordering, and source-code organization are non-normative.
+
+The manifest has an integrity sidecar and cannot be regenerated automatically during ordinary CI, preventing an implementation change from silently rewriting its own expected results.

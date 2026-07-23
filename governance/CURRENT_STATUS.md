@@ -9,8 +9,8 @@ As of: 2026-07-23
 - Name: **TimeProofs Outcome Assurance**
 - Stage: `EXPERIMENTAL_FOUNDATION`
 - Current phase: **P1 — Protocol interoperability foundation** (`IN_PROGRESS`)
-- Current milestone: **P1-M3 — Implementation-independent conformance harness** (`IN_PROGRESS`)
-- Unique next action: **TP-PROTO-003 — Establish implementation-independent conformance harness**
+- Current milestone: **P1-M4 — Independent Python implementation** (`IN_PROGRESS`)
+- Unique next action: **TP-PROTO-004 — Build independent Python conformance implementation**
 
 ## Completed foundation
 
@@ -24,6 +24,7 @@ As of: 2026-07-23
 - Global project operating system
 - Evidence Bundle v0.1 normative fields, schemas, verifier, stable codes, and test vectors aligned
 - Outcome Event v0.1 normative vocabulary, extension namespaces, relationship semantics, and refund/email/appointment profiles aligned
+- Implementation-independent v0.1 conformance manifest, runner contract, fixture integrity hashes, and reference harness completed
 
 ## Current blockers
 

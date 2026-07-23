@@ -51,6 +51,12 @@ const requiredFiles = [
   'research/STANDARDS_WATCH.md',
   'research/SOURCE_REGISTER.md',
   'evidence/README.md',
+  'conformance/README.md',
+  'conformance/manifest-v0.1.json',
+  'conformance/manifest-v0.1.sha256',
+  'conformance/runner-contract-v0.1.json',
+  'spec/CONFORMANCE_HARNESS_V0_1.md',
+  'docs/architecture/SECOND_IMPLEMENTATION_PLAN.md',
   '.github/PULL_REQUEST_TEMPLATE.md'
 ];
 

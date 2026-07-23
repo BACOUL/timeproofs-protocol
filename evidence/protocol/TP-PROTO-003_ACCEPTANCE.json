@@ -1,0 +1,24 @@
+{
+  "action_id": "TP-PROTO-003",
+  "status": "PASS",
+  "date": "2026-07-23",
+  "manifest": "conformance/manifest-v0.1.json",
+  "manifest_sha256_sidecar": "conformance/manifest-v0.1.sha256",
+  "coverage": {
+    "canonicalization_cases": 6,
+    "signature_input_cases": 2,
+    "bundle_cases": 27,
+    "total_cases": 35,
+    "valid_or_incomplete_bundle_fixtures": 7,
+    "invalid_bundle_fixtures": 20
+  },
+  "validation": {
+    "reference_tests_passed": 54,
+    "conformance_cases_passed": 35,
+    "schema_paths": 106,
+    "stable_codes": 155,
+    "registered_event_types": 38,
+    "workstreams": 18
+  },
+  "next_action": "TP-PROTO-004"
+}

@@ -223,6 +223,23 @@ await test('generated site reports match reference verifier outputs', async () =
   }
 });
 
+
+await test('conformance manifest and runner contract are valid machine-readable documents', async () => {
+  for (const file of [
+    'conformance/manifest-v0.1.json',
+    'conformance/runner-contract-v0.1.json'
+  ]) parseJsonStrict(await load(file));
+});
+
+await test('reference implementation passes the complete conformance harness', async () => {
+  const result = spawnSync(process.execPath, [resolve(root, 'scripts/run-conformance.mjs'), '--json'], { encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const report = JSON.parse(result.stdout);
+  assert.equal(report.status, 'PASS');
+  assert.equal(report.total, 35);
+  assert.equal(report.failed, 0);
+});
+
 await test('CLI returns a machine-readable VERIFIED verdict', async () => {
   const result = spawnSync(
     process.execPath,

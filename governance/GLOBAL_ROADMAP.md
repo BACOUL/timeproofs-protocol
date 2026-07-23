@@ -27,8 +27,9 @@ Milestone progress:
 
 - `P1-M1 Evidence Bundle v0.1 normative coherence`: DONE on 2026-07-23;
 - `P1-M2 Outcome Event base vocabulary`: DONE on 2026-07-23;
-- `P1-M3 Implementation-independent conformance harness`: IN PROGRESS;
-- second independent implementation and security review: NOT STARTED.
+- `P1-M3 Implementation-independent conformance harness`: DONE on 2026-07-23;
+- `P1-M4 Independent Python implementation`: IN PROGRESS;
+- independent security review: NOT STARTED.
 
 Objectives:
 

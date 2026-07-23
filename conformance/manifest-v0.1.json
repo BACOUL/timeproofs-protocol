@@ -1,0 +1,1151 @@
+{
+  "manifest_version": "0.1",
+  "protocol": {
+    "spec_version": "0.1",
+    "profile": "TP-JSON-0.1",
+    "signature_domain": "org.timeproofs.signature.v0.1"
+  },
+  "comparison_rules": {
+    "json_object_member_order": "IGNORED",
+    "array_order": "SIGNIFICANT_UNLESS_FIELD_RULE_SAYS_SET",
+    "diagnostic_order": "IGNORED",
+    "diagnostic_messages": "NON_NORMATIVE",
+    "diagnostic_paths": "NON_NORMATIVE",
+    "error_codes": "EXACT_SORTED_UNIQUE_SET",
+    "warning_codes": "EXACT_SORTED_UNIQUE_SET",
+    "valid_proofs": "EXACT_SET_SORTED_BY_PROOF_ID",
+    "input_bytes": "MUST_MATCH_SHA256"
+  },
+  "canonicalization_cases": [
+    {
+      "id": "rfc8785-legacy-object",
+      "input": {
+        "z": 3,
+        "a": "é",
+        "nested": {
+          "beta": true,
+          "alpha": null
+        },
+        "array": [
+          3,
+          1,
+          {
+            "y": "line\nbreak",
+            "x": 0
+          }
+        ]
+      },
+      "expected": {
+        "canonical_json": "{\"a\":\"é\",\"array\":[3,1,{\"x\":0,\"y\":\"line\\nbreak\"}],\"nested\":{\"alpha\":null,\"beta\":true},\"z\":3}",
+        "canonical_utf8_hex": "7b2261223a22c3a9222c226172726179223a5b332c312c7b2278223a302c2279223a226c696e655c6e627265616b227d5d2c226e6573746564223a7b22616c706861223a6e756c6c2c2262657461223a747275657d2c227a223a337d",
+        "canonical_sha256": "d956753b0c51a6826e3589ae707f190c3957a675f2990d452fcd7571a0999e59"
+      }
+    },
+    {
+      "id": "unicode-preserved-and-utf16-sorted",
+      "input": {
+        "z": "last",
+        "é": "precomposed",
+        "é": "decomposed",
+        "😀": "face",
+        "a": "first"
+      },
+      "expected": {
+        "canonical_json": "{\"a\":\"first\",\"é\":\"decomposed\",\"z\":\"last\",\"é\":\"precomposed\",\"😀\":\"face\"}",
+        "canonical_utf8_hex": "7b2261223a226669727374222c2265cc81223a226465636f6d706f736564222c227a223a226c617374222c22c3a9223a22707265636f6d706f736564222c22f09f9880223a2266616365227d",
+        "canonical_sha256": "25551c263b2c4e5f153dec1ce4438a7d492c51cdb06f8353e17c8e49b4500136"
+      }
+    },
+    {
+      "id": "ecmascript-number-serialization",
+      "input": [
+        333333333.3333333,
+        1e+30,
+        4.5,
+        0.002,
+        1e-27,
+        0
+      ],
+      "expected": {
+        "canonical_json": "[333333333.3333333,1e+30,4.5,0.002,1e-27,0]",
+        "canonical_utf8_hex": "5b3333333333333333332e333333333333332c31652b33302c342e352c302e3030322c31652d32372c305d",
+        "canonical_sha256": "3c9384fb0690970a0df3b40b3cc762ff1b9c9efbd41daeda39db4b2eae1a6cb4"
+      }
+    },
+    {
+      "id": "arrays-nested-objects-and-null",
+      "input": {
+        "z": null,
+        "a": [
+          3,
+          {
+            "b": true,
+            "a": false
+          }
+        ],
+        "m": {
+          "d": null,
+          "c": []
+        }
+      },
+      "expected": {
+        "canonical_json": "{\"a\":[3,{\"a\":false,\"b\":true}],\"m\":{\"c\":[],\"d\":null},\"z\":null}",
+        "canonical_utf8_hex": "7b2261223a5b332c7b2261223a66616c73652c2262223a747275657d5d2c226d223a7b2263223a5b5d2c2264223a6e756c6c7d2c227a223a6e756c6c7d",
+        "canonical_sha256": "cc6e2e5af2e01e0155af39ef254b61f712ade4c2e2ddf865d5247c397893213d"
+      }
+    },
+    {
+      "id": "null-member-is-present",
+      "input": {
+        "a": 1,
+        "b": null
+      },
+      "expected": {
+        "canonical_json": "{\"a\":1,\"b\":null}",
+        "canonical_utf8_hex": "7b2261223a312c2262223a6e756c6c7d",
+        "canonical_sha256": "46e0ff59f6164548317489fbea1133a48f7a83c325c3535e44559c9619afb76b"
+      }
+    },
+    {
+      "id": "member-is-omitted",
+      "input": {
+        "a": 1
+      },
+      "expected": {
+        "canonical_json": "{\"a\":1}",
+        "canonical_utf8_hex": "7b2261223a317d",
+        "canonical_sha256": "015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862"
+      }
+    }
+  ],
+  "signature_input_cases": [
+    {
+      "id": "bundle-payload-sha256-domain-binding",
+      "input": {
+        "spec_version": "0.1",
+        "profile": "TP-JSON-0.1",
+        "target_type": "BUNDLE_PAYLOAD",
+        "target_digest": {
+          "algorithm": "sha-256",
+          "value": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "expected": {
+        "signing_input_utf8": "{\"domain\":\"org.timeproofs.signature.v0.1\",\"profile\":\"TP-JSON-0.1\",\"spec_version\":\"0.1\",\"target_digest\":{\"algorithm\":\"sha-256\",\"value\":\"0000000000000000000000000000000000000000000000000000000000000000\"},\"target_type\":\"BUNDLE_PAYLOAD\"}",
+        "signing_input_utf8_hex": "7b22646f6d61696e223a226f72672e74696d6570726f6f66732e7369676e61747572652e76302e31222c2270726f66696c65223a2254502d4a534f4e2d302e31222c22737065635f76657273696f6e223a22302e31222c227461726765745f646967657374223a7b22616c676f726974686d223a227368612d323536222c2276616c7565223a2230303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030227d2c227461726765745f74797065223a2242554e444c455f5041594c4f4144227d",
+        "signing_input_sha256": "b41f82c7d041d20930cddc89df2ef4ba030a30c5235184af75238ea45e2ab5aa"
+      }
+    },
+    {
+      "id": "outcome-event-sha256-domain-binding",
+      "input": {
+        "spec_version": "0.1",
+        "profile": "TP-JSON-0.1",
+        "target_type": "OUTCOME_EVENT",
+        "target_digest": {
+          "algorithm": "sha-256",
+          "value": "1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      },
+      "expected": {
+        "signing_input_utf8": "{\"domain\":\"org.timeproofs.signature.v0.1\",\"profile\":\"TP-JSON-0.1\",\"spec_version\":\"0.1\",\"target_digest\":{\"algorithm\":\"sha-256\",\"value\":\"1111111111111111111111111111111111111111111111111111111111111111\"},\"target_type\":\"OUTCOME_EVENT\"}",
+        "signing_input_utf8_hex": "7b22646f6d61696e223a226f72672e74696d6570726f6f66732e7369676e61747572652e76302e31222c2270726f66696c65223a2254502d4a534f4e2d302e31222c22737065635f76657273696f6e223a22302e31222c227461726765745f646967657374223a7b22616c676f726974686d223a227368612d323536222c2276616c7565223a2231313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131227d2c227461726765745f74797065223a224f5554434f4d455f4556454e54227d",
+        "signing_input_sha256": "a08a0e1c95c32328978d0c977da70acc3eb9af45704470c389582b1182ba7378"
+      }
+    }
+  ],
+  "bundle_cases": [
+    {
+      "id": "valid/appointment-created.bundle",
+      "input": {
+        "path": "test-vectors/valid/appointment-created.bundle.json",
+        "sha256": "76d9adad1ff14455ee149ab46083f53aa27d144d1a9a3e566c0fa9c75daccd5b"
+      },
+      "expected": {
+        "structural_status": "VALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "f1e53c732def116a59d7204f0abf6a6ee76c3fc8ac2d5e05e8b05daeb193c7bf"
+        },
+        "error_codes": [],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_appointment_accepted",
+            "issuer_ref": "calendar.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_appointment_accepted",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "a963998fbe953facbb2247f2bf66fd1df13b3c01810a8cb389c578891f86be82"
+            }
+          },
+          {
+            "proof_id": "tpp_appointment_bundle",
+            "issuer_ref": "gateway.example",
+            "target_type": "BUNDLE_PAYLOAD",
+            "target_id": null,
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "f1e53c732def116a59d7204f0abf6a6ee76c3fc8ac2d5e05e8b05daeb193c7bf"
+            }
+          },
+          {
+            "proof_id": "tpp_appointment_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_appointment_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "6ee54948657630c841ada10a0438756bf4a7dc892f023cd54d8ec028a235848f"
+            }
+          },
+          {
+            "proof_id": "tpp_appointment_effect",
+            "issuer_ref": "calendar.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_appointment_effect",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "6765d603b04d203e01c4b7df0995392cc1855d853a710c369578846466eafc21"
+            }
+          }
+        ],
+        "summary": {
+          "issuers": 5,
+          "events": 4,
+          "evidence": 4,
+          "relationships": 4,
+          "proofs": 4
+        }
+      }
+    },
+    {
+      "id": "valid/email-recorded.bundle",
+      "input": {
+        "path": "test-vectors/valid/email-recorded.bundle.json",
+        "sha256": "d2d81f2e3fcae71fe2f7d3b64c507be6038d5a160fdfeb55a6892fdd53e8cfdd"
+      },
+      "expected": {
+        "structural_status": "VALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "8a0f6bc7cfb4a33e2eb4218de4f112d4a5cc9ecc8068ce2a4f2dffa3275d908f"
+        },
+        "error_codes": [],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_email_accepted",
+            "issuer_ref": "mail.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_email_accepted",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "8bb3d46dee6b557d7b7635c57360f98d42dd24b9955191249f139b64d47570eb"
+            }
+          },
+          {
+            "proof_id": "tpp_email_bundle",
+            "issuer_ref": "gateway.example",
+            "target_type": "BUNDLE_PAYLOAD",
+            "target_id": null,
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "8a0f6bc7cfb4a33e2eb4218de4f112d4a5cc9ecc8068ce2a4f2dffa3275d908f"
+            }
+          },
+          {
+            "proof_id": "tpp_email_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_email_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "03c3dfb566a7ff644b034865332d4dfecb70b91028da4a731dd516d9b4a6ad60"
+            }
+          },
+          {
+            "proof_id": "tpp_email_effect",
+            "issuer_ref": "mail.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_email_effect",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "eb2f4cb991f50ea23324c67c1df75fa26bd18396b805514595cbe713205fea56"
+            }
+          }
+        ],
+        "summary": {
+          "issuers": 5,
+          "events": 4,
+          "evidence": 4,
+          "relationships": 4,
+          "proofs": 4
+        }
+      }
+    },
+    {
+      "id": "valid/extension-event.bundle",
+      "input": {
+        "path": "test-vectors/valid/extension-event.bundle.json",
+        "sha256": "2856f97a29ace5ff3394ca8717d2cca3ec9c165766c31d763f1ec1f57b5ceb89"
+      },
+      "expected": {
+        "structural_status": "INCOMPLETE",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "a77c6fcd5bacd74a5e0166b2f9bdc2177f824e9167cf3dfb9b8b5c63c0c7e713"
+        },
+        "error_codes": [],
+        "warning_codes": [
+          "NO_EVIDENCE",
+          "NO_PROOFS"
+        ],
+        "valid_proofs": [],
+        "summary": {
+          "issuers": 4,
+          "events": 1,
+          "evidence": 0,
+          "relationships": 0,
+          "proofs": 0
+        }
+      }
+    },
+    {
+      "id": "valid/refund-contradicted.bundle",
+      "input": {
+        "path": "test-vectors/valid/refund-contradicted.bundle.json",
+        "sha256": "e3cff71967be24f00bfe403f0e85fc34ce7f0fd10a09c653f57339e85f9b2e43"
+      },
+      "expected": {
+        "structural_status": "VALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "8acb01e748e3ea2f891b6ff04ece2339bf92432bd2e4a8ca8fe9c6e3a38fecd9"
+        },
+        "error_codes": [],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_contradicted_bundle",
+            "issuer_ref": "gateway.example",
+            "target_type": "BUNDLE_PAYLOAD",
+            "target_id": null,
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "8acb01e748e3ea2f891b6ff04ece2339bf92432bd2e4a8ca8fe9c6e3a38fecd9"
+            }
+          },
+          {
+            "proof_id": "tpp_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+            }
+          },
+          {
+            "proof_id": "tpp_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+            }
+          },
+          {
+            "proof_id": "tpp_reversed",
+            "issuer_ref": "psp.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_reversed",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "4b22c8647b3194202158909576f7d1fce64db306db58c7024142e842b4da64fc"
+            }
+          },
+          {
+            "proof_id": "tpp_settled",
+            "issuer_ref": "psp.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_settled",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "accbe9f4ea4d0c99fe079bf173fa51333722f1f64f5000697a13c33c6479dcfb"
+            }
+          }
+        ],
+        "summary": {
+          "issuers": 4,
+          "events": 5,
+          "evidence": 5,
+          "relationships": 6,
+          "proofs": 5
+        }
+      }
+    },
+    {
+      "id": "valid/refund-pending.bundle",
+      "input": {
+        "path": "test-vectors/valid/refund-pending.bundle.json",
+        "sha256": "ff74373fa51c8134aa9458d3641f8b477156d3121078d777c6edbf8502daa80a"
+      },
+      "expected": {
+        "structural_status": "VALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "47f1ab8ab5d213935e526719733e590deafb605dc0d464097bb0504015e30748"
+        },
+        "error_codes": [],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+            }
+          },
+          {
+            "proof_id": "tpp_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+            }
+          },
+          {
+            "proof_id": "tpp_pending_bundle",
+            "issuer_ref": "gateway.example",
+            "target_type": "BUNDLE_PAYLOAD",
+            "target_id": null,
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "47f1ab8ab5d213935e526719733e590deafb605dc0d464097bb0504015e30748"
+            }
+          }
+        ],
+        "summary": {
+          "issuers": 4,
+          "events": 3,
+          "evidence": 3,
+          "relationships": 3,
+          "proofs": 3
+        }
+      }
+    },
+    {
+      "id": "valid/refund-unprovable.bundle",
+      "input": {
+        "path": "test-vectors/valid/refund-unprovable.bundle.json",
+        "sha256": "df20589638e920a2cce11e601b4d9556c39932e26f40df29b868f115d961cbf2"
+      },
+      "expected": {
+        "structural_status": "INCOMPLETE",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "91e8f5039090b111d0f222f2e4166f68f5c562c0a1281e14e3fa88c6d0f92241"
+        },
+        "error_codes": [],
+        "warning_codes": [
+          "NO_EVIDENCE"
+        ],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_claimed",
+            "issuer_ref": "agent.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_claimed_complete",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "68188ff0c2e7f3222ddf6ede37ced7ad32325e98610b54f62c5cff38544077e0"
+            }
+          },
+          {
+            "proof_id": "tpp_unprovable_bundle",
+            "issuer_ref": "agent.example",
+            "target_type": "BUNDLE_PAYLOAD",
+            "target_id": null,
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "91e8f5039090b111d0f222f2e4166f68f5c562c0a1281e14e3fa88c6d0f92241"
+            }
+          }
+        ],
+        "summary": {
+          "issuers": 4,
+          "events": 1,
+          "evidence": 0,
+          "relationships": 0,
+          "proofs": 2
+        }
+      }
+    },
+    {
+      "id": "valid/refund-verified.bundle",
+      "input": {
+        "path": "test-vectors/valid/refund-verified.bundle.json",
+        "sha256": "77ec0f90b37183c91ebf91680a1870e4dffd40b2ebf3a6dcd850ccebd30ae578"
+      },
+      "expected": {
+        "structural_status": "VALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "e63315200ba810d1b0084c869d75594dc9f67383f15948efc9567d354bc33ac2"
+        },
+        "error_codes": [],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+            }
+          },
+          {
+            "proof_id": "tpp_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+            }
+          },
+          {
+            "proof_id": "tpp_settled",
+            "issuer_ref": "psp.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_settled",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "accbe9f4ea4d0c99fe079bf173fa51333722f1f64f5000697a13c33c6479dcfb"
+            }
+          },
+          {
+            "proof_id": "tpp_verified_bundle",
+            "issuer_ref": "gateway.example",
+            "target_type": "BUNDLE_PAYLOAD",
+            "target_id": null,
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "e63315200ba810d1b0084c869d75594dc9f67383f15948efc9567d354bc33ac2"
+            }
+          }
+        ],
+        "summary": {
+          "issuers": 4,
+          "events": 4,
+          "evidence": 4,
+          "relationships": 4,
+          "proofs": 4
+        }
+      }
+    },
+    {
+      "id": "invalid/digest-mismatch.bundle",
+      "input": {
+        "path": "test-vectors/invalid/digest-mismatch.bundle.json",
+        "sha256": "62d2dcc6b7ccf4cb52c2a16e6060164da0f6ec4420dff4c4e1f2526555632a61"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "6bd7a1455f4785aee3a3433a52cb99b3c6d744443a011540bcd7d3d51ef12d48"
+        },
+        "error_codes": [
+          "OBJECT_DIGEST_MISMATCH",
+          "PROOF_TARGET_DIGEST_MISMATCH"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+            }
+          },
+          {
+            "proof_id": "tpp_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+            }
+          }
+        ],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/duplicate-key",
+      "input": {
+        "path": "test-vectors/invalid/duplicate-key.json",
+        "sha256": "294a032ed98a53957dd944e9c5f913a0fe70fc53f05394a26ecd606929abc2d2"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": null,
+        "error_codes": [
+          "DUPLICATE_PROPERTY"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/duplicate-object-id.bundle",
+      "input": {
+        "path": "test-vectors/invalid/duplicate-object-id.bundle.json",
+        "sha256": "011b11681c4a295b753814166719b30e13a3ed8737bdf10dfa72aea2ab1d4050"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "7454c754cdff550182a1ce5cf3eb26bcdd719632894766e40c578eb6331fd316"
+        },
+        "error_codes": [
+          "DUPLICATE_OBJECT_ID"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+            }
+          },
+          {
+            "proof_id": "tpp_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+            }
+          }
+        ],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/event-extra-member.bundle",
+      "input": {
+        "path": "test-vectors/invalid/event-extra-member.bundle.json",
+        "sha256": "f9a67d291195da3c5048dc5d3f57988886299e215abafe202cb8222032e21c46"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "5cb58ce0d23a774bc404a70c142d4b703224b2cd5da4e675fc8122a94f1ff41f"
+        },
+        "error_codes": [
+          "EVENT_MEMBERS_INVALID"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/event-phase-status-invalid.bundle",
+      "input": {
+        "path": "test-vectors/invalid/event-phase-status-invalid.bundle.json",
+        "sha256": "797d12d7c5a20a3ca846e29c5752277d9e0b3f99c02c92974cf16edb49139cb4"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "03db28952a84e09f82c88763c3b0384748487278823122b8806988a59bd23ad3"
+        },
+        "error_codes": [
+          "EVENT_PHASE_STATUS_INVALID",
+          "EVENT_TYPE_STATUS_MISMATCH",
+          "PARENT_EVENT_NOT_FOUND"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/event-source-phase-invalid.bundle",
+      "input": {
+        "path": "test-vectors/invalid/event-source-phase-invalid.bundle.json",
+        "sha256": "f64269d3430a4a443d09f36244ae1795c4af795f2f5dec38889ea33b33bf6ea7"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "1eb65b3ce49163990eeb85147d070957f4857dfe5a525869b43a780842fd2264"
+        },
+        "error_codes": [
+          "EVENT_SOURCE_PHASE_INVALID",
+          "PARENT_EVENT_NOT_FOUND"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/event-type-phase-mismatch.bundle",
+      "input": {
+        "path": "test-vectors/invalid/event-type-phase-mismatch.bundle.json",
+        "sha256": "096a5a8766679bf1c99368a0fd6b9921d60f2d7fa0dadeeb678ec7aae197f073"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "29c2f2763721d277f27c8b49f3911821dbc847d6c4c919bde594f357e58a7878"
+        },
+        "error_codes": [
+          "EVENT_TYPE_PHASE_MISMATCH"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/event-type-reserved-unregistered.bundle",
+      "input": {
+        "path": "test-vectors/invalid/event-type-reserved-unregistered.bundle.json",
+        "sha256": "675666c786b7a15927a4f7b3b165755de813802fd5ccacd1faf3adf842509a40"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "b286946ab3521f1c8936bef244b8b9e83dfa527c00dac53ccf96e9a0b3b36727"
+        },
+        "error_codes": [
+          "EVENT_TYPE_RESERVED_UNREGISTERED"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/event-type-status-mismatch.bundle",
+      "input": {
+        "path": "test-vectors/invalid/event-type-status-mismatch.bundle.json",
+        "sha256": "fdd64ec1d94e91d5c5aa623ff353cb8f14b2578582590541898c9f2f39fc308e"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "8233a78574433e49f6fe49fb66c054a00efee3ce7e55f0e8f071c314feac1192"
+        },
+        "error_codes": [
+          "EVENT_TYPE_STATUS_MISMATCH"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/event-type-unregistered.bundle",
+      "input": {
+        "path": "test-vectors/invalid/event-type-unregistered.bundle.json",
+        "sha256": "c6402e00c7c0754cf7884db199b82dd9ad7cd0b4727559f03f5d2b901e51b4ba"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "a0e1fb17c99d1936c5b1786744ff065a155e901470dd1a2b78179049ba11c957"
+        },
+        "error_codes": [
+          "EVENT_TYPE_UNREGISTERED"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/extra-top-level-member",
+      "input": {
+        "path": "test-vectors/invalid/extra-top-level-member.json",
+        "sha256": "274195408ad49460037624bdfc18fd482ae3c895a019cbf79f8700a5715316ac"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": null,
+        "error_codes": [
+          "TOP_LEVEL_MEMBERS_INVALID"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/invalid-disclosure.bundle",
+      "input": {
+        "path": "test-vectors/invalid/invalid-disclosure.bundle.json",
+        "sha256": "31b80a843892ae5af59f75a489dcff01a7d967a4a633978c52c619e5023f1bc1"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "641bbd6c9b71aa5bdf924a96b4543ff569857ba4a58806953549d494e262841f"
+        },
+        "error_codes": [
+          "DISCLOSURE_INVALID"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+            }
+          },
+          {
+            "proof_id": "tpp_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+            }
+          }
+        ],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/invalid-key-interval.bundle",
+      "input": {
+        "path": "test-vectors/invalid/invalid-key-interval.bundle.json",
+        "sha256": "97d7e808897b9fb1ac55e0fd96ef7cc0f5c0ae68a4a33ea8ad1e086c1039cb37"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "2f45f5a12990e834438d188dc089c84303f83cd4b57d54b53b416a5d71d451cf"
+        },
+        "error_codes": [
+          "KEY_VALIDITY_INTERVAL_INVALID"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/invalid-locator.bundle",
+      "input": {
+        "path": "test-vectors/invalid/invalid-locator.bundle.json",
+        "sha256": "ff09ac480d2264389ff690dff6b83de0865662d1a69e04726c71c8ee73e5e2c8"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "81d95201264d16035c84f57ef63034a8d9f3f4368254495657b993abfd6d2d3b"
+        },
+        "error_codes": [
+          "LOCATOR_SCHEME_INVALID"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+            }
+          },
+          {
+            "proof_id": "tpp_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+            }
+          }
+        ],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/invalid-payload-timestamp.bundle",
+      "input": {
+        "path": "test-vectors/invalid/invalid-payload-timestamp.bundle.json",
+        "sha256": "7d54a1f65b74f9cf0d2bc4b74d416b71dc3b7033e8cfe4c827f003534a36f6f0"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": null,
+        "error_codes": [
+          "CREATED_AT_INVALID"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/proof-target-digest-mismatch.bundle",
+      "input": {
+        "path": "test-vectors/invalid/proof-target-digest-mismatch.bundle.json",
+        "sha256": "4c048765b7fc166d31a88bbf4225cbe010e4bee83c71e62762e37ce3828b89e9"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "e63315200ba810d1b0084c869d75594dc9f67383f15948efc9567d354bc33ac2"
+        },
+        "error_codes": [
+          "PROOF_TARGET_DIGEST_MISMATCH"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+            }
+          },
+          {
+            "proof_id": "tpp_settled",
+            "issuer_ref": "psp.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_settled",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "accbe9f4ea4d0c99fe079bf173fa51333722f1f64f5000697a13c33c6479dcfb"
+            }
+          },
+          {
+            "proof_id": "tpp_verified_bundle",
+            "issuer_ref": "gateway.example",
+            "target_type": "BUNDLE_PAYLOAD",
+            "target_id": null,
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "e63315200ba810d1b0084c869d75594dc9f67383f15948efc9567d354bc33ac2"
+            }
+          }
+        ],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/relationship-endpoint-types-invalid.bundle",
+      "input": {
+        "path": "test-vectors/invalid/relationship-endpoint-types-invalid.bundle.json",
+        "sha256": "6d6ad98204e362d8a031abc6db98d67ee9f90858ca1ca033eaee84a9ba356ac4"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "b796a223576b691dbb34ce27b46c45d76fcabb9a5a3fe179f68a0996750fb3a4"
+        },
+        "error_codes": [
+          "RELATIONSHIP_ENDPOINT_TYPES_INVALID"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/relationship-target-missing.bundle",
+      "input": {
+        "path": "test-vectors/invalid/relationship-target-missing.bundle.json",
+        "sha256": "a1a70beab46e6cce0933a35a5fee738f5c52e3ba9c4a2e6fcca7f0393dd29f6f"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "b6ed70ea414574461bcd4d91e26689390929f7ac6f23ef0bfe49cf1f49f5bcd9"
+        },
+        "error_codes": [
+          "RELATIONSHIP_TO_NOT_FOUND"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+            }
+          },
+          {
+            "proof_id": "tpp_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+            }
+          }
+        ],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/signature-mismatch.bundle",
+      "input": {
+        "path": "test-vectors/invalid/signature-mismatch.bundle.json",
+        "sha256": "d732622a82fa740098466054f55b6717c1cbd5aea4d7b2a3589a89b488db513d"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "e63315200ba810d1b0084c869d75594dc9f67383f15948efc9567d354bc33ac2"
+        },
+        "error_codes": [
+          "SIGNATURE_INVALID"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+            }
+          },
+          {
+            "proof_id": "tpp_settled",
+            "issuer_ref": "psp.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_settled",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "accbe9f4ea4d0c99fe079bf173fa51333722f1f64f5000697a13c33c6479dcfb"
+            }
+          },
+          {
+            "proof_id": "tpp_verified_bundle",
+            "issuer_ref": "gateway.example",
+            "target_type": "BUNDLE_PAYLOAD",
+            "target_id": null,
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "e63315200ba810d1b0084c869d75594dc9f67383f15948efc9567d354bc33ac2"
+            }
+          }
+        ],
+        "summary": null
+      }
+    },
+    {
+      "id": "invalid/unresolved-parent.bundle",
+      "input": {
+        "path": "test-vectors/invalid/unresolved-parent.bundle.json",
+        "sha256": "22e27c416de450a131f618d4a75c77f4306b2defe07f427e480b085b6b538fd8"
+      },
+      "expected": {
+        "structural_status": "INVALID",
+        "payload_digest": {
+          "algorithm": "sha-256",
+          "value": "11ac383aba6895da48d8704f8b92c9d5a9c1e6600ba4dffe9a60ab87ec642552"
+        },
+        "error_codes": [
+          "PARENT_EVENT_NOT_FOUND"
+        ],
+        "warning_codes": [],
+        "valid_proofs": [
+          {
+            "proof_id": "tpp_bad_parent_bundle",
+            "issuer_ref": "gateway.example",
+            "target_type": "BUNDLE_PAYLOAD",
+            "target_id": null,
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "11ac383aba6895da48d8704f8b92c9d5a9c1e6600ba4dffe9a60ab87ec642552"
+            }
+          },
+          {
+            "proof_id": "tpp_bad_parent_created",
+            "issuer_ref": "merchant.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_created",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "f20915b188ff1fa436a9042a73fe64b7abbd6c4bf3c0c84f975e08b324fd3ced"
+            }
+          },
+          {
+            "proof_id": "tpp_dispatch",
+            "issuer_ref": "gateway.example",
+            "target_type": "OUTCOME_EVENT",
+            "target_id": "tpe_refund_dispatched",
+            "target_digest": {
+              "algorithm": "sha-256",
+              "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+            }
+          }
+        ],
+        "summary": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,482 @@
+{
+  "payload": {
+    "spec_version": "0.1",
+    "profile": "TP-JSON-0.1",
+    "bundle_id": "tpb_appointment_created_001",
+    "action_id": "tpa_appointment_demo_001",
+    "created_at": "2026-07-23T16:00:06Z",
+    "issuers": [
+      {
+        "issuer_id": "agent.example",
+        "display_name": "Demo Refund Agent",
+        "issuer_type": "AI_AGENT",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "agent.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "agent-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAU6x+IlJd5Wvn1ZBNOD5rZ7MDha112l86uXgpY89L+Qw=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "gateway.example",
+        "display_name": "Demo Action Gateway",
+        "issuer_type": "GATEWAY",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "gateway.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "gateway-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAKRV9udpYD39GoW8fwD4dbPur0a6b0ARcB2V3x2uUaKI=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "merchant.example",
+        "display_name": "Demo Merchant Refund System",
+        "issuer_type": "SYSTEM",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "merchant.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "merchant-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAad4sccacdLUJJ3XmjVQQ35vLP7mdMtagEamKLMmLfug=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "psp.example",
+        "display_name": "Demo Payment Settlement Provider",
+        "issuer_type": "PAYMENT_PROVIDER",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "psp.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "psp-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAEC87Y5O2A+Bv75OPr9WYUWeQSRMXTzFf5NG2WFnakb8=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "calendar.example",
+        "display_name": "Demo Calendar System",
+        "issuer_type": "SYSTEM",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "calendar.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "calendar-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAad4sccacdLUJJ3XmjVQQ35vLP7mdMtagEamKLMmLfug=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      }
+    ],
+    "events": [
+      {
+        "event_id": "tpe_appointment_requested",
+        "phase": "INTENT",
+        "event_type": "calendar.appointment.requested",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T16:00:00Z",
+        "recorded_at": "2026-07-23T16:00:01Z",
+        "source_class": "SELF_CLAIMED",
+        "issuer_ref": "agent.example",
+        "actor": {
+          "entity_type": "AI_AGENT",
+          "entity_id": "appointment-agent-demo",
+          "display_name": "Appointment Agent Demo"
+        },
+        "subject": {
+          "entity_type": "APPOINTMENT",
+          "entity_id": "appointment-demo-001",
+          "display_name": "Demo appointment"
+        },
+        "claim": {
+          "action_id": "tpa_appointment_demo_001",
+          "requested": true
+        },
+        "evidence_refs": [
+          "tpev_appointment_request"
+        ],
+        "parent_event_digests": [],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "a81e9cfe9a5e724023131d49cb11e5c08a71c6cf64dc9836543122a4759d6a84"
+        }
+      },
+      {
+        "event_id": "tpe_appointment_dispatched",
+        "phase": "DISPATCH",
+        "event_type": "calendar.appointment.dispatched",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T16:00:02Z",
+        "recorded_at": "2026-07-23T16:00:02Z",
+        "source_class": "GATEWAY_OBSERVED",
+        "issuer_ref": "gateway.example",
+        "actor": {
+          "entity_type": "AI_AGENT",
+          "entity_id": "appointment-agent-demo",
+          "display_name": "Appointment Agent Demo"
+        },
+        "subject": {
+          "entity_type": "APPOINTMENT",
+          "entity_id": "appointment-demo-001",
+          "display_name": "Demo appointment"
+        },
+        "claim": {
+          "destination": "calendar.example"
+        },
+        "evidence_refs": [
+          "tpev_appointment_dispatch"
+        ],
+        "parent_event_digests": [
+          {
+            "algorithm": "sha-256",
+            "value": "a81e9cfe9a5e724023131d49cb11e5c08a71c6cf64dc9836543122a4759d6a84"
+          }
+        ],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "6ee54948657630c841ada10a0438756bf4a7dc892f023cd54d8ec028a235848f"
+        }
+      },
+      {
+        "event_id": "tpe_appointment_accepted",
+        "phase": "ACCEPTANCE",
+        "event_type": "calendar.appointment.accepted",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T16:00:03Z",
+        "recorded_at": "2026-07-23T16:00:03Z",
+        "source_class": "RECEIVER_ATTESTED",
+        "issuer_ref": "calendar.example",
+        "actor": {
+          "entity_type": "SERVICE",
+          "entity_id": "calendar-api-demo",
+          "display_name": "Demo Calendar API"
+        },
+        "subject": {
+          "entity_type": "APPOINTMENT",
+          "entity_id": "appointment-demo-001",
+          "display_name": "Demo appointment"
+        },
+        "claim": {
+          "accepted": true
+        },
+        "evidence_refs": [
+          "tpev_appointment_accepted"
+        ],
+        "parent_event_digests": [
+          {
+            "algorithm": "sha-256",
+            "value": "6ee54948657630c841ada10a0438756bf4a7dc892f023cd54d8ec028a235848f"
+          }
+        ],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "a963998fbe953facbb2247f2bf66fd1df13b3c01810a8cb389c578891f86be82"
+        }
+      },
+      {
+        "event_id": "tpe_appointment_effect",
+        "phase": "EFFECT",
+        "event_type": "calendar.appointment.created",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T16:00:04Z",
+        "recorded_at": "2026-07-23T16:00:05Z",
+        "source_class": "SYSTEM_OF_RECORD",
+        "issuer_ref": "calendar.example",
+        "actor": {
+          "entity_type": "SERVICE",
+          "entity_id": "calendar-api-demo",
+          "display_name": "Demo Calendar API"
+        },
+        "subject": {
+          "entity_type": "APPOINTMENT",
+          "entity_id": "appointment-demo-001",
+          "display_name": "Demo appointment"
+        },
+        "claim": {
+          "object_id": "APPOINTMENT-001",
+          "state": "created"
+        },
+        "evidence_refs": [
+          "tpev_appointment_effect"
+        ],
+        "parent_event_digests": [
+          {
+            "algorithm": "sha-256",
+            "value": "a963998fbe953facbb2247f2bf66fd1df13b3c01810a8cb389c578891f86be82"
+          }
+        ],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "6765d603b04d203e01c4b7df0995392cc1855d853a710c369578846466eafc21"
+        }
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "tpev_appointment_request",
+        "evidence_type": "AGENT_REQUEST",
+        "media_type": "application/json",
+        "source_class": "SELF_CLAIMED",
+        "issuer_ref": "agent.example",
+        "claim_scope": [
+          "calendar.appointment.requested"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "1d845d716e555aa1a7ddf5cd50e34869f74b67c2b21b2a3f8b0327a9ec0ffa28"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_appointment_request",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "COMMITMENT_ONLY",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "262e3f430cb38aacec51a4980ca369eb079dd52e12468b423662a6286f43d063"
+        }
+      },
+      {
+        "evidence_id": "tpev_appointment_dispatch",
+        "evidence_type": "GATEWAY_RECORD",
+        "media_type": "application/json",
+        "source_class": "GATEWAY_OBSERVED",
+        "issuer_ref": "gateway.example",
+        "claim_scope": [
+          "calendar.appointment.dispatched"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "24d8894873f2b4a710a627311df8efb51c51b6106c5ceb46cbaaa579fcf20f93"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_appointment_dispatch",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "RESTRICTED",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "298973c2d8b619fb62ed11698fe1efd3bfbff580a77feb69651db14bc629f37b"
+        }
+      },
+      {
+        "evidence_id": "tpev_appointment_accepted",
+        "evidence_type": "API_RESPONSE",
+        "media_type": "application/json",
+        "source_class": "RECEIVER_ATTESTED",
+        "issuer_ref": "calendar.example",
+        "claim_scope": [
+          "calendar.appointment.accepted"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "fd7fe51f93f4461b27398db76c2d0c51e0cbdd5a1c7da90c70aa664790bbebc1"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_appointment_accepted",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "RESTRICTED",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "78fc174b2e67e7a9be8f0e525ffe64bb19fb8c55ecc38c864089fc907ac6a9db"
+        }
+      },
+      {
+        "evidence_id": "tpev_appointment_effect",
+        "evidence_type": "SYSTEM_RECORD",
+        "media_type": "application/json",
+        "source_class": "SYSTEM_OF_RECORD",
+        "issuer_ref": "calendar.example",
+        "claim_scope": [
+          "calendar.appointment.created"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "14c40dc8656af721d3edcf2566108a196408e4facbaa223201be6d1b6c728054"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_appointment_effect",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "RESTRICTED",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "381090b598c420b0ad6d8689b72685e49ad8630f95b1531c3fbe5373d197f01f"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "relationship_id": "tpr_appointment_request",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_appointment_request",
+        "to_ref": "event:tpe_appointment_requested",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "9323e2b19576ddd7d430dc687ccb060cf09c69f5127d0ccbd05031ac55e4c160"
+        }
+      },
+      {
+        "relationship_id": "tpr_appointment_dispatch",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_appointment_dispatch",
+        "to_ref": "event:tpe_appointment_dispatched",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "7728207106c13815cf374831f377720b5f57621f0a3a4f6b3d9eb728821e0603"
+        }
+      },
+      {
+        "relationship_id": "tpr_appointment_accepted",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_appointment_accepted",
+        "to_ref": "event:tpe_appointment_accepted",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "6452f6e78a4ef95c5e468a4aba31c86122a4b497d4a9afa8dfa29a2282f81030"
+        }
+      },
+      {
+        "relationship_id": "tpr_appointment_effect",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_appointment_effect",
+        "to_ref": "event:tpe_appointment_effect",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "1d569f44a88cf110fea222a43fcf8816d363fa2cb6e0609e7d5a9d37abf54648"
+        }
+      }
+    ],
+    "predecessor_bundle_digests": [],
+    "extensions": {
+      "org.timeproofs.demo": {
+        "scenario": "appointment-outcome-event-vocabulary",
+        "notice": "Synthetic interoperability fixture. No real payment occurred."
+      }
+    }
+  },
+  "proofs": [
+    {
+      "proof_id": "tpp_appointment_dispatch",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "OUTCOME_EVENT",
+        "target_id": "tpe_appointment_dispatched",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "6ee54948657630c841ada10a0438756bf4a7dc892f023cd54d8ec028a235848f"
+        }
+      },
+      "issuer_ref": "gateway.example",
+      "verification_method": "gateway.example#gateway-test-01",
+      "created_at": "2026-07-23T16:00:03Z",
+      "algorithm": "Ed25519",
+      "proof_value": "clUpbW6ZktxjC_sN1uNhWuSLsCQWzBXI_uzLinKqH77l7w24zPlxfWpkXW2Riv1KRCSjpzcLoPahmI0cbWt4AA"
+    },
+    {
+      "proof_id": "tpp_appointment_accepted",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "OUTCOME_EVENT",
+        "target_id": "tpe_appointment_accepted",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "a963998fbe953facbb2247f2bf66fd1df13b3c01810a8cb389c578891f86be82"
+        }
+      },
+      "issuer_ref": "calendar.example",
+      "verification_method": "calendar.example#calendar-test-01",
+      "created_at": "2026-07-23T16:00:04Z",
+      "algorithm": "Ed25519",
+      "proof_value": "-FXoeBFYQZWx0XSokl7bSQtDCFgMJprr9JhyOMGVvJUk_MjP8bCaA9i_7xrrUx7dDwxGSI4UsJvBwil4QPwPCA"
+    },
+    {
+      "proof_id": "tpp_appointment_effect",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "OUTCOME_EVENT",
+        "target_id": "tpe_appointment_effect",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "6765d603b04d203e01c4b7df0995392cc1855d853a710c369578846466eafc21"
+        }
+      },
+      "issuer_ref": "calendar.example",
+      "verification_method": "calendar.example#calendar-test-01",
+      "created_at": "2026-07-23T16:00:06Z",
+      "algorithm": "Ed25519",
+      "proof_value": "g4dOvm507DLYhU-ynNZgd-LQDUzTeDEbW7i39K67Ab4lFEJoyItMyTaro383pThs087aIaA2uwM7tmR768WrDA"
+    },
+    {
+      "proof_id": "tpp_appointment_bundle",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "BUNDLE_PAYLOAD",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "f1e53c732def116a59d7204f0abf6a6ee76c3fc8ac2d5e05e8b05daeb193c7bf"
+        }
+      },
+      "issuer_ref": "gateway.example",
+      "verification_method": "gateway.example#gateway-test-01",
+      "created_at": "2026-07-23T16:00:07Z",
+      "algorithm": "Ed25519",
+      "proof_value": "SPzUVkgM9TkROanUZVOsswrYnkNfu37LTM15sj3JrGq-muZFGYNcWgk10j1PBqm5ikqe05yCyznbjRVfXnYYCg"
+    }
+  ]
+}

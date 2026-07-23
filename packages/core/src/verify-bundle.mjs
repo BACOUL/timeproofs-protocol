@@ -7,6 +7,7 @@ import {
 } from './digest.mjs';
 import { verifySignatureProof } from './proofs.mjs';
 import { assertKnownErrorCode, isKnownErrorCode } from './error-codes.mjs';
+import { validateEventVocabulary, validateRelationshipVocabulary } from './vocabulary.mjs';
 import {
   TOP_LEVEL_KEYS,
   PAYLOAD_KEYS,
@@ -234,6 +235,11 @@ function verifyEvent(event, path, issuerIds, errors) {
   verifyEntityRef(event.subject, `${path}.subject`, 'EVENT_SUBJECT_INVALID', errors);
   if (!isPlainObject(event.claim)) addIssue(errors, 'EVENT_CLAIM_INVALID', 'claim must be an object.', `${path}.claim`);
   if (!isPlainObject(event.extensions)) addIssue(errors, 'EVENT_EXTENSIONS_INVALID', 'extensions must be an object.', `${path}.extensions`);
+  if (PHASES.has(event.phase) && STATUSES.has(event.status) && SOURCE_CLASSES.has(event.source_class) && EVENT_TYPE_PATTERN.test(event.event_type ?? '')) {
+    for (const issue of validateEventVocabulary(event)) {
+      addIssue(errors, issue.code, issue.message, issue.member ? `${path}.${issue.member}` : path);
+    }
+  }
   verifyObjectDigest(event, path, errors);
 }
 
@@ -298,6 +304,11 @@ function verifyRelationship(relationship, path, errors) {
     if (!RELATIONSHIP_REF_PATTERN.test(relationship[member] ?? '')) addIssue(errors, 'RELATIONSHIP_REF_INVALID', `${member} must be a typed event, evidence, or issuer reference.`, `${path}.${member}`);
   }
   if (relationship.from_ref === relationship.to_ref) addIssue(errors, 'RELATIONSHIP_SELF_REFERENCE', 'Relationship endpoints must differ.', path);
+  if (RELATIONSHIP_TYPES.has(relationship.relationship_type) && RELATIONSHIP_REF_PATTERN.test(relationship.from_ref ?? '') && RELATIONSHIP_REF_PATTERN.test(relationship.to_ref ?? '')) {
+    for (const issue of validateRelationshipVocabulary(relationship)) {
+      addIssue(errors, issue.code, issue.message, path);
+    }
+  }
   if (!isPlainObject(relationship.extensions)) addIssue(errors, 'RELATIONSHIP_EXTENSIONS_INVALID', 'extensions must be an object.', `${path}.extensions`);
   verifyObjectDigest(relationship, path, errors);
 }

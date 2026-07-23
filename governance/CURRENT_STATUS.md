@@ -9,8 +9,8 @@ As of: 2026-07-23
 - Name: **TimeProofs Outcome Assurance**
 - Stage: `EXPERIMENTAL_FOUNDATION`
 - Current phase: **P1 — Protocol interoperability foundation** (`IN_PROGRESS`)
-- Current milestone: **P1-M2 — Outcome Event v0.1 vocabulary coherence** (`IN_PROGRESS`)
-- Unique next action: **TP-PROTO-002 — Complete Outcome Event v0.1 normative vocabulary**
+- Current milestone: **P1-M3 — Implementation-independent conformance harness** (`IN_PROGRESS`)
+- Unique next action: **TP-PROTO-003 — Establish implementation-independent conformance harness**
 
 ## Completed foundation
 
@@ -23,6 +23,7 @@ As of: 2026-07-23
 - Static product demonstration
 - Global project operating system
 - Evidence Bundle v0.1 normative fields, schemas, verifier, stable codes, and test vectors aligned
+- Outcome Event v0.1 normative vocabulary, extension namespaces, relationship semantics, and refund/email/appointment profiles aligned
 
 ## Current blockers
 

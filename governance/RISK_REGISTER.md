@@ -21,3 +21,4 @@ Review cadence: every material PR and monthly strategy review.
 | R-015 | Competitor or naming conflicts weaken the TimeProofs brand | Medium | Medium | Trademark/domain review before global launch; precise category and object names | Legal conflict, domain confusion, or conflicting standard terminology appears |
 
 | R-016 | JSON Schemas, specification, fixtures, and verifier drift apart | Medium | High | Machine-readable field registry, exact nested-member checks, stable error registry, and CI alignment validator | Any valid fixture contains an undocumented field or schema/verifier acceptance differs |
+| R-017 | Vocabulary rules reject weak but audit-relevant claims and hide contradictions | Low | High | Source class is provenance, not sufficiency; self-claims remain representable; only impossible source-phase combinations are structurally invalid | A real unsupported claim cannot be encoded without masquerading as a stronger source |

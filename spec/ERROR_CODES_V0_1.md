@@ -1,7 +1,7 @@
 # TimeProofs Structural Error Codes v0.1
 
-Status: EXPERIMENTAL NORMATIVE REGISTRY VIEW  
-Profile: `TP-JSON-0.1`  
+Status: EXPERIMENTAL NORMATIVE REGISTRY VIEW
+Profile: `TP-JSON-0.1`
 Generated from: `spec/error-codes-v0.1.json`
 
 The JSON registry is the machine-readable authority for stable v0.1 structural result codes. Human-readable messages and JSON paths are diagnostic and MAY vary. Codes and their structural classification MUST remain stable within the v0.1 profile.
@@ -155,3 +155,11 @@ The JSON registry is the machine-readable authority for stable v0.1 structural r
 | `NO_EVENTS` | COMPLETENESS | `INCOMPLETE` | The bundle contains no Outcome Events. |
 | `NO_EVIDENCE` | COMPLETENESS | `INCOMPLETE` | The bundle contains no Evidence Items. |
 | `NO_PROOFS` | COMPLETENESS | `INCOMPLETE` | The bundle contains no Proofs. |
+| `EVENT_PHASE_STATUS_INVALID` | VOCABULARY | `INVALID` | The event status is not permitted for the declared universal lifecycle phase. |
+| `EVENT_TYPE_PHASE_MISMATCH` | VOCABULARY | `INVALID` | A registered event type is used with a lifecycle phase different from its normative phase. |
+| `EVENT_TYPE_STATUS_MISMATCH` | VOCABULARY | `INVALID` | A registered event type is used with a status outside its allowed status set. |
+| `EVENT_TYPE_SOURCE_CLASS_MISMATCH` | VOCABULARY | `INVALID` | A registered event type is used with a source class outside its allowed source set. |
+| `EVENT_TYPE_RESERVED_UNREGISTERED` | VOCABULARY | `INVALID` | An unregistered event type uses a namespace reserved by the TimeProofs base vocabulary. |
+| `EVENT_TYPE_UNREGISTERED` | VOCABULARY | `INVALID` | An unregistered event type does not use the required collision-resistant extension namespace form. |
+| `RELATIONSHIP_ENDPOINT_TYPES_INVALID` | VOCABULARY | `INVALID` | The endpoint object kinds are not permitted for the declared relationship type. |
+| `EVENT_SOURCE_PHASE_INVALID` | VOCABULARY | `INVALID` | The source class is not meaningful for the declared universal lifecycle phase. |

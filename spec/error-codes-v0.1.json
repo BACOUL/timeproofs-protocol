@@ -883,6 +883,54 @@
       "category": "COMPLETENESS",
       "structural_outcome": "INCOMPLETE",
       "meaning": "The bundle contains no Proofs."
+    },
+    {
+      "code": "EVENT_PHASE_STATUS_INVALID",
+      "category": "VOCABULARY",
+      "structural_outcome": "INVALID",
+      "meaning": "The event status is not permitted for the declared universal lifecycle phase."
+    },
+    {
+      "code": "EVENT_TYPE_PHASE_MISMATCH",
+      "category": "VOCABULARY",
+      "structural_outcome": "INVALID",
+      "meaning": "A registered event type is used with a lifecycle phase different from its normative phase."
+    },
+    {
+      "code": "EVENT_TYPE_STATUS_MISMATCH",
+      "category": "VOCABULARY",
+      "structural_outcome": "INVALID",
+      "meaning": "A registered event type is used with a status outside its allowed status set."
+    },
+    {
+      "code": "EVENT_TYPE_SOURCE_CLASS_MISMATCH",
+      "category": "VOCABULARY",
+      "structural_outcome": "INVALID",
+      "meaning": "A registered event type is used with a source class outside its allowed source set."
+    },
+    {
+      "code": "EVENT_TYPE_RESERVED_UNREGISTERED",
+      "category": "VOCABULARY",
+      "structural_outcome": "INVALID",
+      "meaning": "An unregistered event type uses a namespace reserved by the TimeProofs base vocabulary."
+    },
+    {
+      "code": "EVENT_TYPE_UNREGISTERED",
+      "category": "VOCABULARY",
+      "structural_outcome": "INVALID",
+      "meaning": "An unregistered event type does not use the required collision-resistant extension namespace form."
+    },
+    {
+      "code": "RELATIONSHIP_ENDPOINT_TYPES_INVALID",
+      "category": "VOCABULARY",
+      "structural_outcome": "INVALID",
+      "meaning": "The endpoint object kinds are not permitted for the declared relationship type."
+    },
+    {
+      "code": "EVENT_SOURCE_PHASE_INVALID",
+      "category": "VOCABULARY",
+      "structural_outcome": "INVALID",
+      "meaning": "The source class is not meaningful for the declared universal lifecycle phase."
     }
   ]
 }

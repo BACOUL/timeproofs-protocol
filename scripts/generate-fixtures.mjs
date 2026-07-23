@@ -101,13 +101,13 @@ function relationship({ id, type, from, to }) {
   });
 }
 
-function basePayload(issuers, bundleId) {
+function basePayload(issuers, bundleId, { actionId = 'tpa_refund_demo_001', scenario = 'refund-outcome-assurance', createdAt = '2026-07-23T14:32:08Z' } = {}) {
   return {
     spec_version: '0.1',
     profile: 'TP-JSON-0.1',
     bundle_id: bundleId,
-    action_id: 'tpa_refund_demo_001',
-    created_at: '2026-07-23T14:32:08Z',
+    action_id: actionId,
+    created_at: createdAt,
     issuers,
     events: [],
     evidence: [],
@@ -115,7 +115,7 @@ function basePayload(issuers, bundleId) {
     predecessor_bundle_digests: [],
     extensions: {
       'org.timeproofs.demo': {
-        scenario: 'refund-outcome-assurance',
+        scenario,
         notice: 'Synthetic interoperability fixture. No real payment occurred.'
       }
     }
@@ -374,10 +374,145 @@ addProof(unprovable, {
   proofId: 'tpp_unprovable_bundle', createdAt: '2026-07-23T14:32:09Z'
 });
 
+
+
+function buildReferenceActionBundle({
+  bundleId,
+  actionId,
+  scenario,
+  serviceIssuer,
+  subject,
+  actor,
+  eventPrefix,
+  eventTypes,
+  serviceActor
+}) {
+  const domainIssuers = [...issuers, serviceIssuer];
+  const requestEvidence = evidence({
+    id: `tpev_${eventPrefix}_request`,
+    type: 'AGENT_REQUEST',
+    mediaType: 'application/json',
+    sourceClass: 'SELF_CLAIMED',
+    issuerRef: 'agent.example',
+    claimScope: [eventTypes.requested],
+    content: { action_id: actionId, requested: true },
+    locatorValue: `evref_${eventPrefix}_request`,
+    disclosure: 'COMMITMENT_ONLY'
+  });
+  const dispatchEvidence = evidence({
+    id: `tpev_${eventPrefix}_dispatch`,
+    type: 'GATEWAY_RECORD',
+    mediaType: 'application/json',
+    sourceClass: 'GATEWAY_OBSERVED',
+    issuerRef: 'gateway.example',
+    claimScope: [eventTypes.dispatched],
+    content: { action_id: actionId, destination: serviceIssuer.issuer_id },
+    locatorValue: `evref_${eventPrefix}_dispatch`
+  });
+  const acceptedEvidence = evidence({
+    id: `tpev_${eventPrefix}_accepted`,
+    type: 'API_RESPONSE',
+    mediaType: 'application/json',
+    sourceClass: 'RECEIVER_ATTESTED',
+    issuerRef: serviceIssuer.issuer_id,
+    claimScope: [eventTypes.accepted],
+    content: { action_id: actionId, accepted: true },
+    locatorValue: `evref_${eventPrefix}_accepted`
+  });
+  const effectEvidence = evidence({
+    id: `tpev_${eventPrefix}_effect`,
+    type: 'SYSTEM_RECORD',
+    mediaType: 'application/json',
+    sourceClass: 'SYSTEM_OF_RECORD',
+    issuerRef: serviceIssuer.issuer_id,
+    claimScope: [eventTypes.effect],
+    content: { action_id: actionId, object_id: `${eventPrefix.toUpperCase()}-001`, state: 'created' },
+    locatorValue: `evref_${eventPrefix}_effect`
+  });
+
+  const requested = event({
+    id: `tpe_${eventPrefix}_requested`, phase: 'INTENT', type: eventTypes.requested, status: 'SUCCEEDED',
+    occurredAt: '2026-07-23T16:00:00Z', recordedAt: '2026-07-23T16:00:01Z',
+    sourceClass: 'SELF_CLAIMED', issuerRef: 'agent.example', actor, subject,
+    claim: { action_id: actionId, requested: true }, evidenceRefs: [requestEvidence.evidence_id]
+  });
+  const dispatched = event({
+    id: `tpe_${eventPrefix}_dispatched`, phase: 'DISPATCH', type: eventTypes.dispatched, status: 'SUCCEEDED',
+    occurredAt: '2026-07-23T16:00:02Z', recordedAt: '2026-07-23T16:00:02Z',
+    sourceClass: 'GATEWAY_OBSERVED', issuerRef: 'gateway.example', actor, subject,
+    claim: { destination: serviceIssuer.issuer_id }, evidenceRefs: [dispatchEvidence.evidence_id], parents: [requested.object_digest]
+  });
+  const accepted = event({
+    id: `tpe_${eventPrefix}_accepted`, phase: 'ACCEPTANCE', type: eventTypes.accepted, status: 'SUCCEEDED',
+    occurredAt: '2026-07-23T16:00:03Z', recordedAt: '2026-07-23T16:00:03Z',
+    sourceClass: 'RECEIVER_ATTESTED', issuerRef: serviceIssuer.issuer_id, actor: serviceActor, subject,
+    claim: { accepted: true }, evidenceRefs: [acceptedEvidence.evidence_id], parents: [dispatched.object_digest]
+  });
+  const effect = event({
+    id: `tpe_${eventPrefix}_effect`, phase: 'EFFECT', type: eventTypes.effect, status: 'SUCCEEDED',
+    occurredAt: '2026-07-23T16:00:04Z', recordedAt: '2026-07-23T16:00:05Z',
+    sourceClass: 'SYSTEM_OF_RECORD', issuerRef: serviceIssuer.issuer_id, actor: serviceActor, subject,
+    claim: { object_id: `${eventPrefix.toUpperCase()}-001`, state: 'created' }, evidenceRefs: [effectEvidence.evidence_id], parents: [accepted.object_digest]
+  });
+
+  const payload = basePayload(domainIssuers, bundleId, { actionId, scenario, createdAt: '2026-07-23T16:00:06Z' });
+  payload.events = [requested, dispatched, accepted, effect];
+  payload.evidence = [requestEvidence, dispatchEvidence, acceptedEvidence, effectEvidence];
+  payload.relationships = [
+    relationship({ id: `tpr_${eventPrefix}_request`, type: 'SUPPORTS', from: `evidence:${requestEvidence.evidence_id}`, to: `event:${requested.event_id}` }),
+    relationship({ id: `tpr_${eventPrefix}_dispatch`, type: 'SUPPORTS', from: `evidence:${dispatchEvidence.evidence_id}`, to: `event:${dispatched.event_id}` }),
+    relationship({ id: `tpr_${eventPrefix}_accepted`, type: 'SUPPORTS', from: `evidence:${acceptedEvidence.evidence_id}`, to: `event:${accepted.event_id}` }),
+    relationship({ id: `tpr_${eventPrefix}_effect`, type: 'SUPPORTS', from: `evidence:${effectEvidence.evidence_id}`, to: `event:${effect.event_id}` })
+  ];
+  const bundle = { payload, proofs: [] };
+  addProof(bundle, { target: { target_type: 'OUTCOME_EVENT', target_id: dispatched.event_id }, issuerRef: 'gateway.example', keyId: 'gateway-test-01', privateKeyPem: keys.gateway.privateKey, proofId: `tpp_${eventPrefix}_dispatch`, createdAt: '2026-07-23T16:00:03Z' });
+  addProof(bundle, { target: { target_type: 'OUTCOME_EVENT', target_id: accepted.event_id }, issuerRef: serviceIssuer.issuer_id, keyId: serviceIssuer.keys[0].key_id, privateKeyPem: keys.merchant.privateKey, proofId: `tpp_${eventPrefix}_accepted`, createdAt: '2026-07-23T16:00:04Z' });
+  addProof(bundle, { target: { target_type: 'OUTCOME_EVENT', target_id: effect.event_id }, issuerRef: serviceIssuer.issuer_id, keyId: serviceIssuer.keys[0].key_id, privateKeyPem: keys.merchant.privateKey, proofId: `tpp_${eventPrefix}_effect`, createdAt: '2026-07-23T16:00:06Z' });
+  addProof(bundle, { target: { target_type: 'BUNDLE_PAYLOAD' }, issuerRef: 'gateway.example', keyId: 'gateway-test-01', privateKeyPem: keys.gateway.privateKey, proofId: `tpp_${eventPrefix}_bundle`, createdAt: '2026-07-23T16:00:07Z' });
+  return bundle;
+}
+
+const mailIssuer = issuer({ id: 'mail.example', displayName: 'Demo Mail System', type: 'SYSTEM', domain: 'mail.example', publicKey: keys.merchant.publicKey, keyId: 'mail-test-01' });
+const emailBundle = buildReferenceActionBundle({
+  bundleId: 'tpb_email_recorded_001', actionId: 'tpa_email_demo_001', scenario: 'email-outcome-event-vocabulary',
+  serviceIssuer: mailIssuer,
+  subject: { entity_type: 'EMAIL', entity_id: 'email-demo-001', display_name: 'Demo email' },
+  actor: { entity_type: 'AI_AGENT', entity_id: 'email-agent-demo', display_name: 'Email Agent Demo' },
+  serviceActor: { entity_type: 'SERVICE', entity_id: 'mail-api-demo', display_name: 'Demo Mail API' },
+  eventPrefix: 'email',
+  eventTypes: { requested: 'messaging.email.requested', dispatched: 'messaging.email.dispatched', accepted: 'messaging.email.accepted', effect: 'messaging.email.recorded' }
+});
+
+const calendarIssuer = issuer({ id: 'calendar.example', displayName: 'Demo Calendar System', type: 'SYSTEM', domain: 'calendar.example', publicKey: keys.merchant.publicKey, keyId: 'calendar-test-01' });
+const appointmentBundle = buildReferenceActionBundle({
+  bundleId: 'tpb_appointment_created_001', actionId: 'tpa_appointment_demo_001', scenario: 'appointment-outcome-event-vocabulary',
+  serviceIssuer: calendarIssuer,
+  subject: { entity_type: 'APPOINTMENT', entity_id: 'appointment-demo-001', display_name: 'Demo appointment' },
+  actor: { entity_type: 'AI_AGENT', entity_id: 'appointment-agent-demo', display_name: 'Appointment Agent Demo' },
+  serviceActor: { entity_type: 'SERVICE', entity_id: 'calendar-api-demo', display_name: 'Demo Calendar API' },
+  eventPrefix: 'appointment',
+  eventTypes: { requested: 'calendar.appointment.requested', dispatched: 'calendar.appointment.dispatched', accepted: 'calendar.appointment.accepted', effect: 'calendar.appointment.created' }
+});
+
+const extensionBundle = clone(unprovable);
+extensionBundle.payload.bundle_id = 'tpb_extension_event_001';
+extensionBundle.payload.action_id = 'tpa_extension_demo_001';
+extensionBundle.proofs = [];
+extensionBundle.payload.events[0].phase = 'EFFECT';
+extensionBundle.payload.events[0].event_type = 'x.com.example.workflow.task.completed';
+extensionBundle.payload.events[0].source_class = 'SYSTEM_OF_RECORD';
+extensionBundle.payload.events[0].issuer_ref = 'merchant.example';
+extensionBundle.payload.events[0].object_digest = calculateObjectDigest(extensionBundle.payload.events[0]);
+
 await writeJson('test-vectors/valid/refund-pending.bundle.json', pending);
 await writeJson('test-vectors/valid/refund-verified.bundle.json', verified);
 await writeJson('test-vectors/valid/refund-contradicted.bundle.json', contradicted);
 await writeJson('test-vectors/valid/refund-unprovable.bundle.json', unprovable);
+await writeJson('test-vectors/valid/email-recorded.bundle.json', emailBundle);
+await writeJson('test-vectors/valid/appointment-created.bundle.json', appointmentBundle);
+await writeJson('test-vectors/valid/extension-event.bundle.json', extensionBundle);
+await writeJson('examples/email/email-recorded.bundle.json', emailBundle);
+await writeJson('examples/appointment/appointment-created.bundle.json', appointmentBundle);
 await writeJson('examples/refund/refund-pending.bundle.json', pending);
 await writeJson('examples/refund/refund-verified.bundle.json', verified);
 await writeJson('examples/refund/refund-contradicted.bundle.json', contradicted);
@@ -466,6 +601,29 @@ invalidKeyInterval.proofs = [];
 invalidKeyInterval.payload.issuers[2].keys[0].valid_from = '2026-08-01T00:00:00Z';
 invalidKeyInterval.payload.issuers[2].keys[0].valid_until = '2026-07-01T00:00:00Z';
 await writeInvalid('invalid-key-interval.bundle.json', invalidKeyInterval, 'KEY_VALIDITY_INTERVAL_INVALID');
+
+
+
+function semanticInvalid(base, eventIndex, mutate, fileName, expectedCode) {
+  const value = clone(base);
+  value.proofs = [];
+  mutate(value.payload.events[eventIndex]);
+  value.payload.events[eventIndex].object_digest = calculateObjectDigest(value.payload.events[eventIndex]);
+  return writeInvalid(fileName, value, expectedCode);
+}
+
+await semanticInvalid(pending, 0, (item) => { item.status = 'REVERSED'; }, 'event-phase-status-invalid.bundle.json', 'EVENT_PHASE_STATUS_INVALID');
+await semanticInvalid(pending, 2, (item) => { item.phase = 'SETTLEMENT'; }, 'event-type-phase-mismatch.bundle.json', 'EVENT_TYPE_PHASE_MISMATCH');
+await semanticInvalid(verified, 3, (item) => { item.status = 'PENDING'; }, 'event-type-status-mismatch.bundle.json', 'EVENT_TYPE_STATUS_MISMATCH');
+await semanticInvalid(pending, 0, (item) => { item.source_class = 'INDEPENDENTLY_SETTLED'; item.issuer_ref = 'psp.example'; }, 'event-source-phase-invalid.bundle.json', 'EVENT_SOURCE_PHASE_INVALID');
+await semanticInvalid(pending, 2, (item) => { item.event_type = 'commerce.refund.completed'; }, 'event-type-reserved-unregistered.bundle.json', 'EVENT_TYPE_RESERVED_UNREGISTERED');
+await semanticInvalid(pending, 2, (item) => { item.event_type = 'vendor.refund.completed'; }, 'event-type-unregistered.bundle.json', 'EVENT_TYPE_UNREGISTERED');
+const invalidRelationshipEndpoints = clone(pending);
+invalidRelationshipEndpoints.proofs = [];
+invalidRelationshipEndpoints.payload.relationships[0].from_ref = `event:${invalidRelationshipEndpoints.payload.events[0].event_id}`;
+invalidRelationshipEndpoints.payload.relationships[0].to_ref = `evidence:${invalidRelationshipEndpoints.payload.evidence[0].evidence_id}`;
+invalidRelationshipEndpoints.payload.relationships[0].object_digest = calculateObjectDigest(invalidRelationshipEndpoints.payload.relationships[0]);
+await writeInvalid('relationship-endpoint-types-invalid.bundle.json', invalidRelationshipEndpoints, 'RELATIONSHIP_ENDPOINT_TYPES_INVALID');
 
 await writeJson('test-vectors/invalid/manifest.json', invalidManifest);
 

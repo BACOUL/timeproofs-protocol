@@ -1,0 +1,482 @@
+{
+  "payload": {
+    "spec_version": "0.1",
+    "profile": "TP-JSON-0.1",
+    "bundle_id": "tpb_email_recorded_001",
+    "action_id": "tpa_email_demo_001",
+    "created_at": "2026-07-23T16:00:06Z",
+    "issuers": [
+      {
+        "issuer_id": "agent.example",
+        "display_name": "Demo Refund Agent",
+        "issuer_type": "AI_AGENT",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "agent.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "agent-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAU6x+IlJd5Wvn1ZBNOD5rZ7MDha112l86uXgpY89L+Qw=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "gateway.example",
+        "display_name": "Demo Action Gateway",
+        "issuer_type": "GATEWAY",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "gateway.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "gateway-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAKRV9udpYD39GoW8fwD4dbPur0a6b0ARcB2V3x2uUaKI=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "merchant.example",
+        "display_name": "Demo Merchant Refund System",
+        "issuer_type": "SYSTEM",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "merchant.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "merchant-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAad4sccacdLUJJ3XmjVQQ35vLP7mdMtagEamKLMmLfug=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "psp.example",
+        "display_name": "Demo Payment Settlement Provider",
+        "issuer_type": "PAYMENT_PROVIDER",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "psp.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "psp-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAEC87Y5O2A+Bv75OPr9WYUWeQSRMXTzFf5NG2WFnakb8=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "mail.example",
+        "display_name": "Demo Mail System",
+        "issuer_type": "SYSTEM",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "mail.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "mail-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAad4sccacdLUJJ3XmjVQQ35vLP7mdMtagEamKLMmLfug=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      }
+    ],
+    "events": [
+      {
+        "event_id": "tpe_email_requested",
+        "phase": "INTENT",
+        "event_type": "messaging.email.requested",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T16:00:00Z",
+        "recorded_at": "2026-07-23T16:00:01Z",
+        "source_class": "SELF_CLAIMED",
+        "issuer_ref": "agent.example",
+        "actor": {
+          "entity_type": "AI_AGENT",
+          "entity_id": "email-agent-demo",
+          "display_name": "Email Agent Demo"
+        },
+        "subject": {
+          "entity_type": "EMAIL",
+          "entity_id": "email-demo-001",
+          "display_name": "Demo email"
+        },
+        "claim": {
+          "action_id": "tpa_email_demo_001",
+          "requested": true
+        },
+        "evidence_refs": [
+          "tpev_email_request"
+        ],
+        "parent_event_digests": [],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "0643d66b852c3914cd5f05d43a0e11dada34ae4e8d74dd7ae05dc0ffa3fa7b13"
+        }
+      },
+      {
+        "event_id": "tpe_email_dispatched",
+        "phase": "DISPATCH",
+        "event_type": "messaging.email.dispatched",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T16:00:02Z",
+        "recorded_at": "2026-07-23T16:00:02Z",
+        "source_class": "GATEWAY_OBSERVED",
+        "issuer_ref": "gateway.example",
+        "actor": {
+          "entity_type": "AI_AGENT",
+          "entity_id": "email-agent-demo",
+          "display_name": "Email Agent Demo"
+        },
+        "subject": {
+          "entity_type": "EMAIL",
+          "entity_id": "email-demo-001",
+          "display_name": "Demo email"
+        },
+        "claim": {
+          "destination": "mail.example"
+        },
+        "evidence_refs": [
+          "tpev_email_dispatch"
+        ],
+        "parent_event_digests": [
+          {
+            "algorithm": "sha-256",
+            "value": "0643d66b852c3914cd5f05d43a0e11dada34ae4e8d74dd7ae05dc0ffa3fa7b13"
+          }
+        ],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "03c3dfb566a7ff644b034865332d4dfecb70b91028da4a731dd516d9b4a6ad60"
+        }
+      },
+      {
+        "event_id": "tpe_email_accepted",
+        "phase": "ACCEPTANCE",
+        "event_type": "messaging.email.accepted",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T16:00:03Z",
+        "recorded_at": "2026-07-23T16:00:03Z",
+        "source_class": "RECEIVER_ATTESTED",
+        "issuer_ref": "mail.example",
+        "actor": {
+          "entity_type": "SERVICE",
+          "entity_id": "mail-api-demo",
+          "display_name": "Demo Mail API"
+        },
+        "subject": {
+          "entity_type": "EMAIL",
+          "entity_id": "email-demo-001",
+          "display_name": "Demo email"
+        },
+        "claim": {
+          "accepted": true
+        },
+        "evidence_refs": [
+          "tpev_email_accepted"
+        ],
+        "parent_event_digests": [
+          {
+            "algorithm": "sha-256",
+            "value": "03c3dfb566a7ff644b034865332d4dfecb70b91028da4a731dd516d9b4a6ad60"
+          }
+        ],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "8bb3d46dee6b557d7b7635c57360f98d42dd24b9955191249f139b64d47570eb"
+        }
+      },
+      {
+        "event_id": "tpe_email_effect",
+        "phase": "EFFECT",
+        "event_type": "messaging.email.recorded",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T16:00:04Z",
+        "recorded_at": "2026-07-23T16:00:05Z",
+        "source_class": "SYSTEM_OF_RECORD",
+        "issuer_ref": "mail.example",
+        "actor": {
+          "entity_type": "SERVICE",
+          "entity_id": "mail-api-demo",
+          "display_name": "Demo Mail API"
+        },
+        "subject": {
+          "entity_type": "EMAIL",
+          "entity_id": "email-demo-001",
+          "display_name": "Demo email"
+        },
+        "claim": {
+          "object_id": "EMAIL-001",
+          "state": "created"
+        },
+        "evidence_refs": [
+          "tpev_email_effect"
+        ],
+        "parent_event_digests": [
+          {
+            "algorithm": "sha-256",
+            "value": "8bb3d46dee6b557d7b7635c57360f98d42dd24b9955191249f139b64d47570eb"
+          }
+        ],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "eb2f4cb991f50ea23324c67c1df75fa26bd18396b805514595cbe713205fea56"
+        }
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "tpev_email_request",
+        "evidence_type": "AGENT_REQUEST",
+        "media_type": "application/json",
+        "source_class": "SELF_CLAIMED",
+        "issuer_ref": "agent.example",
+        "claim_scope": [
+          "messaging.email.requested"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "e8449894178a23bf93d2348e3d2836dd9b8d1ae655a36272f98b2c6a74f44027"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_email_request",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "COMMITMENT_ONLY",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "29fbe82530235af19b2024719c24482652e2a1e62f93aff44d415ca9d4b342a5"
+        }
+      },
+      {
+        "evidence_id": "tpev_email_dispatch",
+        "evidence_type": "GATEWAY_RECORD",
+        "media_type": "application/json",
+        "source_class": "GATEWAY_OBSERVED",
+        "issuer_ref": "gateway.example",
+        "claim_scope": [
+          "messaging.email.dispatched"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "88b81713bcc950823f3d912891895c320424642ea08c7da0c9915b0e67cd6cf4"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_email_dispatch",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "RESTRICTED",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "3fbed164ad27c6c625602ec6aa7a3ca5cd191d7f5f3a85f8d1fb82e63c68db7e"
+        }
+      },
+      {
+        "evidence_id": "tpev_email_accepted",
+        "evidence_type": "API_RESPONSE",
+        "media_type": "application/json",
+        "source_class": "RECEIVER_ATTESTED",
+        "issuer_ref": "mail.example",
+        "claim_scope": [
+          "messaging.email.accepted"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "48977f8216572423f9234810793377a5bb4f8a0e428abdb57861e968483e61ec"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_email_accepted",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "RESTRICTED",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "d657154babe291a9af6a9166b915b8bff83eef225e1488547ded62833b4b3a49"
+        }
+      },
+      {
+        "evidence_id": "tpev_email_effect",
+        "evidence_type": "SYSTEM_RECORD",
+        "media_type": "application/json",
+        "source_class": "SYSTEM_OF_RECORD",
+        "issuer_ref": "mail.example",
+        "claim_scope": [
+          "messaging.email.recorded"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "31682af6ee485df8b9736229d94605e83f96ee5bd114a61d1ae3ca541834968e"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_email_effect",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "RESTRICTED",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "00fec9859742bdf63d778a939d4d37f536f377f322dba7db868822d852e6eda2"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "relationship_id": "tpr_email_request",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_email_request",
+        "to_ref": "event:tpe_email_requested",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "8cb248c13661207c075063b1d61c146989b7f7f764845c2524f81f77e158bc40"
+        }
+      },
+      {
+        "relationship_id": "tpr_email_dispatch",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_email_dispatch",
+        "to_ref": "event:tpe_email_dispatched",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "27c2c457abbce05a41b261c2a99e9880b0994866557021df0b429bc01598e556"
+        }
+      },
+      {
+        "relationship_id": "tpr_email_accepted",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_email_accepted",
+        "to_ref": "event:tpe_email_accepted",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "beb54ee9c2bccaf3b9c6452ef4b984b509f470db17148a347c3a523bc57e85df"
+        }
+      },
+      {
+        "relationship_id": "tpr_email_effect",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_email_effect",
+        "to_ref": "event:tpe_email_effect",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "31f4d6cea1f668b06e10353532d373be99b048ed8e852e2faf0e1c293d7f1d29"
+        }
+      }
+    ],
+    "predecessor_bundle_digests": [],
+    "extensions": {
+      "org.timeproofs.demo": {
+        "scenario": "email-outcome-event-vocabulary",
+        "notice": "Synthetic interoperability fixture. No real payment occurred."
+      }
+    }
+  },
+  "proofs": [
+    {
+      "proof_id": "tpp_email_dispatch",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "OUTCOME_EVENT",
+        "target_id": "tpe_email_dispatched",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "03c3dfb566a7ff644b034865332d4dfecb70b91028da4a731dd516d9b4a6ad60"
+        }
+      },
+      "issuer_ref": "gateway.example",
+      "verification_method": "gateway.example#gateway-test-01",
+      "created_at": "2026-07-23T16:00:03Z",
+      "algorithm": "Ed25519",
+      "proof_value": "WDFj3Z7l2tzCcA93sNFo4TfNh3IGR0G0nLOm0CBrvoMpojh-RN3AJb1xj8wzteVUTkHcYiNf6ztvbs4hcEy-Dw"
+    },
+    {
+      "proof_id": "tpp_email_accepted",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "OUTCOME_EVENT",
+        "target_id": "tpe_email_accepted",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "8bb3d46dee6b557d7b7635c57360f98d42dd24b9955191249f139b64d47570eb"
+        }
+      },
+      "issuer_ref": "mail.example",
+      "verification_method": "mail.example#mail-test-01",
+      "created_at": "2026-07-23T16:00:04Z",
+      "algorithm": "Ed25519",
+      "proof_value": "Ct0ZlDffC0eDBeTkefxk3PEVkN3wLU9nNQlIHUneUQOLhfQm7eoXkI4j_EYxf3K8W0w954MMAFOLFOKHLwwZAw"
+    },
+    {
+      "proof_id": "tpp_email_effect",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "OUTCOME_EVENT",
+        "target_id": "tpe_email_effect",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "eb2f4cb991f50ea23324c67c1df75fa26bd18396b805514595cbe713205fea56"
+        }
+      },
+      "issuer_ref": "mail.example",
+      "verification_method": "mail.example#mail-test-01",
+      "created_at": "2026-07-23T16:00:06Z",
+      "algorithm": "Ed25519",
+      "proof_value": "mn91UXr9w-rH5AeGZMWNJCPPGI3x1mNY3VO_qMUv-70ETYDTuehKVSyBSvqExU3PKkgHShAqMlfOjXGRagW-Bw"
+    },
+    {
+      "proof_id": "tpp_email_bundle",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "BUNDLE_PAYLOAD",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "8a0f6bc7cfb4a33e2eb4218de4f112d4a5cc9ecc8068ce2a4f2dffa3275d908f"
+        }
+      },
+      "issuer_ref": "gateway.example",
+      "verification_method": "gateway.example#gateway-test-01",
+      "created_at": "2026-07-23T16:00:07Z",
+      "algorithm": "Ed25519",
+      "proof_value": "IVh2ArCu-CO1il2vtc_E1EACmY5F5OlOKJooAcMBbOCu-emrMiZvc6sxOtE4fn8Z7iD47ij40dMjR-mBhhX4Ag"
+    }
+  ]
+}

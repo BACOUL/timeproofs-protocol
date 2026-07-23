@@ -75,3 +75,24 @@ Date: 2026-07-23
 Status: ACCEPTED
 
 Structural error and completeness codes are versioned interoperability outputs, not incidental log messages. Their machine-readable authority is `spec/error-codes-v0.1.json`. Human messages and paths may improve without changing code meaning.
+
+## D-011 — Registered base vocabulary with collision-resistant extensions
+
+Date: 2026-07-23
+Status: ACCEPTED
+
+TimeProofs maintains a machine-readable registry for base event types and reserves its core namespaces. Third-party event types remain valid only under the explicit `x.<reverse-dns>.<domain>.<resource>.<event>` form. This prevents collisions without making the protocol closed.
+
+## D-012 — Provenance is representable even when it is insufficient
+
+Date: 2026-07-23
+Status: ACCEPTED
+
+Source classes describe who made or observed a claim. A self-claimed external outcome remains structurally representable and signable; it is not rejected merely because it is weak evidence. Domain verdict rules determine sufficiency. This preserves unsupported or contradictory claims for audit instead of erasing them at parse time.
+
+## D-013 — Phase, event type, and status have normative semantic compatibility
+
+Date: 2026-07-23
+Status: ACCEPTED
+
+Universal phase/status compatibility and registered event type phase/status semantics are structural interoperability rules. A verifier rejects impossible combinations while keeping overall action verdicts outside the Evidence Bundle layer. Relationship direction is also normative by relationship type.

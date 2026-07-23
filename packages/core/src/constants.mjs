@@ -47,7 +47,7 @@ export const LOCATOR_SCHEMES = new Set(['opaque', 'embedded', 'https']);
 export const RETRIEVAL_POLICIES = new Set(['PUBLIC', 'AUTHORIZED_ONLY', 'LOCAL_ONLY', 'UNAVAILABLE']);
 export const RELATIONSHIP_TYPES = new Set(['SUPPORTS', 'CONTRADICTS', 'SUPERSEDES', 'REVERSES', 'CORRESPONDS_TO']);
 
-export const EVENT_TYPE_PATTERN = /^[a-z0-9]+(?:[._-][a-z0-9]+)+$/u;
+export const EVENT_TYPE_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*(?:\.[a-z0-9]+(?:_[a-z0-9]+)*){2,}$/u;
 export const EVIDENCE_TYPE_PATTERN = /^[A-Z0-9]+(?:[._-][A-Z0-9]+)*$/u;
 export const MEDIA_TYPE_PATTERN = /^[A-Za-z0-9!#$&^_.+-]+\/[A-Za-z0-9!#$&^_.+-]+(?:\s*;.*)?$/u;
 export const RELATIONSHIP_REF_PATTERN = /^(?:event|evidence|issuer):[^:\s]+$/u;

@@ -29,3 +29,7 @@ A mapping MUST state both:
 2. what it cannot prove without another issuer or system.
 
 A successful tool result MUST NOT automatically map to a final business outcome.
+
+## Vocabulary mapping rule
+
+Protocol adapters MUST map source-native states to registered TimeProofs event types only when the source semantics match the registered phase and meaning. Vendor-specific states that do not match MUST use a collision-resistant `x.<reverse-dns>...` event type until a reviewed profile exists. A mapping MUST preserve weak or self-claimed provenance rather than upgrading it to a receiver or system-of-record source class.

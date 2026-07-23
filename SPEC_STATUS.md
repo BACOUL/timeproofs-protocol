@@ -4,7 +4,7 @@
 |---|---:|---|
 | Evidence Bundle abstract model | 0.1 | Normatively coherent experimental draft |
 | TP-JSON profile | 0.1 | Coherent reference profile; independent implementation pending |
-| Outcome Event vocabulary | 0.1 | Skeleton |
+| Outcome Event vocabulary | 0.1 | Normatively coherent experimental registry with refund, email, appointment, and extension profiles |
 | Structural verification | 0.1 | Reference implementation aligned with schemas and stable codes |
 | Signature model | 0.1 | Ed25519 experimental profile |
 | Refund verdict rules | refund-v0.1 | Experimental, non-normative |

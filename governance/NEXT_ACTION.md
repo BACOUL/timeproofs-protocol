@@ -2,30 +2,30 @@
 
 Generated from `governance/project-state.json`. Do not edit manually.
 
-## TP-PROTO-002 — Complete Outcome Event v0.1 normative vocabulary
+## TP-PROTO-003 — Establish implementation-independent conformance harness
 
 - Workstream: `WS02_PROTOCOL`
 - Phase: `P1`
-- Milestone: `P1-M2`
+- Milestone: `P1-M3`
 
 ## Purpose
 
-Define the universal lifecycle phases, statuses, source classes, naming rules, base relationship semantics, and initial domain profiles without confusing events with verdicts.
+Define a language-neutral conformance contract and machine-readable expected results so a genuinely independent implementation can reproduce canonical bytes, digests, proof validation, structural statuses, and stable codes without relying on the Node.js reference code.
 
 ## Acceptance criteria
 
-- Every universal phase, status, and source class has normative semantics and invalid combinations are documented.
-- Event type registration and extension rules prevent naming collisions.
-- The refund vocabulary is complete for request, acceptance, creation, settlement, failure, cancellation, expiry, and reversal.
-- At least one email and one appointment vocabulary profile are defined without changing the base Evidence Bundle schema.
-- Vocabulary fixtures and verifier checks remain deterministic.
-- Project status, decisions, risks, compatibility, and evidence are reconciled before merge.
+- A machine-readable conformance manifest covers canonicalization, valid bundles, invalid bundles, digests, proofs, structural statuses, and stable codes.
+- Expected outputs are generated or verified independently of incidental CLI text and file ordering.
+- A language-neutral runner contract defines inputs, outputs, comparison rules, and failure classification.
+- The second implementation plan states independence boundaries and forbids reuse of reference implementation logic.
+- The existing Node.js implementation passes the complete conformance harness deterministically.
+- Project status, decisions, risks, compatibility, security, and acceptance evidence are reconciled before merge.
 
 ## Explicit non-scope
 
-- Second implementation language
+- Writing the second Python implementation
 - Managed cloud service
-- Production ACP, UCP, AP2, MCP, or A2A adapters
+- Production protocol adapters
 - Public site migration
 - Commercial pricing
 

@@ -11,27 +11,27 @@
     "status": "IN_PROGRESS"
   },
   "current_milestone": {
-    "id": "P1-M2",
-    "name": "Outcome Event v0.1 vocabulary coherence",
+    "id": "P1-M3",
+    "name": "Implementation-independent conformance harness",
     "status": "IN_PROGRESS"
   },
   "next_action": {
-    "id": "TP-PROTO-002",
-    "title": "Complete Outcome Event v0.1 normative vocabulary",
+    "id": "TP-PROTO-003",
+    "title": "Establish implementation-independent conformance harness",
     "workstream": "WS02_PROTOCOL",
-    "purpose": "Define the universal lifecycle phases, statuses, source classes, naming rules, base relationship semantics, and initial domain profiles without confusing events with verdicts.",
+    "purpose": "Define a language-neutral conformance contract and machine-readable expected results so a genuinely independent implementation can reproduce canonical bytes, digests, proof validation, structural statuses, and stable codes without relying on the Node.js reference code.",
     "acceptance_criteria": [
-      "Every universal phase, status, and source class has normative semantics and invalid combinations are documented.",
-      "Event type registration and extension rules prevent naming collisions.",
-      "The refund vocabulary is complete for request, acceptance, creation, settlement, failure, cancellation, expiry, and reversal.",
-      "At least one email and one appointment vocabulary profile are defined without changing the base Evidence Bundle schema.",
-      "Vocabulary fixtures and verifier checks remain deterministic.",
-      "Project status, decisions, risks, compatibility, and evidence are reconciled before merge."
+      "A machine-readable conformance manifest covers canonicalization, valid bundles, invalid bundles, digests, proofs, structural statuses, and stable codes.",
+      "Expected outputs are generated or verified independently of incidental CLI text and file ordering.",
+      "A language-neutral runner contract defines inputs, outputs, comparison rules, and failure classification.",
+      "The second implementation plan states independence boundaries and forbids reuse of reference implementation logic.",
+      "The existing Node.js implementation passes the complete conformance harness deterministically.",
+      "Project status, decisions, risks, compatibility, security, and acceptance evidence are reconciled before merge."
     ],
     "non_scope": [
-      "Second implementation language",
+      "Writing the second Python implementation",
       "Managed cloud service",
-      "Production ACP, UCP, AP2, MCP, or A2A adapters",
+      "Production protocol adapters",
       "Public site migration",
       "Commercial pricing"
     ]
@@ -45,7 +45,8 @@
     "Refund scenarios: pending, verified, contradicted, unprovable",
     "Static product demonstration",
     "Global project operating system",
-    "Evidence Bundle v0.1 normative fields, schemas, verifier, stable codes, and test vectors aligned"
+    "Evidence Bundle v0.1 normative fields, schemas, verifier, stable codes, and test vectors aligned",
+    "Outcome Event v0.1 normative vocabulary, extension namespaces, relationship semantics, and refund/email/appointment profiles aligned"
   ],
   "blockers": [
     "The GitHub repository BACOUL/timeproofs-protocol must be created and this prepared history pushed.",

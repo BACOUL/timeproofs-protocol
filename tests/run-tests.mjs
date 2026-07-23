@@ -10,7 +10,9 @@ import {
   digestValue,
   parseJsonStrict,
   verifyBundle,
-  verifySignatureProof
+  verifySignatureProof,
+  OUTCOME_EVENT_VOCABULARY,
+  EVENT_TYPE_RULES
 } from '../packages/core/src/index.mjs';
 import { evaluateBundle } from '../packages/verdict-engine/src/index.mjs';
 
@@ -73,7 +75,10 @@ const expectedStructural = {
   'refund-pending.bundle.json': 'VALID',
   'refund-verified.bundle.json': 'VALID',
   'refund-contradicted.bundle.json': 'VALID',
-  'refund-unprovable.bundle.json': 'INCOMPLETE'
+  'refund-unprovable.bundle.json': 'INCOMPLETE',
+  'email-recorded.bundle.json': 'VALID',
+  'appointment-created.bundle.json': 'VALID',
+  'extension-event.bundle.json': 'INCOMPLETE'
 };
 
 for (const [fileName, expectedStatus] of Object.entries(expectedStructural)) {
@@ -109,6 +114,30 @@ for (const [fileName, expectedCode] of Object.entries(invalidManifest)) {
     assert.ok(result.errors.some((error) => error.code === expectedCode), JSON.stringify(result.errors, null, 2));
   });
 }
+
+await test('Outcome Event vocabulary registry is internally coherent', async () => {
+  assert.equal(OUTCOME_EVENT_VOCABULARY.spec_version, '0.1');
+  assert.equal(Object.keys(EVENT_TYPE_RULES).length, 38);
+  assert.deepEqual(Object.keys(OUTCOME_EVENT_VOCABULARY.phases).sort(), ['ACCEPTANCE', 'AUTHORIZATION', 'DISPATCH', 'EFFECT', 'INTENT', 'SETTLEMENT', 'TERMINATION']);
+  assert.ok(EVENT_TYPE_RULES['commerce.refund.created']);
+  assert.ok(EVENT_TYPE_RULES['messaging.email.recorded']);
+  assert.ok(EVENT_TYPE_RULES['calendar.appointment.created']);
+});
+
+await test('self-claimed settlement remains structurally representable but not sufficient', async () => {
+  const bundle = await loadBundle('test-vectors/valid/refund-unprovable.bundle.json');
+  const verification = verifyBundle(bundle);
+  assert.equal(verification.status, 'INCOMPLETE');
+  assert.equal(verification.errors.length, 0);
+  assert.equal(evaluateBundle(bundle, 'refund-v0.1').verdict, 'UNPROVABLE');
+});
+
+await test('collision-resistant extension event namespace remains accepted', async () => {
+  const bundle = await loadBundle('test-vectors/valid/extension-event.bundle.json');
+  const result = verifyBundle(bundle);
+  assert.equal(result.status, 'INCOMPLETE');
+  assert.equal(result.errors.length, 0);
+});
 
 await test('payload digest is unaffected by adding a proof', async () => {
   const bundle = await loadBundle('test-vectors/valid/refund-verified.bundle.json');

@@ -11,5 +11,12 @@
   "duplicate-object-id.bundle.json": "DUPLICATE_OBJECT_ID",
   "invalid-payload-timestamp.bundle.json": "CREATED_AT_INVALID",
   "proof-target-digest-mismatch.bundle.json": "PROOF_TARGET_DIGEST_MISMATCH",
-  "invalid-key-interval.bundle.json": "KEY_VALIDITY_INTERVAL_INVALID"
+  "invalid-key-interval.bundle.json": "KEY_VALIDITY_INTERVAL_INVALID",
+  "event-phase-status-invalid.bundle.json": "EVENT_PHASE_STATUS_INVALID",
+  "event-type-phase-mismatch.bundle.json": "EVENT_TYPE_PHASE_MISMATCH",
+  "event-type-status-mismatch.bundle.json": "EVENT_TYPE_STATUS_MISMATCH",
+  "event-source-phase-invalid.bundle.json": "EVENT_SOURCE_PHASE_INVALID",
+  "event-type-reserved-unregistered.bundle.json": "EVENT_TYPE_RESERVED_UNREGISTERED",
+  "event-type-unregistered.bundle.json": "EVENT_TYPE_UNREGISTERED",
+  "relationship-endpoint-types-invalid.bundle.json": "RELATIONSHIP_ENDPOINT_TYPES_INVALID"
 }

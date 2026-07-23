@@ -1,0 +1,675 @@
+{
+  "spec_version": "0.1",
+  "profile": "TP-JSON-0.1",
+  "status": "EXPERIMENTAL_NORMATIVE_REGISTRY",
+  "event_type_pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*){2,}$",
+  "extension_event_type_pattern": "^x\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*){4,}$",
+  "reserved_namespaces": [
+    "commerce.refund",
+    "messaging.email",
+    "calendar.appointment",
+    "org.timeproofs"
+  ],
+  "phases": {
+    "INTENT": {
+      "meaning": "A requested objective or desired effect was recorded. It does not prove dispatch or execution.",
+      "allowed_statuses": [
+        "PENDING",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "AUTHORIZATION": {
+      "meaning": "A mandate, permission, or policy decision relevant to the action was recorded. It does not prove dispatch or execution.",
+      "allowed_statuses": [
+        "PENDING",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "DISPATCH": {
+      "meaning": "A request was submitted toward a receiving system. It does not prove receiver acceptance or business effect.",
+      "allowed_statuses": [
+        "PENDING",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "ACCEPTANCE": {
+      "meaning": "A receiver accepted, rejected, or partially accepted responsibility for processing. It does not prove the requested business effect.",
+      "allowed_statuses": [
+        "PENDING",
+        "SUCCEEDED",
+        "FAILED",
+        "PARTIAL"
+      ]
+    },
+    "EFFECT": {
+      "meaning": "A business object or externally observable system effect was created, changed, or failed. It does not necessarily prove final settlement.",
+      "allowed_statuses": [
+        "PENDING",
+        "SUCCEEDED",
+        "FAILED",
+        "PARTIAL"
+      ]
+    },
+    "SETTLEMENT": {
+      "meaning": "A result requiring finalization, delivery, clearing, or equivalent completion was observed.",
+      "allowed_statuses": [
+        "PENDING",
+        "SUCCEEDED",
+        "FAILED",
+        "PARTIAL"
+      ]
+    },
+    "TERMINATION": {
+      "meaning": "A lifecycle ended through cancellation, reversal, expiry, terminal success, or terminal failure.",
+      "allowed_statuses": [
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELLED",
+        "REVERSED",
+        "EXPIRED"
+      ]
+    }
+  },
+  "statuses": {
+    "PENDING": {
+      "meaning": "The event-specific operation has started or is awaiting a later state.",
+      "terminal": false
+    },
+    "SUCCEEDED": {
+      "meaning": "The event-specific observation occurred successfully. It does not make the complete action successful.",
+      "terminal": false
+    },
+    "FAILED": {
+      "meaning": "The event-specific operation failed or was rejected.",
+      "terminal": false
+    },
+    "PARTIAL": {
+      "meaning": "Only part of the event-specific operation succeeded or was accepted.",
+      "terminal": false
+    },
+    "CANCELLED": {
+      "meaning": "The action or relevant business object was cancelled.",
+      "terminal": true
+    },
+    "REVERSED": {
+      "meaning": "A previously observed effect or settlement was reversed.",
+      "terminal": true
+    },
+    "EXPIRED": {
+      "meaning": "The action, mandate, request, or business object expired before completion.",
+      "terminal": true
+    }
+  },
+  "source_classes": {
+    "SELF_CLAIMED": {
+      "meaning": "The acting agent or originating application states the claim. It cannot alone establish an external effect."
+    },
+    "GATEWAY_OBSERVED": {
+      "meaning": "A middleware, proxy, or transport component observed the request or response crossing its boundary."
+    },
+    "RECEIVER_ATTESTED": {
+      "meaning": "The receiving service attests what it accepted, rejected, or observed at its boundary."
+    },
+    "SYSTEM_OF_RECORD": {
+      "meaning": "A system treated by the applicable ruleset as authoritative for the specific business claim."
+    },
+    "INDEPENDENTLY_SETTLED": {
+      "meaning": "An independent finalization, clearing, delivery, or settlement system attests the result."
+    }
+  },
+  "relationship_semantics": {
+    "SUPPORTS": {
+      "allowed_from": [
+        "evidence",
+        "event"
+      ],
+      "allowed_to": [
+        "event"
+      ],
+      "meaning": "The source object supplies evidence supporting the target event."
+    },
+    "CONTRADICTS": {
+      "allowed_from": [
+        "evidence",
+        "event"
+      ],
+      "allowed_to": [
+        "evidence",
+        "event"
+      ],
+      "meaning": "The source object presents a claim incompatible with the target object."
+    },
+    "SUPERSEDES": {
+      "allowed_from": [
+        "event"
+      ],
+      "allowed_to": [
+        "event"
+      ],
+      "meaning": "The source event replaces the target event without erasing it."
+    },
+    "REVERSES": {
+      "allowed_from": [
+        "event"
+      ],
+      "allowed_to": [
+        "event"
+      ],
+      "meaning": "The source event reverses an effect represented by the target event."
+    },
+    "CORRESPONDS_TO": {
+      "allowed_from": [
+        "event",
+        "evidence",
+        "issuer"
+      ],
+      "allowed_to": [
+        "event",
+        "evidence",
+        "issuer"
+      ],
+      "meaning": "The objects refer to the same external business entity or transaction without asserting support or causality."
+    }
+  },
+  "event_types": [
+    {
+      "event_type": "commerce.refund.requested",
+      "phase": "INTENT",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "A refund request was recorded.",
+      "qualifying_source_classes": [
+        "SELF_CLAIMED",
+        "GATEWAY_OBSERVED"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.authorized",
+      "phase": "AUTHORIZATION",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "A refund mandate or authorization was approved.",
+      "qualifying_source_classes": [
+        "GATEWAY_OBSERVED",
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.authorization_failed",
+      "phase": "AUTHORIZATION",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "Refund authorization failed or was denied.",
+      "qualifying_source_classes": [
+        "GATEWAY_OBSERVED",
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.dispatched",
+      "phase": "DISPATCH",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "A refund request was sent toward the receiver.",
+      "qualifying_source_classes": [
+        "GATEWAY_OBSERVED",
+        "RECEIVER_ATTESTED"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.dispatch_failed",
+      "phase": "DISPATCH",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "Dispatch of the refund request failed.",
+      "qualifying_source_classes": [
+        "GATEWAY_OBSERVED",
+        "RECEIVER_ATTESTED"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.accepted",
+      "phase": "ACCEPTANCE",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "The receiver accepted responsibility for processing the refund.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.rejected",
+      "phase": "ACCEPTANCE",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "The receiver rejected the refund request.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.created",
+      "phase": "EFFECT",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "A refund business object was created. This is not settlement.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.creation_failed",
+      "phase": "EFFECT",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "Creation of the refund business object failed.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.settlement_pending",
+      "phase": "SETTLEMENT",
+      "allowed_statuses": [
+        "PENDING"
+      ],
+      "meaning": "Settlement has been initiated but is not final.",
+      "qualifying_source_classes": [
+        "SYSTEM_OF_RECORD",
+        "INDEPENDENTLY_SETTLED"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.settled",
+      "phase": "SETTLEMENT",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "Refund settlement was confirmed by an appropriate source.",
+      "qualifying_source_classes": [
+        "SYSTEM_OF_RECORD",
+        "INDEPENDENTLY_SETTLED"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.settlement_failed",
+      "phase": "SETTLEMENT",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "Refund settlement failed.",
+      "qualifying_source_classes": [
+        "SYSTEM_OF_RECORD",
+        "INDEPENDENTLY_SETTLED"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.cancelled",
+      "phase": "TERMINATION",
+      "allowed_statuses": [
+        "CANCELLED"
+      ],
+      "meaning": "The refund lifecycle was cancelled before final settlement.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.expired",
+      "phase": "TERMINATION",
+      "allowed_statuses": [
+        "EXPIRED"
+      ],
+      "meaning": "The refund request or authorization expired.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "commerce.refund.reversed",
+      "phase": "TERMINATION",
+      "allowed_statuses": [
+        "REVERSED"
+      ],
+      "meaning": "A previously created or settled refund was reversed.",
+      "qualifying_source_classes": [
+        "SYSTEM_OF_RECORD",
+        "INDEPENDENTLY_SETTLED"
+      ]
+    },
+    {
+      "event_type": "messaging.email.requested",
+      "phase": "INTENT",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "An instruction to send an email was recorded.",
+      "qualifying_source_classes": [
+        "SELF_CLAIMED",
+        "GATEWAY_OBSERVED"
+      ]
+    },
+    {
+      "event_type": "messaging.email.dispatched",
+      "phase": "DISPATCH",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "The email submission was sent toward a receiving mail service.",
+      "qualifying_source_classes": [
+        "GATEWAY_OBSERVED",
+        "RECEIVER_ATTESTED"
+      ]
+    },
+    {
+      "event_type": "messaging.email.dispatch_failed",
+      "phase": "DISPATCH",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "Email dispatch failed.",
+      "qualifying_source_classes": [
+        "GATEWAY_OBSERVED",
+        "RECEIVER_ATTESTED"
+      ]
+    },
+    {
+      "event_type": "messaging.email.accepted",
+      "phase": "ACCEPTANCE",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "A receiving mail service accepted the message for processing.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "messaging.email.rejected",
+      "phase": "ACCEPTANCE",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "A receiving mail service rejected the message.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "messaging.email.recorded",
+      "phase": "EFFECT",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "The message was recorded in the sender or provider system of record.",
+      "qualifying_source_classes": [
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "messaging.email.delivery_pending",
+      "phase": "SETTLEMENT",
+      "allowed_statuses": [
+        "PENDING"
+      ],
+      "meaning": "Final delivery is pending.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "messaging.email.delivered",
+      "phase": "SETTLEMENT",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "Delivery was confirmed by an appropriate mail system.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "messaging.email.delivery_failed",
+      "phase": "SETTLEMENT",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "Final delivery failed.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "messaging.email.cancelled",
+      "phase": "TERMINATION",
+      "allowed_statuses": [
+        "CANCELLED"
+      ],
+      "meaning": "The send operation was cancelled before completion.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "messaging.email.recalled",
+      "phase": "TERMINATION",
+      "allowed_statuses": [
+        "REVERSED"
+      ],
+      "meaning": "A previously recorded or delivered email was recalled or reversed where supported.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.requested",
+      "phase": "INTENT",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "An instruction to create an appointment was recorded.",
+      "qualifying_source_classes": [
+        "SELF_CLAIMED",
+        "GATEWAY_OBSERVED"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.dispatched",
+      "phase": "DISPATCH",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "The appointment request was sent toward a calendar or booking service.",
+      "qualifying_source_classes": [
+        "GATEWAY_OBSERVED",
+        "RECEIVER_ATTESTED"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.dispatch_failed",
+      "phase": "DISPATCH",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "Appointment request dispatch failed.",
+      "qualifying_source_classes": [
+        "GATEWAY_OBSERVED",
+        "RECEIVER_ATTESTED"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.accepted",
+      "phase": "ACCEPTANCE",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "The receiving calendar or booking service accepted processing responsibility.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.rejected",
+      "phase": "ACCEPTANCE",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "The receiving service rejected the appointment request.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.created",
+      "phase": "EFFECT",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "An appointment object was created in a system of record.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.creation_failed",
+      "phase": "EFFECT",
+      "allowed_statuses": [
+        "FAILED"
+      ],
+      "meaning": "Appointment creation failed.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.confirmation_pending",
+      "phase": "SETTLEMENT",
+      "allowed_statuses": [
+        "PENDING"
+      ],
+      "meaning": "Final appointment confirmation is pending.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.confirmed",
+      "phase": "SETTLEMENT",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "The appointment was confirmed by an appropriate system.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.cancelled",
+      "phase": "TERMINATION",
+      "allowed_statuses": [
+        "CANCELLED"
+      ],
+      "meaning": "The appointment was cancelled.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.expired",
+      "phase": "TERMINATION",
+      "allowed_statuses": [
+        "EXPIRED"
+      ],
+      "meaning": "The appointment hold or request expired.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    },
+    {
+      "event_type": "calendar.appointment.rescheduled",
+      "phase": "EFFECT",
+      "allowed_statuses": [
+        "SUCCEEDED"
+      ],
+      "meaning": "The appointment time or resource was changed in the system of record.",
+      "qualifying_source_classes": [
+        "RECEIVER_ATTESTED",
+        "SYSTEM_OF_RECORD"
+      ]
+    }
+  ],
+  "source_phase_rules": {
+    "SELF_CLAIMED": [
+      "INTENT",
+      "AUTHORIZATION",
+      "DISPATCH",
+      "ACCEPTANCE",
+      "EFFECT",
+      "SETTLEMENT",
+      "TERMINATION"
+    ],
+    "GATEWAY_OBSERVED": [
+      "INTENT",
+      "AUTHORIZATION",
+      "DISPATCH",
+      "ACCEPTANCE",
+      "EFFECT",
+      "SETTLEMENT",
+      "TERMINATION"
+    ],
+    "RECEIVER_ATTESTED": [
+      "AUTHORIZATION",
+      "DISPATCH",
+      "ACCEPTANCE",
+      "EFFECT",
+      "SETTLEMENT",
+      "TERMINATION"
+    ],
+    "SYSTEM_OF_RECORD": [
+      "AUTHORIZATION",
+      "ACCEPTANCE",
+      "EFFECT",
+      "SETTLEMENT",
+      "TERMINATION"
+    ],
+    "INDEPENDENTLY_SETTLED": [
+      "SETTLEMENT",
+      "TERMINATION"
+    ]
+  }
+}

@@ -1,7 +1,15 @@
-# TP-MARKET-001 Deployment Readiness Evidence
+# TP-MARKET-001 Deployment Evidence
 
 Date: 2026-07-23  
-Status: READY_NOT_DEPLOYED
+Status: DEPLOYED_PENDING_EXTERNAL_EVIDENCE
+
+## Public preview
+
+- Repository: `BACOUL/timeproofs-protocol`
+- Deployment surface: GitHub Pages
+- Public URL: `https://bacoul.github.io/timeproofs-protocol/`
+- Deployment workflow: `.github/workflows/pages.yml`
+- Deployment confirmation: public preview loaded successfully on 2026-07-23
 
 ## Completed
 
@@ -14,12 +22,13 @@ Status: READY_NOT_DEPLOYED
 - GitHub Pages deployment workflow is committed.
 - Site validation is part of CI and the complete test command.
 - Deployment and field-validation runbooks are committed.
+- Public GitHub repository exists and the complete prepared project history is on `main`.
+- The experimental preview is publicly accessible.
 
 ## Not completed
 
-- `BACOUL/timeproofs-protocol` does not yet exist on GitHub.
-- No public preview URL exists.
-- No independent response has been received.
+- No independent comprehension response has been received.
+- No qualified practitioner feedback has been received.
 - No qualified practitioner has committed to a sandbox evaluation.
 - No willingness-to-pay evidence exists.
 

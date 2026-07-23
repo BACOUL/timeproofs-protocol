@@ -1,0 +1,22 @@
+{
+  "action_id": "refund-action-001",
+  "ruleset": "refund-v0.1",
+  "actor": {
+    "entity_type": "AI_AGENT",
+    "entity_id": "agent-demo",
+    "display_name": "Demo agent"
+  },
+  "subject": {
+    "entity_type": "REFUND",
+    "entity_id": "re_pending_001",
+    "display_name": "Demo Stripe refund"
+  },
+  "claim": {
+    "statement": "Refund requested",
+    "requested_amount": "7900",
+    "currency": "eur"
+  },
+  "correlations": {
+    "stripe_refund_id": "re_pending_001"
+  }
+}

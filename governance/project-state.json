@@ -1,1 +1,197 @@
-{"schema_version":"1.0","project":"TimeProofs Outcome Assurance","as_of":"2026-07-23","authority":"governance/GLOBAL_MASTER_PLAN.md","product_authority":"PRODUCT_MASTER_PLAN.md","stage":"EXPERIMENTAL_FOUNDATION","current_phase":{"id":"P2","name":"Killer outcome demonstration and market validation","status":"IN_PROGRESS"},"current_milestone":{"id":"P2-M2","name":"External comprehension and demand validation","status":"IN_PROGRESS"},"next_action":{"id":"TP-MARKET-001","title":"Collect first external product evidence from the deployed validation preview","workstream":"WS17_DISTRIBUTION","purpose":"Put the deployed machine-derived Outcome Evidence Packet in front of independent participants and qualified practitioners, then measure comprehension, integration demand, and willingness to pay before expanding protocol or cloud scope.","acceptance_criteria":["The experimental static preview is deployed from the committed site without unsupported production, customer, compliance, or standards claims.","At least 10 independent participants complete the anonymous comprehension experiment; results are retained only with consent and analyzed by the repository script.","At least 80% of accepted participants score 3/3, or the packet is revised and the experiment is explicitly marked REFINE.","At least 5 qualified developers, product owners, compliance practitioners, or agent-workflow operators provide structured evidence-gap feedback.","At least 2 qualified participants identify a concrete reusable workflow and agree to evaluate a sandbox integration, or the wedge/positioning is revised.","Willingness-to-pay evidence is recorded separately from general interest, including which paid value unit matters: retention, re-verification, connector, contradiction alert, or dispute/audit packet.","Assumptions, risks, business model, roadmap, and the next connector decision are reconciled from actual evidence without inventing traction."],"non_scope":["High-volume outbound prospecting","Public production launch of timeproofs.io","Claiming protocol interoperability alpha before the Python implementation and security review pass","Managed cloud infrastructure","Final public pricing","Custom consulting work that cannot become a reusable connector"]},"completed_foundation":["New repository foundation separated from AgentReady","Experimental Evidence Bundle model","Strict JSON parsing and deterministic canonicalization","SHA-256 digests and Ed25519 proof verification","Structural verifier and experimental verdict engine","Refund scenarios: pending, verified, contradicted, unprovable","Static product demonstration","Global project operating system","Evidence Bundle v0.1 normative fields, schemas, verifier, stable codes, and test vectors aligned","Outcome Event v0.1 normative vocabulary, extension namespaces, relationship semantics, and refund/email/appointment profiles aligned","Implementation-independent v0.1 conformance manifest, runner contract, fixture integrity hashes, and reference harness completed","Machine-derived printable Outcome Evidence Packets and an anonymous local comprehension experiment completed for four refund outcomes","Deployment-ready GitHub Pages preview, structured anonymous practitioner experiment, deterministic market analyzers, and field-validation runbooks completed","Public GitHub repository created and complete prepared history imported on main","Experimental validation preview deployed publicly through GitHub Pages at https://bacoul.github.io/timeproofs-protocol/","First qualitative preview iteration completed: explicit non-timestamping category guard, source-provenance badges, and clipboard return path"],"blockers":["Two unstructured external reviews have been recorded but do not count toward the acceptance sample; no accepted structured comprehension, integration-demand, sandbox, or willingness-to-pay evidence exists yet.","No second independent implementation exists yet; G1 remains incomplete but no longer blocks the validation preview.","The protocol and cryptographic design have not received independent security review.","No external system-of-record connector has been validated on a real sandbox workflow."],"workstreams":[{"id":"WS01_VISION","name":"Vision, category, positioning, brand","status":"ACTIVE"},{"id":"WS02_PROTOCOL","name":"Open protocol and interoperability","status":"PAUSED"},{"id":"WS03_PRODUCT","name":"Product software and developer experience","status":"ACTIVE"},{"id":"WS04_AGENT_INTEGRATIONS","name":"Agent frameworks and action protocols","status":"WATCHING"},{"id":"WS05_AGENTIC_COMMERCE","name":"Agentic commerce and in-chat transactions","status":"WATCHING"},{"id":"WS06_NON_COMMERCE","name":"Non-commerce consequential actions","status":"PLANNED"},{"id":"WS07_DEMOS","name":"Demonstrations and reference use cases","status":"ACTIVE"},{"id":"WS08_COMPETITION","name":"Competition and category intelligence","status":"ACTIVE"},{"id":"WS09_STANDARDS","name":"Standards and research","status":"ACTIVE"},{"id":"WS10_SECURITY","name":"Security and cryptographic assurance","status":"ACTIVE"},{"id":"WS11_PRIVACY_LEGAL","name":"Privacy, legal, and regulatory readiness","status":"PLANNED"},{"id":"WS12_SITE","name":"Global website and trust surfaces","status":"ACTIVE"},{"id":"WS13_SEO","name":"Global SEO and topical authority","status":"PLANNED"},{"id":"WS14_GEO_AI_FIRST","name":"GEO and AI-first discoverability","status":"PLANNED"},{"id":"WS15_INTERNATIONAL","name":"Internationalization and localization","status":"PLANNED"},{"id":"WS16_BUSINESS","name":"Business model, pricing, and revenue","status":"DISCOVERY"},{"id":"WS17_DISTRIBUTION","name":"Distribution and adoption","status":"ACTIVE"},{"id":"WS18_OPERATIONS","name":"Operations, reliability, and evolution","status":"PLANNED"}],"gates":[{"id":"G0_OS","name":"Global operating system","status":"PASS"},{"id":"G1_PROTOCOL","name":"Interoperable protocol alpha","status":"IN_PROGRESS"},{"id":"G2_DEMO","name":"Killer outcome demonstration","status":"IN_PROGRESS"},{"id":"G3_DEVELOPER","name":"Five-minute developer integration","status":"NOT_STARTED"},{"id":"G4_SERVICE","name":"Managed service security and operations","status":"NOT_STARTED"},{"id":"G5_MARKET","name":"External adoption and payment evidence","status":"IN_PROGRESS"},{"id":"G6_GLOBAL","name":"Global public launch","status":"NOT_STARTED"}]}
+{
+  "schema_version": "1.0",
+  "project": "TimeProofs Outcome Assurance",
+  "as_of": "2026-07-23",
+  "authority": "governance/GLOBAL_MASTER_PLAN.md",
+  "product_authority": "PRODUCT_MASTER_PLAN.md",
+  "stage": "EXPERIMENTAL_FOUNDATION",
+  "current_phase": {
+    "id": "P3",
+    "name": "TimeProofs Relay product alpha",
+    "status": "IN_PROGRESS"
+  },
+  "current_milestone": {
+    "id": "P3-M1",
+    "name": "Stripe refund connector and relay foundation",
+    "status": "IN_PROGRESS"
+  },
+  "next_action": {
+    "id": "TP-BUILD-001",
+    "title": "Ship the first runnable TimeProofs Relay with Stripe refund evidence",
+    "workstream": "WS03_PRODUCT",
+    "purpose": "Turn the existing protocol and refund demonstration into a runnable local/VPC product that receives agent claims and authenticated Stripe refund webhooks, preserves append-only evidence revisions, and exposes a current recalculable outcome.",
+    "acceptance_criteria": [
+      "The Stripe connector verifies the raw webhook signature and rejects changed or stale payloads.",
+      "Stripe refund created, pending, succeeded, failed, and cancelled states map to registered TimeProofs event semantics without treating object creation as settlement.",
+      "A runnable Relay accepts an action claim and later provider observations through documented HTTP endpoints.",
+      "The Relay stores append-only Evidence Bundle revisions and links each revision to its predecessor digest.",
+      "The current action endpoint returns structural status, current verdict, reasons, decisive events, and missing evidence without rewriting prior bundles.",
+      "Every normalized provider observation is signed by an operator-controlled Relay key with the upstream authentication method disclosed.",
+      "A local Stripe test-mode walkthrough completes in ten minutes or less and produces a portable Evidence Packet.",
+      "All protocol, connector, service, conformance, site, and governance tests pass."
+    ],
+    "non_scope": [
+      "Enterprise dashboard",
+      "Production payment credentials or live money movement",
+      "Shopify and additional connector breadth",
+      "Identity, authorization, insurance, or payment processing",
+      "Final pricing and billing",
+      "Production, compliance, certification, or legal-validity claims"
+    ]
+  },
+  "completed_foundation": [
+    "New repository foundation separated from AgentReady",
+    "Experimental Evidence Bundle model",
+    "Strict JSON parsing and deterministic canonicalization",
+    "SHA-256 digests and Ed25519 proof verification",
+    "Structural verifier and experimental verdict engine",
+    "Refund scenarios: pending, verified, contradicted, unprovable",
+    "Static product demonstration",
+    "Global project operating system",
+    "Evidence Bundle v0.1 normative fields, schemas, verifier, stable codes, and test vectors aligned",
+    "Outcome Event v0.1 normative vocabulary, extension namespaces, relationship semantics, and refund/email/appointment profiles aligned",
+    "Implementation-independent v0.1 conformance manifest, runner contract, fixture integrity hashes, and reference harness completed",
+    "Machine-derived printable Outcome Evidence Packets and an anonymous local comprehension experiment completed for four refund outcomes",
+    "Deployment-ready GitHub Pages preview, structured anonymous practitioner experiment, deterministic market analyzers, and field-validation runbooks completed",
+    "Public GitHub repository created and complete prepared history imported on main",
+    "Experimental validation preview deployed publicly through GitHub Pages at https://bacoul.github.io/timeproofs-protocol/",
+    "First qualitative preview iteration completed: explicit non-timestamping category guard, source-provenance badges, and clipboard return path",
+    "Stripe refund connector foundation implemented with authenticated webhook verification, provider-event normalization, and pending/verified/failed outcome tests"
+  ],
+  "blockers": [
+    "TimeProofs Relay HTTP service and append-only revision store are not implemented yet.",
+    "The Stripe connector has not yet been exercised against a live Stripe test-mode webhook endpoint.",
+    "No second independent implementation exists yet; G1 remains incomplete.",
+    "The protocol and cryptographic design have not received independent security review.",
+    "The broad outcome-verification category already has direct competitors, so TimeProofs must earn differentiation through open multi-issuer interoperability and recalculable evidence history."
+  ],
+  "workstreams": [
+    {
+      "id": "WS01_VISION",
+      "name": "Vision, category, positioning, brand",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS02_PROTOCOL",
+      "name": "Open protocol and interoperability",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS03_PRODUCT",
+      "name": "Product software and developer experience",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS04_AGENT_INTEGRATIONS",
+      "name": "Agent frameworks and action protocols",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS05_AGENTIC_COMMERCE",
+      "name": "Agentic commerce and in-chat transactions",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS06_NON_COMMERCE",
+      "name": "Non-commerce consequential actions",
+      "status": "PLANNED"
+    },
+    {
+      "id": "WS07_DEMOS",
+      "name": "Demonstrations and reference use cases",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS08_COMPETITION",
+      "name": "Competition and category intelligence",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS09_STANDARDS",
+      "name": "Standards and research",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS10_SECURITY",
+      "name": "Security and cryptographic assurance",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS11_PRIVACY_LEGAL",
+      "name": "Privacy, legal, and regulatory readiness",
+      "status": "PLANNED"
+    },
+    {
+      "id": "WS12_SITE",
+      "name": "Global website and trust surfaces",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS13_SEO",
+      "name": "Global SEO and topical authority",
+      "status": "PLANNED"
+    },
+    {
+      "id": "WS14_GEO_AI_FIRST",
+      "name": "GEO and AI-first discoverability",
+      "status": "PLANNED"
+    },
+    {
+      "id": "WS15_INTERNATIONAL",
+      "name": "Internationalization and localization",
+      "status": "PLANNED"
+    },
+    {
+      "id": "WS16_BUSINESS",
+      "name": "Business model, pricing, and revenue",
+      "status": "DISCOVERY"
+    },
+    {
+      "id": "WS17_DISTRIBUTION",
+      "name": "Distribution and adoption",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "WS18_OPERATIONS",
+      "name": "Operations, reliability, and evolution",
+      "status": "ACTIVE"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G0_OS",
+      "name": "Global operating system",
+      "status": "PASS"
+    },
+    {
+      "id": "G1_PROTOCOL",
+      "name": "Interoperable protocol alpha",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "G2_DEMO",
+      "name": "Killer outcome demonstration",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "G3_DEVELOPER",
+      "name": "Five-minute developer integration",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "G4_SERVICE",
+      "name": "Managed service security and operations",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "G5_MARKET",
+      "name": "External adoption and payment evidence",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "G6_GLOBAL",
+      "name": "Global public launch",
+      "status": "NOT_STARTED"
+    }
+  ]
+}

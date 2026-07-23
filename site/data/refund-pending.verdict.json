@@ -1,0 +1,63 @@
+{
+  "ruleset": "refund-v0.1",
+  "verdict": "PENDING",
+  "reasons": [
+    "REFUND_CREATED_WITHOUT_SETTLEMENT"
+  ],
+  "verification": {
+    "status": "VALID",
+    "errors": [],
+    "warnings": [],
+    "payload_digest": {
+      "algorithm": "sha-256",
+      "value": "47f1ab8ab5d213935e526719733e590deafb605dc0d464097bb0504015e30748"
+    },
+    "valid_proofs": [
+      {
+        "proof_id": "tpp_dispatch",
+        "issuer_ref": "gateway.example",
+        "target": {
+          "target_type": "OUTCOME_EVENT",
+          "target_id": "tpe_refund_dispatched",
+          "digest": {
+            "algorithm": "sha-256",
+            "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+          }
+        }
+      },
+      {
+        "proof_id": "tpp_created",
+        "issuer_ref": "merchant.example",
+        "target": {
+          "target_type": "OUTCOME_EVENT",
+          "target_id": "tpe_refund_created",
+          "digest": {
+            "algorithm": "sha-256",
+            "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+          }
+        }
+      },
+      {
+        "proof_id": "tpp_pending_bundle",
+        "issuer_ref": "gateway.example",
+        "target": {
+          "target_type": "BUNDLE_PAYLOAD",
+          "digest": {
+            "algorithm": "sha-256",
+            "value": "47f1ab8ab5d213935e526719733e590deafb605dc0d464097bb0504015e30748"
+          }
+        }
+      }
+    ],
+    "summary": {
+      "issuers": 4,
+      "events": 3,
+      "evidence": 3,
+      "relationships": 3,
+      "proofs": 3
+    }
+  },
+  "decisive_events": [
+    "tpe_refund_created"
+  ]
+}

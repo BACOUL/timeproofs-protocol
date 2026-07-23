@@ -1,0 +1,88 @@
+{
+  "ruleset": "refund-v0.1",
+  "verdict": "CONTRADICTED",
+  "reasons": [
+    "OUTCOME_REVERSED"
+  ],
+  "verification": {
+    "status": "VALID",
+    "errors": [],
+    "warnings": [],
+    "payload_digest": {
+      "algorithm": "sha-256",
+      "value": "8acb01e748e3ea2f891b6ff04ece2339bf92432bd2e4a8ca8fe9c6e3a38fecd9"
+    },
+    "valid_proofs": [
+      {
+        "proof_id": "tpp_dispatch",
+        "issuer_ref": "gateway.example",
+        "target": {
+          "target_type": "OUTCOME_EVENT",
+          "target_id": "tpe_refund_dispatched",
+          "digest": {
+            "algorithm": "sha-256",
+            "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+          }
+        }
+      },
+      {
+        "proof_id": "tpp_created",
+        "issuer_ref": "merchant.example",
+        "target": {
+          "target_type": "OUTCOME_EVENT",
+          "target_id": "tpe_refund_created",
+          "digest": {
+            "algorithm": "sha-256",
+            "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+          }
+        }
+      },
+      {
+        "proof_id": "tpp_settled",
+        "issuer_ref": "psp.example",
+        "target": {
+          "target_type": "OUTCOME_EVENT",
+          "target_id": "tpe_refund_settled",
+          "digest": {
+            "algorithm": "sha-256",
+            "value": "accbe9f4ea4d0c99fe079bf173fa51333722f1f64f5000697a13c33c6479dcfb"
+          }
+        }
+      },
+      {
+        "proof_id": "tpp_reversed",
+        "issuer_ref": "psp.example",
+        "target": {
+          "target_type": "OUTCOME_EVENT",
+          "target_id": "tpe_refund_reversed",
+          "digest": {
+            "algorithm": "sha-256",
+            "value": "4b22c8647b3194202158909576f7d1fce64db306db58c7024142e842b4da64fc"
+          }
+        }
+      },
+      {
+        "proof_id": "tpp_contradicted_bundle",
+        "issuer_ref": "gateway.example",
+        "target": {
+          "target_type": "BUNDLE_PAYLOAD",
+          "digest": {
+            "algorithm": "sha-256",
+            "value": "8acb01e748e3ea2f891b6ff04ece2339bf92432bd2e4a8ca8fe9c6e3a38fecd9"
+          }
+        }
+      }
+    ],
+    "summary": {
+      "issuers": 4,
+      "events": 5,
+      "evidence": 5,
+      "relationships": 6,
+      "proofs": 5
+    }
+  },
+  "decisive_events": [
+    "tpe_refund_settled",
+    "tpe_refund_reversed"
+  ]
+}

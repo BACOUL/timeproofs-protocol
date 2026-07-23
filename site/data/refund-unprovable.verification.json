@@ -1,0 +1,47 @@
+{
+  "status": "INCOMPLETE",
+  "errors": [],
+  "warnings": [
+    {
+      "code": "NO_EVIDENCE",
+      "message": "Bundle is structurally sound but lacks evidence-bearing completeness.",
+      "path": "$"
+    }
+  ],
+  "payload_digest": {
+    "algorithm": "sha-256",
+    "value": "91e8f5039090b111d0f222f2e4166f68f5c562c0a1281e14e3fa88c6d0f92241"
+  },
+  "valid_proofs": [
+    {
+      "proof_id": "tpp_claimed",
+      "issuer_ref": "agent.example",
+      "target": {
+        "target_type": "OUTCOME_EVENT",
+        "target_id": "tpe_refund_claimed_complete",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "68188ff0c2e7f3222ddf6ede37ced7ad32325e98610b54f62c5cff38544077e0"
+        }
+      }
+    },
+    {
+      "proof_id": "tpp_unprovable_bundle",
+      "issuer_ref": "agent.example",
+      "target": {
+        "target_type": "BUNDLE_PAYLOAD",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "91e8f5039090b111d0f222f2e4166f68f5c562c0a1281e14e3fa88c6d0f92241"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "issuers": 4,
+    "events": 1,
+    "evidence": 0,
+    "relationships": 0,
+    "proofs": 2
+  }
+}

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TimeProofs Outcome Assurance — independent evidence for AI action outcomes.">
+  <title>TimeProofs — Verify what actually happened</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="TimeProofs home">
+      <span class="brand-mark" aria-hidden="true">T</span>
+      <span>TimeProofs</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#demo">Demo</a>
+      <a href="#protocol">Protocol</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#roadmap">Roadmap</a>
+    </nav>
+    <span class="preview-label">Experimental preview</span>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Outcome Assurance for AI actions</p>
+        <h1>When an AI says “done”, verify what actually happened.</h1>
+        <p class="hero-description">
+          TimeProofs links agent claims to signed evidence from gateways, receivers,
+          systems of record, and settlement providers—then calculates a clear,
+          reproducible outcome verdict.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#demo">Explore the refund demo</a>
+          <a class="button secondary" href="#protocol">Read the protocol model</a>
+        </div>
+        <dl class="hero-facts">
+          <div><dt>Evidence</dt><dd>Immutable</dd></div>
+          <div><dt>Rules</dt><dd>Versioned</dd></div>
+          <div><dt>Verdict</dt><dd>Recalculable</dd></div>
+        </dl>
+      </div>
+      <div class="hero-panel" aria-label="Outcome verification summary">
+        <div class="panel-topline">
+          <span>Refund REF-DEMO-001</span>
+          <span class="badge verified">Outcome verified</span>
+        </div>
+        <ol class="mini-timeline">
+          <li class="done"><span>Request dispatched</span><strong>Gateway observed</strong></li>
+          <li class="done"><span>Refund created</span><strong>System of record</strong></li>
+          <li class="done"><span>Funds settled</span><strong>Independent provider</strong></li>
+        </ol>
+        <div class="integrity-row">
+          <span>Structural verification</span>
+          <strong>VALID</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="problem-section">
+      <div>
+        <p class="eyebrow">The missing layer</p>
+        <h2>An action trace is not the same as a proven outcome.</h2>
+      </div>
+      <div class="problem-grid">
+        <article>
+          <span class="step">01</span>
+          <h3>The agent claims</h3>
+          <p>“Your refund is complete.” The statement may only reflect a submitted request.</p>
+        </article>
+        <article>
+          <span class="step">02</span>
+          <h3>External systems attest</h3>
+          <p>The merchant and payment provider sign the events they actually observed.</p>
+        </article>
+        <article>
+          <span class="step">03</span>
+          <h3>TimeProofs evaluates</h3>
+          <p>Versioned rules distinguish created, pending, settled, reversed, and unprovable outcomes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo-section" id="demo">
+      <div class="section-heading">
+        <p class="eyebrow">Interactive evidence packet</p>
+        <h2>One refund. Four materially different outcomes.</h2>
+        <p>The same action can be initiated, settled, reversed, or supported only by the agent’s own claim.</p>
+      </div>
+
+      <div class="scenario-tabs" role="tablist" aria-label="Refund scenarios">
+        <button class="scenario-tab active" data-scenario="pending" role="tab" aria-selected="true">Pending</button>
+        <button class="scenario-tab" data-scenario="verified" role="tab" aria-selected="false">Verified</button>
+        <button class="scenario-tab" data-scenario="contradicted" role="tab" aria-selected="false">Contradicted</button>
+        <button class="scenario-tab" data-scenario="unprovable" role="tab" aria-selected="false">Unprovable</button>
+      </div>
+
+      <div class="packet" aria-live="polite">
+        <div class="packet-header">
+          <div>
+            <p class="packet-label">Outcome Evidence Packet</p>
+            <h3 id="packet-title">Refund outcome</h3>
+          </div>
+          <div id="verdict-badge" class="large-badge pending">Verification pending</div>
+        </div>
+
+        <div class="packet-summary">
+          <div><span>Action ID</span><code id="action-id">—</code></div>
+          <div><span>Bundle</span><code id="bundle-id">—</code></div>
+          <div><span>Structural status</span><strong id="structural-status">—</strong></div>
+          <div><span>Ruleset</span><code id="ruleset">—</code></div>
+        </div>
+
+        <div class="packet-grid">
+          <div>
+            <h4>Lifecycle evidence</h4>
+            <ol id="timeline" class="timeline"></ol>
+          </div>
+          <aside class="evidence-aside">
+            <h4>Verification basis</h4>
+            <dl id="verification-basis"></dl>
+            <h4>Why this verdict?</h4>
+            <ul id="verdict-reasons"></ul>
+          </aside>
+        </div>
+
+        <details class="machine-details">
+          <summary>Inspect machine verification data</summary>
+          <pre id="machine-report"></pre>
+        </details>
+      </div>
+    </section>
+
+    <section class="protocol-section" id="protocol">
+      <div class="section-heading narrow">
+        <p class="eyebrow">Open protocol foundation</p>
+        <h2>A shared vocabulary without a proprietary truth claim.</h2>
+      </div>
+      <div class="protocol-flow">
+        <article>
+          <span>1</span>
+          <h3>Outcome Event</h3>
+          <p>One immutable observation with phase, domain type, status, source, claim, and causal parents.</p>
+        </article>
+        <article>
+          <span>2</span>
+          <h3>Evidence Bundle</h3>
+          <p>A portable payload containing events, evidence references, issuers, relationships, digests, and proofs.</p>
+        </article>
+        <article>
+          <span>3</span>
+          <h3>Structural Verifier</h3>
+          <p>Checks strict JSON, canonical bytes, object digests, causal references, and Ed25519 signatures.</p>
+        </article>
+        <article>
+          <span>4</span>
+          <h3>Verdict Engine</h3>
+          <p>Applies a named ruleset without rewriting the original evidence.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="architecture-section" id="architecture">
+      <div class="section-heading narrow">
+        <p class="eyebrow">Product architecture</p>
+        <h2>Open verification. Paid assurance infrastructure.</h2>
+      </div>
+      <div class="architecture-grid">
+        <article class="open-layer">
+          <p class="layer-label">Open layer</p>
+          <h3>Interoperability foundation</h3>
+          <ul>
+            <li>Evidence Bundle specification</li>
+            <li>JSON Schemas and test vectors</li>
+            <li>Local verifier and SDKs</li>
+            <li>Outcome Event vocabulary</li>
+          </ul>
+        </article>
+        <article class="managed-layer">
+          <p class="layer-label">Managed layer</p>
+          <h3>Outcome Assurance service</h3>
+          <ul>
+            <li>Long-term evidence retention</li>
+            <li>Key lifecycle and issuer registry</li>
+            <li>Automated re-verification</li>
+            <li>Connectors and audit packets</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="roadmap-section" id="roadmap">
+      <div class="section-heading narrow">
+        <p class="eyebrow">Execution order</p>
+        <h2>Protocol first. Demonstration second. Managed service last.</h2>
+      </div>
+      <ol class="roadmap-list">
+        <li><strong>Evidence Bundle v0.1</strong><span>Canonical model, schemas, signatures, invalid vectors.</span></li>
+        <li><strong>Refund demonstration</strong><span>Pending, verified, contradicted, and unprovable evidence packets.</span></li>
+        <li><strong>Receiver SDK</strong><span>HTTP and MCP write-action instrumentation.</span></li>
+        <li><strong>Outcome Assurance Cloud</strong><span>Retention, re-verification, registry, connectors, and billing.</span></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand footer-brand"><span class="brand-mark" aria-hidden="true">T</span><span>TimeProofs</span></div>
+    <p>Experimental protocol and product preview. A valid signature proves provenance and integrity, not universal factual truth.</p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -134,3 +134,13 @@ Status: ACCEPTED
 The deployed validation preview explicitly states that TimeProofs is not a timestamping protocol and labels the provenance class of every demonstrated lifecycle event. Anonymous results can be copied to the clipboard or downloaded locally.
 
 A collection backend is not added from predicted friction alone. It may be introduced only if observed completion and return rates show that manual return materially biases or blocks the validation sample. This preserves the no-backend privacy experiment while reducing unnecessary participant effort.
+## D-018 — Build-first Relay execution replaces validation as the blocking next action
+
+Date: 2026-07-23
+Status: ACCEPTED
+
+The broad outcome-verification category is no longer empty. Direct competitors already publish system-of-record checks, completion decisions, signed receipts, offline verification, refund examples, and provider connectors. TimeProofs therefore cannot base its strategy on being the first generic completion-verification product.
+
+The project proceeds immediately with TimeProofs Relay: an open-source local/VPC reference product for multi-issuer Evidence Bundles, append-only bundle revisions, and separately recalculable evaluations. External feedback remains useful but does not block implementation. The first accelerated connector is Stripe refunds in test mode.
+
+TimeProofs MUST NOT copy a competitor's closed completion-control interface or claim category primacy. Its differentiation must be demonstrated through portable protocol objects, transparent upstream authentication, evidence/evaluation separation, revision history, and cross-domain interoperability.

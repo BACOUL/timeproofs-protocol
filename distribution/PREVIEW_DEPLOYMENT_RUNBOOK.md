@@ -1,6 +1,6 @@
 # Validation Preview Deployment Runbook
 
-Status: READY, NOT DEPLOYED  
+Status: DEPLOYED, VALIDATION IN PROGRESS  
 Target repository: `BACOUL/timeproofs-protocol`  
 Target surface: GitHub Pages experimental preview
 
@@ -8,21 +8,14 @@ Target surface: GitHub Pages experimental preview
 
 Publish the committed static validation preview without migrating `timeproofs.io`, making production claims, or requiring managed infrastructure.
 
-## One-time owner action
+## Completed deployment
 
-1. Create a new empty public GitHub repository named `timeproofs-protocol` under `BACOUL`.
-2. Do not initialize it with a README, license, or `.gitignore`.
-3. Push the prepared `main` history:
+- Repository created: `BACOUL/timeproofs-protocol`
+- Complete prepared history imported on `main`
+- GitHub Pages source configured to GitHub Actions
+- Validation preview deployed successfully
 
-```bash
-git remote add origin https://github.com/BACOUL/timeproofs-protocol.git
-git push -u origin main
-```
-
-4. In repository **Settings → Pages**, set **Source** to **GitHub Actions**.
-5. Open **Actions → Deploy TimeProofs validation preview** and run it manually if the initial push did not trigger it.
-
-Expected preview URL:
+Public preview URL:
 
 ```text
 https://bacoul.github.io/timeproofs-protocol/

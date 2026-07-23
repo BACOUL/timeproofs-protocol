@@ -14,6 +14,14 @@ const eventLabels = {
   'commerce.refund.reversed': 'Refund reversed'
 };
 
+const sourceLabels = {
+  SELF_CLAIMED: { label: 'AI agent claim', className: 'self-claimed' },
+  GATEWAY_OBSERVED: { label: 'Gateway observation', className: 'gateway-observed' },
+  RECEIVER_ATTESTED: { label: 'Receiver attestation', className: 'receiver-attested' },
+  SYSTEM_OF_RECORD: { label: 'System-of-record evidence', className: 'system-of-record' },
+  INDEPENDENTLY_SETTLED: { label: 'Independent settlement', className: 'independently-settled' }
+};
+
 const reasonLabels = {
   SETTLEMENT_CONFIRMED_BY_STRONG_SIGNED_SOURCE: 'A signed settlement event was issued by an independently settling system.',
   REFUND_CREATED_WITHOUT_SETTLEMENT: 'The merchant proves that a refund object exists, but no signed settlement event is present.',
@@ -44,13 +52,20 @@ function renderTimeline(bundle) {
     const marker = document.createElement('span');
     marker.className = 'timeline-marker';
     const content = document.createElement('div');
+    const source = sourceLabels[event.source_class] ?? {
+      label: event.source_class.replaceAll('_', ' '),
+      className: 'unknown-source'
+    };
+    const sourceChip = document.createElement('span');
+    sourceChip.className = `source-chip ${source.className}`;
+    sourceChip.textContent = source.label;
     const title = document.createElement('div');
     title.className = 'timeline-title';
     title.textContent = eventLabels[event.event_type] ?? event.event_type;
     const meta = document.createElement('div');
     meta.className = 'timeline-meta';
-    meta.textContent = `${event.source_class.replaceAll('_', ' ')} · ${event.issuer_ref} · ${event.occurred_at}`;
-    content.append(title, meta);
+    meta.textContent = `${event.issuer_ref} · ${event.occurred_at}`;
+    content.append(sourceChip, title, meta);
     const status = document.createElement('span');
     status.className = 'timeline-status';
     status.textContent = event.status;
@@ -124,8 +139,32 @@ renderScenario('pending').catch((error) => {
 });
 
 
+async function copyAnonymousResult(result, button, output) {
+  if (!result) return;
+  const text = `${JSON.stringify(result, null, 2)}\n`;
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.append(textarea);
+    textarea.select();
+    const copied = document.execCommand('copy');
+    textarea.remove();
+    if (!copied) throw new Error('Clipboard copy failed');
+  }
+  const previous = button.textContent;
+  button.textContent = 'Copied';
+  output.textContent = `${output.textContent} Anonymous JSON copied to the clipboard.`;
+  window.setTimeout(() => { button.textContent = previous; }, 1800);
+}
+
 const validationForm = document.querySelector('#comprehension-test');
 const validationOutput = document.querySelector('#validation-result');
+const copyValidation = document.querySelector('#copy-validation');
 const downloadValidation = document.querySelector('#download-validation');
 let latestValidationResult = null;
 
@@ -148,7 +187,12 @@ validationForm?.addEventListener('submit', (event) => {
   validationOutput.textContent = passed
     ? '3/3 — The outcome model is clear in this test.'
     : `${score}/3 — At least one distinction remains unclear. Review the four scenarios above.`;
+  copyValidation.disabled = false;
   downloadValidation.disabled = false;
+});
+
+copyValidation?.addEventListener('click', async () => {
+  await copyAnonymousResult(latestValidationResult, copyValidation, validationOutput);
 });
 
 downloadValidation?.addEventListener('click', () => {
@@ -164,6 +208,7 @@ downloadValidation?.addEventListener('click', () => {
 
 const practitionerForm = document.querySelector('#practitioner-test');
 const practitionerOutput = document.querySelector('#practitioner-result');
+const copyPractitioner = document.querySelector('#copy-practitioner');
 const downloadPractitioner = document.querySelector('#download-practitioner');
 let latestPractitionerResult = null;
 
@@ -187,7 +232,12 @@ practitionerForm?.addEventListener('submit', (event) => {
   practitionerOutput.textContent = latestPractitionerResult.sandbox_interest
     ? 'Anonymous result ready. This records a sandbox-evaluation signal, not a customer or payment commitment.'
     : 'Anonymous result ready. Negative and uncertain evidence is equally important.';
+  copyPractitioner.disabled = false;
   downloadPractitioner.disabled = false;
+});
+
+copyPractitioner?.addEventListener('click', async () => {
+  await copyAnonymousResult(latestPractitionerResult, copyPractitioner, practitionerOutput);
 });
 
 downloadPractitioner?.addEventListener('click', () => {

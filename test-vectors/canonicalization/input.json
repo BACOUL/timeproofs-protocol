@@ -1,0 +1,16 @@
+{
+  "z": 3,
+  "a": "é",
+  "nested": {
+    "beta": true,
+    "alpha": null
+  },
+  "array": [
+    3,
+    1,
+    {
+      "y": "line\nbreak",
+      "x": 0
+    }
+  ]
+}

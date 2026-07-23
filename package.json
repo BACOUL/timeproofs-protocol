@@ -1,0 +1,20 @@
+{
+  "name": "timeproofs-protocol",
+  "version": "0.1.0-alpha.0",
+  "private": true,
+  "type": "module",
+  "description": "Open evidence protocol and reference verifier for AI action outcomes.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "fixtures": "node scripts/generate-fixtures.mjs",
+    "test": "node tests/run-tests.mjs",
+    "verify:examples": "node packages/cli/bin/timeproofs.mjs verify test-vectors/valid/refund-verified.bundle.json --json",
+    "verdict:examples": "node packages/cli/bin/timeproofs.mjs verdict test-vectors/valid/refund-verified.bundle.json --ruleset refund-v0.1 --json"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "Apache-2.0"
+}

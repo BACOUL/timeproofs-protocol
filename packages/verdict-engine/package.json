@@ -1,0 +1,8 @@
+{
+  "name": "@timeproofs/verdict-engine",
+  "version": "0.1.0-alpha.0",
+  "type": "module",
+  "private": true,
+  "exports": "./src/index.mjs",
+  "license": "Apache-2.0"
+}

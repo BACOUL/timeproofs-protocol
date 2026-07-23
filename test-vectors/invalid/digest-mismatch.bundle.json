@@ -1,0 +1,376 @@
+{
+  "payload": {
+    "spec_version": "0.1",
+    "profile": "TP-JSON-0.1",
+    "bundle_id": "tpb_refund_pending_001",
+    "action_id": "tpa_refund_demo_001",
+    "created_at": "2026-07-23T14:32:08Z",
+    "issuers": [
+      {
+        "issuer_id": "agent.example",
+        "display_name": "Demo Refund Agent",
+        "issuer_type": "AI_AGENT",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "agent.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "agent-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAU6x+IlJd5Wvn1ZBNOD5rZ7MDha112l86uXgpY89L+Qw=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "gateway.example",
+        "display_name": "Demo Action Gateway",
+        "issuer_type": "GATEWAY",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "gateway.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "gateway-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAKRV9udpYD39GoW8fwD4dbPur0a6b0ARcB2V3x2uUaKI=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "merchant.example",
+        "display_name": "Demo Merchant Refund System",
+        "issuer_type": "SYSTEM",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "merchant.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "merchant-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAad4sccacdLUJJ3XmjVQQ35vLP7mdMtagEamKLMmLfug=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "psp.example",
+        "display_name": "Demo Payment Settlement Provider",
+        "issuer_type": "PAYMENT_PROVIDER",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "psp.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "psp-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAEC87Y5O2A+Bv75OPr9WYUWeQSRMXTzFf5NG2WFnakb8=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      }
+    ],
+    "events": [
+      {
+        "event_id": "tpe_refund_requested",
+        "phase": "INTENT",
+        "event_type": "commerce.refund.requested",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T14:30:00Z",
+        "recorded_at": "2026-07-23T14:30:01Z",
+        "source_class": "SELF_CLAIMED",
+        "issuer_ref": "agent.example",
+        "actor": {
+          "entity_type": "AI_AGENT",
+          "entity_id": "refund-agent-demo",
+          "display_name": "Refund Agent Demo"
+        },
+        "subject": {
+          "entity_type": "REFUND",
+          "entity_id": "refund-demo-001",
+          "display_name": "Refund 79.00 EUR"
+        },
+        "claim": {
+          "amount": "79.00",
+          "currency": "EUR",
+          "order_id": "ORDER-DEMO-001"
+        },
+        "evidence_refs": [
+          "tpev_refund_request"
+        ],
+        "parent_event_digests": [],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "5e2bff777295b01c6582c5791e3e379b38685e0ba5cee4bdc1561f8387a689f2"
+        }
+      },
+      {
+        "event_id": "tpe_refund_dispatched",
+        "phase": "DISPATCH",
+        "event_type": "commerce.refund.dispatched",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T14:30:03Z",
+        "recorded_at": "2026-07-23T14:30:03Z",
+        "source_class": "GATEWAY_OBSERVED",
+        "issuer_ref": "gateway.example",
+        "actor": {
+          "entity_type": "AI_AGENT",
+          "entity_id": "refund-agent-demo",
+          "display_name": "Refund Agent Demo"
+        },
+        "subject": {
+          "entity_type": "REFUND",
+          "entity_id": "refund-demo-001",
+          "display_name": "Refund 79.00 EUR"
+        },
+        "claim": {
+          "request_id": "REQ-DEMO-001",
+          "destination": "merchant.example"
+        },
+        "evidence_refs": [
+          "tpev_gateway_dispatch"
+        ],
+        "parent_event_digests": [
+          {
+            "algorithm": "sha-256",
+            "value": "5e2bff777295b01c6582c5791e3e379b38685e0ba5cee4bdc1561f8387a689f2"
+          }
+        ],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+        }
+      },
+      {
+        "event_id": "tpe_refund_created",
+        "phase": "EFFECT",
+        "event_type": "commerce.refund.created",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T14:30:05Z",
+        "recorded_at": "2026-07-23T14:30:06Z",
+        "source_class": "SYSTEM_OF_RECORD",
+        "issuer_ref": "merchant.example",
+        "actor": {
+          "entity_type": "SERVICE",
+          "entity_id": "merchant-refund-api",
+          "display_name": "Merchant Refund API"
+        },
+        "subject": {
+          "entity_type": "REFUND",
+          "entity_id": "refund-demo-001",
+          "display_name": "Refund 79.00 EUR"
+        },
+        "claim": {
+          "refund_id": "REF-DEMO-001",
+          "amount": "80.00",
+          "currency": "EUR",
+          "state": "created"
+        },
+        "evidence_refs": [
+          "tpev_refund_created"
+        ],
+        "parent_event_digests": [
+          {
+            "algorithm": "sha-256",
+            "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+          }
+        ],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+        }
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "tpev_refund_request",
+        "evidence_type": "AGENT_REQUEST",
+        "media_type": "application/json",
+        "source_class": "SELF_CLAIMED",
+        "issuer_ref": "agent.example",
+        "claim_scope": [
+          "commerce.refund.requested"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "771a5e58f2c0fd14d80063cebb7731ec94620b6fd2df8cbdc24a512b4c697fc6"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_demo_refund_request",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "COMMITMENT_ONLY",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "506106a672fdd38ca5d11240edef8f7ba3ba4fc6b52ad73f7f6af50ce2d9d381"
+        }
+      },
+      {
+        "evidence_id": "tpev_gateway_dispatch",
+        "evidence_type": "GATEWAY_RECORD",
+        "media_type": "application/json",
+        "source_class": "GATEWAY_OBSERVED",
+        "issuer_ref": "gateway.example",
+        "claim_scope": [
+          "commerce.refund.dispatched"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "1e968d7a1fcaadfefc9ac7a82e874010b08364be3caa6f321b3c47f8aed9e053"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_demo_gateway_dispatch",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "RESTRICTED",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "995cc2c82c89280784b7a5b739a954cb29611ec82bcb845764b1a37602039f49"
+        }
+      },
+      {
+        "evidence_id": "tpev_refund_created",
+        "evidence_type": "API_RESPONSE",
+        "media_type": "application/json",
+        "source_class": "SYSTEM_OF_RECORD",
+        "issuer_ref": "merchant.example",
+        "claim_scope": [
+          "commerce.refund.created"
+        ],
+        "content_digest": {
+          "algorithm": "sha-256",
+          "value": "e2987cea58635d7e0fe10f1795016be36d22da5a0e0b685dffeb46475ef8453a"
+        },
+        "locator": {
+          "scheme": "opaque",
+          "value": "evref_demo_refund_created",
+          "retrieval_policy": "AUTHORIZED_ONLY"
+        },
+        "disclosure": "RESTRICTED",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "f61ea484b224fcbc82b1988dbbd518c62a2c6368a1355ffd41a5b0102d083b81"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "relationship_id": "tpr_request_support",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_refund_request",
+        "to_ref": "event:tpe_refund_requested",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "21ff841041d9e8c6935fd41807b5a9b4db60a994305bdf4be3b3c7ad7400a0f2"
+        }
+      },
+      {
+        "relationship_id": "tpr_dispatch_support",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_gateway_dispatch",
+        "to_ref": "event:tpe_refund_dispatched",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "154ee6516dbd3b738b6403441f0c397dcdf56b8be6bb4865d63f84f47939c3aa"
+        }
+      },
+      {
+        "relationship_id": "tpr_created_support",
+        "relationship_type": "SUPPORTS",
+        "from_ref": "evidence:tpev_refund_created",
+        "to_ref": "event:tpe_refund_created",
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "3030e8c2a2faf1cd154d11953e6c7a39084fd3ab7aad85cb3778f43e4fa67e43"
+        }
+      }
+    ],
+    "predecessor_bundle_digests": [],
+    "extensions": {
+      "org.timeproofs.demo": {
+        "scenario": "refund-outcome-assurance",
+        "notice": "Synthetic interoperability fixture. No real payment occurred."
+      }
+    }
+  },
+  "proofs": [
+    {
+      "proof_id": "tpp_dispatch",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "OUTCOME_EVENT",
+        "target_id": "tpe_refund_dispatched",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "d936b8bb76a113b7110373f2e83560ecead1f0d216a17b247c145f2fd2d6f71a"
+        }
+      },
+      "issuer_ref": "gateway.example",
+      "verification_method": "gateway.example#gateway-test-01",
+      "created_at": "2026-07-23T14:30:04Z",
+      "algorithm": "Ed25519",
+      "proof_value": "i_ZzDVXPyLisCZq2qY0-e30eJ8dkyvRLxbkqYkjmF5HPTKHHz_vtuttXRa76bDGxDqpWHhJSdz7kD4MH60F6Ag"
+    },
+    {
+      "proof_id": "tpp_created",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "OUTCOME_EVENT",
+        "target_id": "tpe_refund_created",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "da8dcd03d392c4c6bebd54af1a77ef62fce872ae290c2f10d1f2413b117f562b"
+        }
+      },
+      "issuer_ref": "merchant.example",
+      "verification_method": "merchant.example#merchant-test-01",
+      "created_at": "2026-07-23T14:30:07Z",
+      "algorithm": "Ed25519",
+      "proof_value": "vnrPf38uWLro3WXYyuIawZ8YFScenS7xxAwd6r1ttoShrnqgzMa8iH4PATiPFZrKzGqm1exb0UeIVb1GA7fbBQ"
+    },
+    {
+      "proof_id": "tpp_pending_bundle",
+      "proof_type": "SIGNATURE",
+      "target": {
+        "target_type": "BUNDLE_PAYLOAD",
+        "digest": {
+          "algorithm": "sha-256",
+          "value": "47f1ab8ab5d213935e526719733e590deafb605dc0d464097bb0504015e30748"
+        }
+      },
+      "issuer_ref": "gateway.example",
+      "verification_method": "gateway.example#gateway-test-01",
+      "created_at": "2026-07-23T14:32:09Z",
+      "algorithm": "Ed25519",
+      "proof_value": "K3kUM-TvkrCqVpaiJHlEii3gFpNlz53ZStfK61CbBj2okgXgbLaXnmV0D1YFUrpAQTElxPcoIYj5qI0xP61ZAQ"
+    }
+  ]
+}

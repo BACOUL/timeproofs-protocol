@@ -1,0 +1,10 @@
+{
+  "name": "@timeproofs/cli",
+  "version": "0.1.0-alpha.0",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "timeproofs": "./bin/timeproofs.mjs"
+  },
+  "license": "Apache-2.0"
+}

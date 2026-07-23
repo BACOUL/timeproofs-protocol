@@ -32,6 +32,10 @@
           systems of record, and settlement providers—then calculates a clear,
           reproducible outcome verdict.
         </p>
+        <div class="category-guard" role="note">
+          <strong>TimeProofs is not a timestamping protocol.</strong>
+          <span>It does not prove a claim merely existed at a time. It correlates signed evidence from independent systems to determine the current outcome of an AI action.</span>
+        </div>
         <div class="hero-actions">
           <a class="button primary" href="#demo">Explore the refund demo</a>
           <a class="button secondary" href="#protocol">Read the protocol model</a>
@@ -114,9 +118,16 @@
           <div><span>Ruleset</span><code id="ruleset">—</code></div>
         </div>
 
+        <div class="source-legend" aria-label="Evidence source strength legend">
+          <span class="source-chip self-claimed">AI agent claim</span>
+          <span class="source-chip gateway-observed">Gateway observation</span>
+          <span class="source-chip system-of-record">System-of-record evidence</span>
+          <span class="source-chip independently-settled">Independent settlement</span>
+        </div>
+
         <div class="packet-grid">
           <div>
-            <h4>Lifecycle evidence</h4>
+            <h4>Lifecycle evidence — who attested each event?</h4>
             <ol id="timeline" class="timeline"></ol>
           </div>
           <aside class="evidence-aside">
@@ -167,8 +178,10 @@
         </fieldset>
         <div class="validation-actions">
           <button class="button primary" type="submit">See comprehension score</button>
+          <button class="button secondary" id="copy-validation" type="button" disabled>Copy anonymous result</button>
           <button class="button secondary" id="download-validation" type="button" disabled>Download anonymous result</button>
         </div>
+        <p class="return-hint">Copy the result directly into the chat or email that shared this preview. Download remains available for auditability.</p>
         <output id="validation-result" class="validation-result" aria-live="polite"></output>
       </form>
     </section>
@@ -266,8 +279,10 @@
         </fieldset>
         <div class="validation-actions">
           <button class="button primary" type="submit">Prepare anonymous practitioner result</button>
+          <button class="button secondary" id="copy-practitioner" type="button" disabled>Copy anonymous result</button>
           <button class="button secondary" id="download-practitioner" type="button" disabled>Download anonymous result</button>
         </div>
+        <p class="return-hint">Copy the result directly into the channel that shared this preview. Nothing is transmitted automatically.</p>
         <output id="practitioner-result" class="validation-result" aria-live="polite"></output>
       </form>
     </section>

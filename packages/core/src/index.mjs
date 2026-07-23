@@ -13,3 +13,4 @@ export { createSignatureProof, resolveTarget, verifySignatureProof } from './pro
 export { verifyBundle } from './verify-bundle.mjs';
 export { ERROR_CODE_REGISTRY, isKnownErrorCode } from './error-codes.mjs';
 export { OUTCOME_EVENT_VOCABULARY, EVENT_TYPE_RULES, validateEventVocabulary, validateRelationshipVocabulary } from './vocabulary.mjs';
+export { createEvidenceBundle, createEvidenceItem, createIssuerDescriptor, createOutcomeEvent, createRelationship, withObjectDigest } from './builders.mjs';

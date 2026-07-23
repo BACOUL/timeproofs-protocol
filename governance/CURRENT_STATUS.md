@@ -10,7 +10,7 @@ As of: 2026-07-23
 - Stage: `EXPERIMENTAL_FOUNDATION`
 - Current phase: **P2 — Killer outcome demonstration and market validation** (`IN_PROGRESS`)
 - Current milestone: **P2-M2 — External comprehension and demand validation** (`IN_PROGRESS`)
-- Unique next action: **TP-MARKET-001 — Deploy the validation preview and collect first external product evidence**
+- Unique next action: **TP-MARKET-001 — Collect first external product evidence from the deployed validation preview**
 
 ## Completed foundation
 
@@ -27,10 +27,11 @@ As of: 2026-07-23
 - Implementation-independent v0.1 conformance manifest, runner contract, fixture integrity hashes, and reference harness completed
 - Machine-derived printable Outcome Evidence Packets and an anonymous local comprehension experiment completed for four refund outcomes
 - Deployment-ready GitHub Pages preview, structured anonymous practitioner experiment, deterministic market analyzers, and field-validation runbooks completed
+- Public GitHub repository created and complete prepared history imported on main
+- Experimental validation preview deployed publicly through GitHub Pages at https://bacoul.github.io/timeproofs-protocol/
 
 ## Current blockers
 
-- Deployment automation and preflight checks are ready, but the GitHub repository BACOUL/timeproofs-protocol must still be created and the prepared history pushed before external validation can begin.
 - No external comprehension, integration-demand, or willingness-to-pay evidence has been collected yet.
 - No second independent implementation exists yet; G1 remains incomplete but no longer blocks the validation preview.
 - The protocol and cryptographic design have not received independent security review.

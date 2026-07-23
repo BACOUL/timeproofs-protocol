@@ -11,31 +11,31 @@
     "status": "IN_PROGRESS"
   },
   "current_milestone": {
-    "id": "P3-M1",
-    "name": "Stripe refund connector and relay foundation",
+    "id": "P3-M2",
+    "name": "Relay packaging and Stripe test-mode walkthrough",
     "status": "IN_PROGRESS"
   },
   "next_action": {
-    "id": "TP-BUILD-001",
-    "title": "Ship the first runnable TimeProofs Relay with Stripe refund evidence",
+    "id": "TP-BUILD-002",
+    "title": "Package and exercise TimeProofs Relay with Stripe test mode",
     "workstream": "WS03_PRODUCT",
-    "purpose": "Turn the existing protocol and refund demonstration into a runnable local/VPC product that receives agent claims and authenticated Stripe refund webhooks, preserves append-only evidence revisions, and exposes a current recalculable outcome.",
+    "purpose": "Turn the runnable local Relay into a five-minute developer artifact and prove its end-to-end behavior against Stripe test-mode webhook delivery without live money movement.",
     "acceptance_criteria": [
-      "The Stripe connector verifies the raw webhook signature and rejects changed or stale payloads.",
-      "Stripe refund created, pending, succeeded, failed, and cancelled states map to registered TimeProofs event semantics without treating object creation as settlement.",
-      "A runnable Relay accepts an action claim and later provider observations through documented HTTP endpoints.",
-      "The Relay stores append-only Evidence Bundle revisions and links each revision to its predecessor digest.",
-      "The current action endpoint returns structural status, current verdict, reasons, decisive events, and missing evidence without rewriting prior bundles.",
-      "Every normalized provider observation is signed by an operator-controlled Relay key with the upstream authentication method disclosed.",
-      "A local Stripe test-mode walkthrough completes in ten minutes or less and produces a portable Evidence Packet.",
-      "All protocol, connector, service, conformance, site, and governance tests pass."
+      "The Relay starts through the documented npm command and a reproducible container image with persistent local storage.",
+      "A fresh installation creates an operator-controlled Ed25519 key with private-file permissions and preserves it across restarts.",
+      "Stripe CLI can forward authenticated test-mode refund events to the Relay without modifying the raw request body.",
+      "One walkthrough records an agent claim, progresses through PENDING, and reaches VERIFIED or CONTRADICTED from later Stripe evidence.",
+      "Every revision remains available, links to its immediate predecessor payload digest, and survives a Relay restart.",
+      "The current endpoint and portable packet expose structural status, verdict, reasons, decisive events, and missing evidence.",
+      "Replay, duplicate delivery, invalid signature, stale signature, unknown correlation, and rollback behavior are documented and tested.",
+      "npm ci, all protocol and Relay tests, conformance, site validation, and governance validation pass."
     ],
     "non_scope": [
+      "Production Stripe credentials or live money movement",
+      "Hosted multi-tenant service",
       "Enterprise dashboard",
-      "Production payment credentials or live money movement",
       "Shopify and additional connector breadth",
       "Identity, authorization, insurance, or payment processing",
-      "Final pricing and billing",
       "Production, compliance, certification, or legal-validity claims"
     ]
   },
@@ -56,11 +56,13 @@
     "Public GitHub repository created and complete prepared history imported on main",
     "Experimental validation preview deployed publicly through GitHub Pages at https://bacoul.github.io/timeproofs-protocol/",
     "First qualitative preview iteration completed: explicit non-timestamping category guard, source-provenance badges, and clipboard return path",
-    "Stripe refund connector foundation implemented with authenticated webhook verification, provider-event normalization, and pending/verified/failed outcome tests"
+    "Stripe refund connector foundation implemented with authenticated webhook verification, provider-event normalization, and pending/verified/failed/cancelled outcome tests",
+    "Runnable TimeProofs Relay alpha implemented with local HTTP API, operator-controlled Ed25519 keys, append-only file-backed revisions, Stripe webhook ingestion, idempotency, current outcomes, and portable packets",
+    "Relay container packaging, health check, persistent volume definition, and restart persistence tests implemented"
   ],
   "blockers": [
-    "TimeProofs Relay HTTP service and append-only revision store are not implemented yet.",
-    "The Stripe connector has not yet been exercised against a live Stripe test-mode webhook endpoint.",
+    "The runnable Relay has not yet been exercised against Stripe CLI and a real Stripe test-mode webhook endpoint.",
+    "Docker packaging is committed and statically validated, but this execution environment has no Docker runtime for an image build test.",
     "No second independent implementation exists yet; G1 remains incomplete.",
     "The protocol and cryptographic design have not received independent security review.",
     "The broad outcome-verification category already has direct competitors, so TimeProofs must earn differentiation through open multi-issuer interoperability and recalculable evidence history."

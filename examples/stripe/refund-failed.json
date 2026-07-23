@@ -1,0 +1,19 @@
+{
+  "id": "evt_refund_failed_001",
+  "object": "event",
+  "type": "refund.failed",
+  "created": 1784815320,
+  "data": {
+    "object": {
+      "id": "re_failed_001",
+      "object": "refund",
+      "amount": 7900,
+      "currency": "eur",
+      "charge": "ch_demo_002",
+      "payment_intent": "pi_demo_002",
+      "balance_transaction": null,
+      "status": "failed",
+      "failure_reason": "declined"
+    }
+  }
+}

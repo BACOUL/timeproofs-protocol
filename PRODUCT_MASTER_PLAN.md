@@ -102,16 +102,21 @@ The killer demonstration distinguishes:
 
 An agent must not display “refund completed” when only a request or refund object exists.
 
-## 7. First integrations
+## 7. First shippable product and integrations
+
+The first shippable product is **TimeProofs Relay**: an open-source local/VPC service that receives agent claims and authenticated system-of-record events, creates append-only Evidence Bundle revisions, signs normalized observations, and returns a separately recalculable outcome evaluation.
 
 Priority order:
 
-1. generic HTTP/webhook receiver SDK;
-2. MCP write-action adapter;
-3. Stripe test connector;
-4. Shopify order/refund connector;
-5. calendar and email demonstrations;
-6. ACP/UCP/AP2 mapping profiles after protocol stabilization.
+1. generic Evidence Bundle builders and relay signing path;
+2. Stripe refund webhook signature verification and event normalization;
+3. local file-backed append-only action store;
+4. HTTP API for claims, evidence ingestion, current outcome, bundle, and packet;
+5. MCP write-action adapter;
+6. Shopify order/refund connector;
+7. ACP/UCP/AP2 mapping profiles after protocol stabilization.
+
+The Relay is deliberately not a payment processor, agent observability dashboard, or authorization gateway. It is the reference product proving that the open evidence protocol can operate across changing external outcomes.
 
 ## 8. Business model
 

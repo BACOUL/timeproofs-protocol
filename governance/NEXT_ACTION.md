@@ -2,34 +2,35 @@
 
 Generated from `governance/project-state.json`. Do not edit manually.
 
-## TP-MARKET-001 — Collect first external product evidence from the deployed validation preview
+## TP-BUILD-001 — Ship the first runnable TimeProofs Relay with Stripe refund evidence
 
-- Workstream: `WS17_DISTRIBUTION`
-- Phase: `P2`
-- Milestone: `P2-M2`
+- Workstream: `WS03_PRODUCT`
+- Phase: `P3`
+- Milestone: `P3-M1`
 
 ## Purpose
 
-Put the deployed machine-derived Outcome Evidence Packet in front of independent participants and qualified practitioners, then measure comprehension, integration demand, and willingness to pay before expanding protocol or cloud scope.
+Turn the existing protocol and refund demonstration into a runnable local/VPC product that receives agent claims and authenticated Stripe refund webhooks, preserves append-only evidence revisions, and exposes a current recalculable outcome.
 
 ## Acceptance criteria
 
-- The experimental static preview is deployed from the committed site without unsupported production, customer, compliance, or standards claims.
-- At least 10 independent participants complete the anonymous comprehension experiment; results are retained only with consent and analyzed by the repository script.
-- At least 80% of accepted participants score 3/3, or the packet is revised and the experiment is explicitly marked REFINE.
-- At least 5 qualified developers, product owners, compliance practitioners, or agent-workflow operators provide structured evidence-gap feedback.
-- At least 2 qualified participants identify a concrete reusable workflow and agree to evaluate a sandbox integration, or the wedge/positioning is revised.
-- Willingness-to-pay evidence is recorded separately from general interest, including which paid value unit matters: retention, re-verification, connector, contradiction alert, or dispute/audit packet.
-- Assumptions, risks, business model, roadmap, and the next connector decision are reconciled from actual evidence without inventing traction.
+- The Stripe connector verifies the raw webhook signature and rejects changed or stale payloads.
+- Stripe refund created, pending, succeeded, failed, and cancelled states map to registered TimeProofs event semantics without treating object creation as settlement.
+- A runnable Relay accepts an action claim and later provider observations through documented HTTP endpoints.
+- The Relay stores append-only Evidence Bundle revisions and links each revision to its predecessor digest.
+- The current action endpoint returns structural status, current verdict, reasons, decisive events, and missing evidence without rewriting prior bundles.
+- Every normalized provider observation is signed by an operator-controlled Relay key with the upstream authentication method disclosed.
+- A local Stripe test-mode walkthrough completes in ten minutes or less and produces a portable Evidence Packet.
+- All protocol, connector, service, conformance, site, and governance tests pass.
 
 ## Explicit non-scope
 
-- High-volume outbound prospecting
-- Public production launch of timeproofs.io
-- Claiming protocol interoperability alpha before the Python implementation and security review pass
-- Managed cloud infrastructure
-- Final public pricing
-- Custom consulting work that cannot become a reusable connector
+- Enterprise dashboard
+- Production payment credentials or live money movement
+- Shopify and additional connector breadth
+- Identity, authorization, insurance, or payment processing
+- Final pricing and billing
+- Production, compliance, certification, or legal-validity claims
 
 ## Completion procedure
 

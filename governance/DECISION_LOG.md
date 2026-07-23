@@ -125,3 +125,12 @@ Status: ACCEPTED
 The first market experiment is deployed as a static GitHub Pages preview. Browser forms send no data and collect no name, email, company, phone, address, analytics, or cookies. Participants deliberately export structured anonymous JSON and return it through the channel that shared the preview.
 
 This reduces privacy and infrastructure scope while preserving auditable evidence. It is an experiment surface, not a production service or a substitute for consented design-partner follow-up.
+
+## D-017 — Clarify category and provenance before adding feedback infrastructure
+
+Date: 2026-07-23
+Status: ACCEPTED
+
+The deployed validation preview explicitly states that TimeProofs is not a timestamping protocol and labels the provenance class of every demonstrated lifecycle event. Anonymous results can be copied to the clipboard or downloaded locally.
+
+A collection backend is not added from predicted friction alone. It may be introduced only if observed completion and return rates show that manual return materially biases or blocks the validation sample. This preserves the no-backend privacy experiment while reducing unnecessary participant effort.

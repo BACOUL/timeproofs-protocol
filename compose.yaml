@@ -1,0 +1,15 @@
+services:
+  relay:
+    build:
+      context: .
+    environment:
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      TIMEPROOFS_RELAY_ISSUER: ${TIMEPROOFS_RELAY_ISSUER:-urn:timeproofs:relay:docker}
+    ports:
+      - "8787:8787"
+    volumes:
+      - timeproofs-relay-data:/data
+    restart: unless-stopped
+
+volumes:
+  timeproofs-relay-data:

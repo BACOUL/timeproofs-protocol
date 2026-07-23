@@ -118,6 +118,16 @@ Priority order:
 
 The Relay is deliberately not a payment processor, agent observability dashboard, or authorization gateway. It is the reference product proving that the open evidence protocol can operate across changing external outcomes.
 
+Implemented alpha foundation:
+
+- local HTTP service;
+- operator-controlled Ed25519 key generation and persistence;
+- append-only file-backed bundle revisions;
+- agent-claim recording without provenance inflation;
+- authenticated Stripe webhook ingestion;
+- current outcome, bundle, packet, issuer, and revision endpoints;
+- duplicate and stale webhook protection.
+
 ## 8. Business model
 
 The open verifier remains free.

@@ -1,0 +1,134 @@
+{
+  "payload": {
+    "spec_version": "0.1",
+    "profile": "TP-JSON-0.1",
+    "bundle_id": "tpb_refund_unprovable_001",
+    "action_id": "tpa_refund_demo_001",
+    "created_at": "2026-07-23T14:32:08Z",
+    "issuers": [
+      {
+        "issuer_id": "agent.example",
+        "display_name": "Demo Refund Agent",
+        "issuer_type": "AI_AGENT",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "agent.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "agent-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAU6x+IlJd5Wvn1ZBNOD5rZ7MDha112l86uXgpY89L+Qw=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "gateway.example",
+        "display_name": "Demo Action Gateway",
+        "issuer_type": "GATEWAY",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "gateway.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "gateway-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAKRV9udpYD39GoW8fwD4dbPur0a6b0ARcB2V3x2uUaKI=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "merchant.example",
+        "display_name": "Demo Merchant Refund System",
+        "issuer_type": "SYSTEM",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "merchant.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "merchant-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAad4sccacdLUJJ3XmjVQQ35vLP7mdMtagEamKLMmLfug=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      },
+      {
+        "issuer_id": "psp.example",
+        "display_name": "Demo Payment Settlement Provider",
+        "issuer_type": "PAYMENT_PROVIDER",
+        "identifiers": [
+          {
+            "scheme": "dns",
+            "value": "psp.example"
+          }
+        ],
+        "keys": [
+          {
+            "key_id": "psp-test-01",
+            "algorithm": "Ed25519",
+            "format": "spki-pem",
+            "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAEC87Y5O2A+Bv75OPr9WYUWeQSRMXTzFf5NG2WFnakb8=\n-----END PUBLIC KEY-----\n"
+          }
+        ],
+        "extensions": {}
+      }
+    ],
+    "events": [
+      {
+        "event_id": "tpe_refund_claimed_complete",
+        "phase": "SETTLEMENT",
+        "event_type": "commerce.refund.settled",
+        "status": "SUCCEEDED",
+        "occurred_at": "2026-07-23T14:31:54Z",
+        "recorded_at": "2026-07-23T14:31:55Z",
+        "source_class": "SELF_CLAIMED",
+        "issuer_ref": "agent.example",
+        "actor": {
+          "entity_type": "AI_AGENT",
+          "entity_id": "refund-agent-demo",
+          "display_name": "Refund Agent Demo"
+        },
+        "subject": {
+          "entity_type": "REFUND",
+          "entity_id": "refund-demo-001",
+          "display_name": "Refund 79.00 EUR"
+        },
+        "claim": {
+          "message": "The refund is complete."
+        },
+        "evidence_refs": [],
+        "parent_event_digests": [],
+        "extensions": {},
+        "object_digest": {
+          "algorithm": "sha-256",
+          "value": "1e10491720b8aa0b78354a2641c4acf14d8a09522d603cc8e3c312e14849a113"
+        },
+        "unexpected": true
+      }
+    ],
+    "evidence": [],
+    "relationships": [],
+    "predecessor_bundle_digests": [],
+    "extensions": {
+      "org.timeproofs.demo": {
+        "scenario": "refund-outcome-assurance",
+        "notice": "Synthetic interoperability fixture. No real payment occurred."
+      }
+    }
+  },
+  "proofs": []
+}

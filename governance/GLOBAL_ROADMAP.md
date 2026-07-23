@@ -23,6 +23,12 @@ Exit gate: `G0_OS = PASS`.
 
 Status: IN PROGRESS
 
+Milestone progress:
+
+- `P1-M1 Evidence Bundle v0.1 normative coherence`: DONE on 2026-07-23;
+- `P1-M2 Outcome Event base vocabulary`: IN PROGRESS;
+- independent implementation and security review: NOT STARTED.
+
 Objectives:
 
 - complete Evidence Bundle v0.1 semantics;

@@ -3,10 +3,14 @@ import { readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import {
+  SIGNATURE_DOMAIN,
+  buildSignatureInput,
   canonicalize,
   calculatePayloadDigest,
+  digestValue,
   parseJsonStrict,
-  verifyBundle
+  verifyBundle,
+  verifySignatureProof
 } from '../packages/core/src/index.mjs';
 import { evaluateBundle } from '../packages/verdict-engine/src/index.mjs';
 
@@ -32,6 +36,10 @@ async function loadBundle(relativePath) {
   return parseJsonStrict(await load(relativePath));
 }
 
+function clone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
 await test('strict parser rejects duplicate object members', async () => {
   const text = await load('test-vectors/invalid/duplicate-key.json');
   assert.throws(() => parseJsonStrict(text), (error) => error.code === 'DUPLICATE_PROPERTY');
@@ -41,14 +49,24 @@ await test('strict parser rejects unpaired Unicode surrogate', async () => {
   assert.throws(() => parseJsonStrict('{"value":"\\ud800"}'), (error) => error.code === 'UNPAIRED_HIGH_SURROGATE');
 });
 
-await test('canonicalization vector matches expected bytes', async () => {
+await test('canonicalization legacy vector matches expected bytes', async () => {
   const input = await loadBundle('test-vectors/canonicalization/input.json');
   const expected = (await load('test-vectors/canonicalization/expected.txt')).trimEnd();
   assert.equal(canonicalize(input), expected);
 });
 
-await test('canonicalization normalizes negative zero through JSON number serialization', async () => {
-  assert.equal(canonicalize({ value: -0 }), '{"value":0}');
+const canonicalVectors = await loadBundle('test-vectors/canonicalization/vectors.json');
+for (const vector of canonicalVectors) {
+  await test(`canonicalization vector ${vector.id}`, async () => {
+    assert.equal(canonicalize(vector.input), vector.expected);
+  });
+}
+
+await test('null and an omitted member have different canonical bytes and digests', async () => {
+  const withNull = { a: 1, b: null };
+  const omitted = { a: 1 };
+  assert.notEqual(canonicalize(withNull), canonicalize(omitted));
+  assert.notDeepEqual(digestValue(withNull), digestValue(omitted));
 });
 
 const expectedStructural = {
@@ -83,18 +101,12 @@ for (const [fileName, expectedVerdict] of Object.entries(expectedVerdicts)) {
   });
 }
 
-const expectedInvalidCodes = {
-  'digest-mismatch.bundle.json': 'OBJECT_DIGEST_MISMATCH',
-  'signature-mismatch.bundle.json': 'SIGNATURE_INVALID',
-  'unresolved-parent.bundle.json': 'PARENT_EVENT_NOT_FOUND',
-  'extra-top-level-member.json': 'TOP_LEVEL_MEMBERS_INVALID'
-};
-
-for (const [fileName, expectedCode] of Object.entries(expectedInvalidCodes)) {
+const invalidManifest = await loadBundle('test-vectors/invalid/manifest.json');
+for (const [fileName, expectedCode] of Object.entries(invalidManifest)) {
   await test(`${fileName} is rejected with ${expectedCode}`, async () => {
     const result = verifyBundle(await load(`test-vectors/invalid/${fileName}`));
     assert.equal(result.status, 'INVALID');
-    assert.ok(result.errors.some((error) => error.code === expectedCode));
+    assert.ok(result.errors.some((error) => error.code === expectedCode), JSON.stringify(result.errors, null, 2));
   });
 }
 
@@ -115,11 +127,61 @@ await test('changing proof target type invalidates domain-separated signature', 
   assert.ok(result.errors.some((error) => ['PROOF_TARGET_NOT_FOUND', 'SIGNATURE_INVALID'].includes(error.code)));
 });
 
-await test('schemas are valid JSON documents', async () => {
-  const files = await readdir(resolve(root, 'schemas'));
-  for (const file of files.filter((name) => name.endsWith('.json'))) {
-    parseJsonStrict(await load(`schemas/${file}`));
+await test('changing profile invalidates the signed context', async () => {
+  const bundle = await loadBundle('test-vectors/valid/refund-verified.bundle.json');
+  bundle.payload.profile = 'TP-JSON-0.2';
+  const result = verifyBundle(bundle);
+  assert.equal(result.status, 'INVALID');
+  assert.ok(result.errors.some((error) => error.code === 'PROFILE_UNSUPPORTED'));
+  const proof = bundle.proofs.find((candidate) => candidate.target.target_type === 'OUTCOME_EVENT');
+  const issuer = bundle.payload.issuers.find((candidate) => candidate.issuer_id === proof.issuer_ref);
+  assert.equal(verifySignatureProof(bundle, proof, issuer).code, 'SIGNATURE_INVALID');
+});
+
+await test('changing spec version invalidates the signed context', async () => {
+  const bundle = await loadBundle('test-vectors/valid/refund-verified.bundle.json');
+  bundle.payload.spec_version = '0.2';
+  const result = verifyBundle(bundle);
+  assert.equal(result.status, 'INVALID');
+  assert.ok(result.errors.some((error) => error.code === 'SPEC_VERSION_UNSUPPORTED'));
+  const proof = bundle.proofs.find((candidate) => candidate.target.target_type === 'OUTCOME_EVENT');
+  const issuer = bundle.payload.issuers.find((candidate) => candidate.issuer_id === proof.issuer_ref);
+  assert.equal(verifySignatureProof(bundle, proof, issuer).code, 'SIGNATURE_INVALID');
+});
+
+await test('signature input binds domain, profile, version, target type, algorithm and digest value', async () => {
+  const digest = { algorithm: 'sha-256', value: '1'.repeat(64) };
+  const base = buildSignatureInput({ specVersion: '0.1', profile: 'TP-JSON-0.1', targetType: 'OUTCOME_EVENT', targetDigest: digest });
+  assert.equal(SIGNATURE_DOMAIN, 'org.timeproofs.signature.v0.1');
+  for (const changed of [
+    { specVersion: '0.2', profile: 'TP-JSON-0.1', targetType: 'OUTCOME_EVENT', targetDigest: digest },
+    { specVersion: '0.1', profile: 'TP-JSON-0.2', targetType: 'OUTCOME_EVENT', targetDigest: digest },
+    { specVersion: '0.1', profile: 'TP-JSON-0.1', targetType: 'EVIDENCE_ITEM', targetDigest: digest },
+    { specVersion: '0.1', profile: 'TP-JSON-0.1', targetType: 'OUTCOME_EVENT', targetDigest: { algorithm: 'sha-512', value: '1'.repeat(64) } },
+    { specVersion: '0.1', profile: 'TP-JSON-0.1', targetType: 'OUTCOME_EVENT', targetDigest: { algorithm: 'sha-256', value: '2'.repeat(64) } }
+  ]) {
+    assert.notDeepEqual(buildSignatureInput(changed), base);
   }
+});
+
+await test('nested extra members are rejected consistently with schemas', async () => {
+  const bundle = await loadBundle('test-vectors/valid/refund-unprovable.bundle.json');
+  bundle.proofs = [];
+  bundle.payload.events[0].unexpected = true;
+  const result = verifyBundle(bundle);
+  assert.equal(result.status, 'INVALID');
+  assert.ok(result.errors.some((error) => error.code === 'EVENT_MEMBERS_INVALID'));
+});
+
+await test('schemas and machine-readable registries are valid JSON documents', async () => {
+  const files = [
+    ...(await readdir(resolve(root, 'schemas'))).filter((name) => name.endsWith('.json')).map((name) => `schemas/${name}`),
+    'spec/field-semantics-v0.1.json',
+    'spec/error-codes-v0.1.json',
+    'test-vectors/invalid/manifest.json',
+    'test-vectors/canonicalization/vectors.json'
+  ];
+  for (const file of files) parseJsonStrict(await load(file));
 });
 
 await test('generated site reports match reference verifier outputs', async () => {

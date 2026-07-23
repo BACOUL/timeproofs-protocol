@@ -1,0 +1,58 @@
+[
+  {
+    "id": "unicode-preserved-and-utf16-sorted",
+    "input": {
+      "z": "last",
+      "é": "precomposed",
+      "é": "decomposed",
+      "😀": "face",
+      "a": "first"
+    },
+    "expected": "{\"a\":\"first\",\"é\":\"decomposed\",\"z\":\"last\",\"é\":\"precomposed\",\"😀\":\"face\"}"
+  },
+  {
+    "id": "ecmascript-number-serialization",
+    "input": [
+      333333333.3333333,
+      1e+30,
+      4.5,
+      0.002,
+      1e-27,
+      0
+    ],
+    "expected": "[333333333.3333333,1e+30,4.5,0.002,1e-27,0]"
+  },
+  {
+    "id": "arrays-nested-objects-and-null",
+    "input": {
+      "z": null,
+      "a": [
+        3,
+        {
+          "b": true,
+          "a": false
+        }
+      ],
+      "m": {
+        "d": null,
+        "c": []
+      }
+    },
+    "expected": "{\"a\":[3,{\"a\":false,\"b\":true}],\"m\":{\"c\":[],\"d\":null},\"z\":null}"
+  },
+  {
+    "id": "null-member-is-present",
+    "input": {
+      "a": 1,
+      "b": null
+    },
+    "expected": "{\"a\":1,\"b\":null}"
+  },
+  {
+    "id": "member-is-omitted",
+    "input": {
+      "a": 1
+    },
+    "expected": "{\"a\":1}"
+  }
+]

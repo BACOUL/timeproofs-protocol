@@ -11,3 +11,4 @@ export {
 export { buildSignatureInput, SIGNATURE_DOMAIN } from './signature-input.mjs';
 export { createSignatureProof, resolveTarget, verifySignatureProof } from './proofs.mjs';
 export { verifyBundle } from './verify-bundle.mjs';
+export { ERROR_CODE_REGISTRY, isKnownErrorCode } from './error-codes.mjs';

@@ -1,0 +1,888 @@
+{
+  "spec_version": "0.1",
+  "profile": "TP-JSON-0.1",
+  "codes": [
+    {
+      "code": "INPUT_NOT_STRING",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "Input to the strict JSON parser is not a string."
+    },
+    {
+      "code": "EXPECTED_STRING",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A JSON string opening quote was expected."
+    },
+    {
+      "code": "INVALID_ESCAPE",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A JSON string contains an invalid escape sequence."
+    },
+    {
+      "code": "INVALID_UNICODE_ESCAPE",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A Unicode escape is malformed."
+    },
+    {
+      "code": "UNPAIRED_HIGH_SURROGATE",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A high surrogate is not paired with a low surrogate."
+    },
+    {
+      "code": "UNPAIRED_LOW_SURROGATE",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A low surrogate appears without a preceding high surrogate."
+    },
+    {
+      "code": "UNESCAPED_CONTROL_CHARACTER",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A JSON string contains an unescaped control character."
+    },
+    {
+      "code": "UNTERMINATED_STRING",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A JSON string is not terminated."
+    },
+    {
+      "code": "LEADING_ZERO",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A JSON number contains a forbidden leading zero."
+    },
+    {
+      "code": "INVALID_NUMBER",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A JSON number is malformed."
+    },
+    {
+      "code": "NON_FINITE_NUMBER",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A JSON number cannot be represented as a supported finite number."
+    },
+    {
+      "code": "EXPECTED_COMMA",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A comma was expected between JSON members or elements."
+    },
+    {
+      "code": "EXPECTED_PROPERTY_NAME",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A JSON object property name was expected."
+    },
+    {
+      "code": "DUPLICATE_PROPERTY",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A JSON object contains a duplicate property name."
+    },
+    {
+      "code": "EXPECTED_COLON",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A colon was expected after a JSON property name."
+    },
+    {
+      "code": "INVALID_LITERAL",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "A JSON literal is malformed."
+    },
+    {
+      "code": "UNEXPECTED_TOKEN",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "An unexpected JSON token was encountered."
+    },
+    {
+      "code": "TRAILING_DATA",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "Data appears after the complete JSON value."
+    },
+    {
+      "code": "JSON_PARSE_ERROR",
+      "category": "PARSING",
+      "structural_outcome": "INVALID",
+      "meaning": "An unclassified JSON parsing failure occurred."
+    },
+    {
+      "code": "BUNDLE_NOT_OBJECT",
+      "category": "ENVELOPE",
+      "structural_outcome": "INVALID",
+      "meaning": "The bundle root is not a JSON object."
+    },
+    {
+      "code": "TOP_LEVEL_MEMBERS_INVALID",
+      "category": "ENVELOPE",
+      "structural_outcome": "INVALID",
+      "meaning": "The root members are not exactly payload and proofs."
+    },
+    {
+      "code": "PAYLOAD_NOT_OBJECT",
+      "category": "ENVELOPE",
+      "structural_outcome": "INVALID",
+      "meaning": "The payload member is not an object."
+    },
+    {
+      "code": "PROOFS_NOT_ARRAY",
+      "category": "ENVELOPE",
+      "structural_outcome": "INVALID",
+      "meaning": "The proofs member is not an array."
+    },
+    {
+      "code": "PAYLOAD_MEMBERS_INVALID",
+      "category": "PAYLOAD",
+      "structural_outcome": "INVALID",
+      "meaning": "Payload members do not exactly match TP-JSON-0.1."
+    },
+    {
+      "code": "SPEC_VERSION_UNSUPPORTED",
+      "category": "PAYLOAD",
+      "structural_outcome": "INVALID",
+      "meaning": "The specification version is unsupported."
+    },
+    {
+      "code": "PROFILE_UNSUPPORTED",
+      "category": "PAYLOAD",
+      "structural_outcome": "INVALID",
+      "meaning": "The serialization profile is unsupported."
+    },
+    {
+      "code": "BUNDLE_ID_INVALID",
+      "category": "PAYLOAD",
+      "structural_outcome": "INVALID",
+      "meaning": "bundle_id is not a non-empty opaque string."
+    },
+    {
+      "code": "ACTION_ID_INVALID",
+      "category": "PAYLOAD",
+      "structural_outcome": "INVALID",
+      "meaning": "action_id is not a non-empty opaque string."
+    },
+    {
+      "code": "CREATED_AT_INVALID",
+      "category": "PAYLOAD",
+      "structural_outcome": "INVALID",
+      "meaning": "created_at is not a valid TP-JSON-0.1 UTC timestamp."
+    },
+    {
+      "code": "PAYLOAD_ARRAY_INVALID",
+      "category": "PAYLOAD",
+      "structural_outcome": "INVALID",
+      "meaning": "A required payload collection is not an array."
+    },
+    {
+      "code": "PAYLOAD_EXTENSIONS_INVALID",
+      "category": "PAYLOAD",
+      "structural_outcome": "INVALID",
+      "meaning": "payload.extensions is not an object."
+    },
+    {
+      "code": "PREDECESSOR_DIGEST_INVALID",
+      "category": "PAYLOAD",
+      "structural_outcome": "INVALID",
+      "meaning": "A predecessor payload digest is malformed."
+    },
+    {
+      "code": "DUPLICATE_PREDECESSOR_DIGEST",
+      "category": "PAYLOAD",
+      "structural_outcome": "INVALID",
+      "meaning": "A predecessor payload digest is repeated."
+    },
+    {
+      "code": "ISSUER_NOT_OBJECT",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "An issuer entry is not an object."
+    },
+    {
+      "code": "ISSUER_MEMBERS_INVALID",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "Issuer members do not exactly match TP-JSON-0.1."
+    },
+    {
+      "code": "ISSUER_ID_INVALID",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "issuer_id is not a non-empty string."
+    },
+    {
+      "code": "ISSUER_DISPLAY_NAME_INVALID",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "display_name is not a non-empty string."
+    },
+    {
+      "code": "ISSUER_TYPE_INVALID",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "issuer_type is unsupported."
+    },
+    {
+      "code": "ISSUER_IDENTIFIERS_INVALID",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "identifiers is not an array."
+    },
+    {
+      "code": "ISSUER_KEYS_INVALID",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "keys is not an array."
+    },
+    {
+      "code": "ISSUER_EXTENSIONS_INVALID",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "issuer.extensions is not an object."
+    },
+    {
+      "code": "IDENTIFIER_NOT_OBJECT",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "An issuer identifier is not an object."
+    },
+    {
+      "code": "IDENTIFIER_MEMBERS_INVALID",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "Identifier members are not exactly scheme and value."
+    },
+    {
+      "code": "IDENTIFIER_SCHEME_INVALID",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "Identifier scheme is not a non-empty string."
+    },
+    {
+      "code": "IDENTIFIER_VALUE_INVALID",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "Identifier value is not a non-empty string."
+    },
+    {
+      "code": "DUPLICATE_ISSUER_IDENTIFIER",
+      "category": "ISSUER",
+      "structural_outcome": "INVALID",
+      "meaning": "An issuer repeats the same scheme and value identifier."
+    },
+    {
+      "code": "KEY_NOT_OBJECT",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "A key entry is not an object."
+    },
+    {
+      "code": "KEY_MEMBERS_INVALID",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "Key members are outside the TP-JSON-0.1 key model."
+    },
+    {
+      "code": "KEY_ID_INVALID",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "key_id is not a non-empty string."
+    },
+    {
+      "code": "DUPLICATE_KEY_ID",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "key_id is repeated within an issuer."
+    },
+    {
+      "code": "KEY_ALGORITHM_UNSUPPORTED",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "The key algorithm is unsupported."
+    },
+    {
+      "code": "KEY_FORMAT_UNSUPPORTED",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "The public key format is unsupported."
+    },
+    {
+      "code": "PUBLIC_KEY_INVALID",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "The public key is not a usable SPKI PEM Ed25519 key."
+    },
+    {
+      "code": "KEY_VALID_FROM_INVALID",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "valid_from is not a valid UTC timestamp."
+    },
+    {
+      "code": "KEY_VALID_UNTIL_INVALID",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "valid_until is not a valid UTC timestamp."
+    },
+    {
+      "code": "KEY_VALIDITY_INTERVAL_INVALID",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "valid_until is not later than valid_from."
+    },
+    {
+      "code": "KEY_REVOCATION_REF_INVALID",
+      "category": "KEY",
+      "structural_outcome": "INVALID",
+      "meaning": "revocation_ref is present but not a non-empty string."
+    },
+    {
+      "code": "DUPLICATE_ISSUER_ID",
+      "category": "REFERENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "issuer_id is repeated in the issuer collection."
+    },
+    {
+      "code": "DUPLICATE_OBJECT_ID",
+      "category": "REFERENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "An addressable payload object identifier is repeated."
+    },
+    {
+      "code": "EVENT_NOT_OBJECT",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "An Outcome Event is not an object."
+    },
+    {
+      "code": "EVENT_MEMBERS_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "Outcome Event members do not exactly match TP-JSON-0.1."
+    },
+    {
+      "code": "EVENT_REQUIRED_MEMBER_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "A required Outcome Event string member is invalid."
+    },
+    {
+      "code": "EVENT_PHASE_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "The lifecycle phase is unsupported."
+    },
+    {
+      "code": "EVENT_TYPE_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "event_type is not a lower-case namespaced token."
+    },
+    {
+      "code": "EVENT_STATUS_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "The event status is unsupported."
+    },
+    {
+      "code": "SOURCE_CLASS_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "The evidence source class is unsupported."
+    },
+    {
+      "code": "EVENT_OCCURRED_AT_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "occurred_at is not a valid UTC timestamp."
+    },
+    {
+      "code": "EVENT_RECORDED_AT_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "recorded_at is not a valid UTC timestamp."
+    },
+    {
+      "code": "EVENT_RECORDED_BEFORE_OCCURRED",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "recorded_at precedes occurred_at."
+    },
+    {
+      "code": "EVENT_ISSUER_NOT_FOUND",
+      "category": "REFERENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "An event issuer_ref does not resolve."
+    },
+    {
+      "code": "EVENT_PARENTS_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "parent_event_digests is not an array."
+    },
+    {
+      "code": "DUPLICATE_PARENT_DIGEST",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "An event repeats a parent digest."
+    },
+    {
+      "code": "EVENT_EVIDENCE_REFS_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "evidence_refs is not an array."
+    },
+    {
+      "code": "DUPLICATE_EVENT_EVIDENCE_REF",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "An event repeats an evidence reference."
+    },
+    {
+      "code": "EVENT_ACTOR_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "actor is not a conforming Entity Reference."
+    },
+    {
+      "code": "EVENT_SUBJECT_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "subject is not a conforming Entity Reference."
+    },
+    {
+      "code": "ENTITY_REF_MEMBERS_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "Entity Reference members are outside the TP-JSON-0.1 model."
+    },
+    {
+      "code": "ENTITY_TYPE_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "entity_type is not a non-empty string."
+    },
+    {
+      "code": "ENTITY_ID_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "entity_id is not a non-empty string."
+    },
+    {
+      "code": "ENTITY_DISPLAY_NAME_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "display_name is present but not a string."
+    },
+    {
+      "code": "EVENT_CLAIM_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "claim is not a JSON object."
+    },
+    {
+      "code": "EVENT_EXTENSIONS_INVALID",
+      "category": "EVENT",
+      "structural_outcome": "INVALID",
+      "meaning": "event.extensions is not an object."
+    },
+    {
+      "code": "OBJECT_DIGEST_INVALID",
+      "category": "DIGEST",
+      "structural_outcome": "INVALID",
+      "meaning": "object_digest is missing or malformed."
+    },
+    {
+      "code": "OBJECT_DIGEST_MISMATCH",
+      "category": "DIGEST",
+      "structural_outcome": "INVALID",
+      "meaning": "object_digest does not match the canonical object content."
+    },
+    {
+      "code": "OBJECT_DIGEST_CALCULATION_FAILED",
+      "category": "DIGEST",
+      "structural_outcome": "INVALID",
+      "meaning": "The verifier could not calculate an object digest."
+    },
+    {
+      "code": "PARENT_DIGEST_INVALID",
+      "category": "GRAPH",
+      "structural_outcome": "INVALID",
+      "meaning": "A parent event digest is malformed."
+    },
+    {
+      "code": "PARENT_EVENT_NOT_FOUND",
+      "category": "GRAPH",
+      "structural_outcome": "INVALID",
+      "meaning": "A parent event digest does not resolve in the current bundle."
+    },
+    {
+      "code": "EVENT_SELF_PARENT",
+      "category": "GRAPH",
+      "structural_outcome": "INVALID",
+      "meaning": "An event references its own digest as a parent."
+    },
+    {
+      "code": "EVENT_EVIDENCE_NOT_FOUND",
+      "category": "REFERENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "An event evidence reference does not resolve."
+    },
+    {
+      "code": "EVIDENCE_NOT_OBJECT",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "An Evidence Item is not an object."
+    },
+    {
+      "code": "EVIDENCE_MEMBERS_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "Evidence Item members do not exactly match TP-JSON-0.1."
+    },
+    {
+      "code": "EVIDENCE_REQUIRED_MEMBER_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "A required Evidence Item string member is invalid."
+    },
+    {
+      "code": "EVIDENCE_TYPE_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "evidence_type is not a namespaced upper-case token."
+    },
+    {
+      "code": "MEDIA_TYPE_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "media_type is not a syntactically valid media type."
+    },
+    {
+      "code": "EVIDENCE_ISSUER_NOT_FOUND",
+      "category": "REFERENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "An evidence issuer_ref does not resolve."
+    },
+    {
+      "code": "CONTENT_DIGEST_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "content_digest is malformed."
+    },
+    {
+      "code": "EVIDENCE_LOCATOR_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "locator is not a conforming Evidence Locator."
+    },
+    {
+      "code": "LOCATOR_MEMBERS_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "Locator members do not exactly match TP-JSON-0.1."
+    },
+    {
+      "code": "LOCATOR_SCHEME_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "The locator scheme is unsupported."
+    },
+    {
+      "code": "LOCATOR_VALUE_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "The locator value is not a non-empty string."
+    },
+    {
+      "code": "LOCATOR_RETRIEVAL_POLICY_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "The retrieval policy is unsupported."
+    },
+    {
+      "code": "LOCATOR_POLICY_CONFLICT",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "The locator scheme and retrieval policy are inconsistent."
+    },
+    {
+      "code": "CLAIM_SCOPE_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "claim_scope is not a non-empty array of event type strings."
+    },
+    {
+      "code": "DUPLICATE_CLAIM_SCOPE",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "claim_scope repeats an entry."
+    },
+    {
+      "code": "DISCLOSURE_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "The disclosure class is unsupported."
+    },
+    {
+      "code": "EVIDENCE_EXTENSIONS_INVALID",
+      "category": "EVIDENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "evidence.extensions is not an object."
+    },
+    {
+      "code": "RELATIONSHIP_NOT_OBJECT",
+      "category": "RELATIONSHIP",
+      "structural_outcome": "INVALID",
+      "meaning": "A Relationship is not an object."
+    },
+    {
+      "code": "RELATIONSHIP_MEMBERS_INVALID",
+      "category": "RELATIONSHIP",
+      "structural_outcome": "INVALID",
+      "meaning": "Relationship members do not exactly match TP-JSON-0.1."
+    },
+    {
+      "code": "RELATIONSHIP_REQUIRED_MEMBER_INVALID",
+      "category": "RELATIONSHIP",
+      "structural_outcome": "INVALID",
+      "meaning": "A required Relationship string member is invalid."
+    },
+    {
+      "code": "RELATIONSHIP_TYPE_INVALID",
+      "category": "RELATIONSHIP",
+      "structural_outcome": "INVALID",
+      "meaning": "The relationship type is unsupported."
+    },
+    {
+      "code": "RELATIONSHIP_REF_INVALID",
+      "category": "RELATIONSHIP",
+      "structural_outcome": "INVALID",
+      "meaning": "A relationship endpoint is not a supported typed reference."
+    },
+    {
+      "code": "RELATIONSHIP_SELF_REFERENCE",
+      "category": "RELATIONSHIP",
+      "structural_outcome": "INVALID",
+      "meaning": "A relationship points from and to the same reference."
+    },
+    {
+      "code": "RELATIONSHIP_EXTENSIONS_INVALID",
+      "category": "RELATIONSHIP",
+      "structural_outcome": "INVALID",
+      "meaning": "relationship.extensions is not an object."
+    },
+    {
+      "code": "RELATIONSHIP_FROM_NOT_FOUND",
+      "category": "REFERENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "A relationship from_ref does not resolve."
+    },
+    {
+      "code": "RELATIONSHIP_TO_NOT_FOUND",
+      "category": "REFERENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "A relationship to_ref does not resolve."
+    },
+    {
+      "code": "PROOF_NOT_OBJECT",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "A Proof is not an object."
+    },
+    {
+      "code": "PROOF_MEMBERS_INVALID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "Proof members do not exactly match TP-JSON-0.1."
+    },
+    {
+      "code": "PROOF_ID_INVALID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "proof_id is not a non-empty string."
+    },
+    {
+      "code": "DUPLICATE_PROOF_ID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "proof_id is repeated."
+    },
+    {
+      "code": "PROOF_TYPE_UNSUPPORTED",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The proof type is unsupported."
+    },
+    {
+      "code": "PROOF_TARGET_INVALID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "target is not a conforming Proof Target."
+    },
+    {
+      "code": "PROOF_TARGET_MEMBERS_INVALID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "Proof Target members do not match the target type."
+    },
+    {
+      "code": "PROOF_TARGET_TYPE_INVALID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The proof target type is unsupported."
+    },
+    {
+      "code": "PROOF_TARGET_ID_REQUIRED",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "target_id is required for a non-payload target."
+    },
+    {
+      "code": "PROOF_TARGET_ID_FORBIDDEN",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "target_id is forbidden for BUNDLE_PAYLOAD."
+    },
+    {
+      "code": "PROOF_TARGET_DIGEST_INVALID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The declared proof target digest is malformed."
+    },
+    {
+      "code": "PROOF_CREATED_AT_INVALID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "Proof created_at is not a valid UTC timestamp."
+    },
+    {
+      "code": "PROOF_ISSUER_NOT_FOUND",
+      "category": "REFERENCE",
+      "structural_outcome": "INVALID",
+      "meaning": "A proof issuer_ref does not resolve."
+    },
+    {
+      "code": "VERIFICATION_METHOD_INVALID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "verification_method is not a conforming issuer#key reference."
+    },
+    {
+      "code": "PROOF_ALGORITHM_UNSUPPORTED",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The proof algorithm is unsupported."
+    },
+    {
+      "code": "PROOF_VALUE_INVALID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "proof_value is not canonical unpadded base64url."
+    },
+    {
+      "code": "PROOF_TARGET_NOT_FOUND",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The proof target does not resolve."
+    },
+    {
+      "code": "PROOF_TARGET_DIGEST_MISMATCH",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The declared proof target digest differs from the resolved target digest."
+    },
+    {
+      "code": "INVALID_VERIFICATION_METHOD",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The verification method cannot be parsed."
+    },
+    {
+      "code": "PROOF_ISSUER_MISMATCH",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "Proof issuer fields do not identify the same issuer."
+    },
+    {
+      "code": "VERIFICATION_KEY_NOT_FOUND",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The verification key does not resolve under the issuer."
+    },
+    {
+      "code": "UNSUPPORTED_SIGNATURE_ALGORITHM",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The proof or key signature algorithm is unsupported."
+    },
+    {
+      "code": "UNSUPPORTED_PUBLIC_KEY_FORMAT",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The public key format is unsupported."
+    },
+    {
+      "code": "SIGNATURE_VALID",
+      "category": "PROOF",
+      "structural_outcome": "VALID",
+      "meaning": "The signature is valid."
+    },
+    {
+      "code": "SIGNATURE_INVALID",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The Ed25519 signature is invalid."
+    },
+    {
+      "code": "SIGNATURE_PROCESSING_ERROR",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "Signature processing failed."
+    },
+    {
+      "code": "PROOF_CREATED_BEFORE_KEY_VALIDITY",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The proof predates the declared key validity interval."
+    },
+    {
+      "code": "PROOF_CREATED_AFTER_KEY_VALIDITY",
+      "category": "PROOF",
+      "structural_outcome": "INVALID",
+      "meaning": "The proof is later than the declared key validity interval."
+    },
+    {
+      "code": "PAYLOAD_DIGEST_CALCULATION_FAILED",
+      "category": "DIGEST",
+      "structural_outcome": "INVALID",
+      "meaning": "The verifier could not calculate the payload digest."
+    },
+    {
+      "code": "NO_EVENTS",
+      "category": "COMPLETENESS",
+      "structural_outcome": "INCOMPLETE",
+      "meaning": "The bundle contains no Outcome Events."
+    },
+    {
+      "code": "NO_EVIDENCE",
+      "category": "COMPLETENESS",
+      "structural_outcome": "INCOMPLETE",
+      "meaning": "The bundle contains no Evidence Items."
+    },
+    {
+      "code": "NO_PROOFS",
+      "category": "COMPLETENESS",
+      "structural_outcome": "INCOMPLETE",
+      "meaning": "The bundle contains no Proofs."
+    }
+  ]
+}

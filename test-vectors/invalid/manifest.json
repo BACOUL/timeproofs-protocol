@@ -1,0 +1,15 @@
+{
+  "digest-mismatch.bundle.json": "OBJECT_DIGEST_MISMATCH",
+  "signature-mismatch.bundle.json": "SIGNATURE_INVALID",
+  "unresolved-parent.bundle.json": "PARENT_EVENT_NOT_FOUND",
+  "duplicate-key.json": "DUPLICATE_PROPERTY",
+  "extra-top-level-member.json": "TOP_LEVEL_MEMBERS_INVALID",
+  "event-extra-member.bundle.json": "EVENT_MEMBERS_INVALID",
+  "invalid-locator.bundle.json": "LOCATOR_SCHEME_INVALID",
+  "invalid-disclosure.bundle.json": "DISCLOSURE_INVALID",
+  "relationship-target-missing.bundle.json": "RELATIONSHIP_TO_NOT_FOUND",
+  "duplicate-object-id.bundle.json": "DUPLICATE_OBJECT_ID",
+  "invalid-payload-timestamp.bundle.json": "CREATED_AT_INVALID",
+  "proof-target-digest-mismatch.bundle.json": "PROOF_TARGET_DIGEST_MISMATCH",
+  "invalid-key-interval.bundle.json": "KEY_VALIDITY_INTERVAL_INVALID"
+}

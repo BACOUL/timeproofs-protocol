@@ -4,22 +4,37 @@
   "title": "TimeProofs Evidence Bundle TP-JSON-0.1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["payload", "proofs"],
+  "required": [
+    "payload",
+    "proofs"
+  ],
   "properties": {
-    "payload": { "$ref": "#/$defs/payload" },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    },
     "proofs": {
       "type": "array",
-      "items": { "$ref": "#/$defs/proof" }
+      "items": {
+        "$ref": "#/$defs/proof"
+      }
     }
   },
   "$defs": {
     "digest": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["algorithm", "value"],
+      "required": [
+        "algorithm",
+        "value"
+      ],
       "properties": {
-        "algorithm": { "const": "sha-256" },
-        "value": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        "algorithm": {
+          "const": "sha-256"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
       }
     },
     "timestamp": {
@@ -33,166 +48,453 @@
     "key": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["key_id", "algorithm", "format", "public_key"],
+      "required": [
+        "key_id",
+        "algorithm",
+        "format",
+        "public_key"
+      ],
       "properties": {
-        "key_id": { "type": "string", "minLength": 1 },
-        "algorithm": { "const": "Ed25519" },
-        "format": { "const": "spki-pem" },
-        "public_key": { "type": "string", "minLength": 1 },
-        "valid_from": { "$ref": "#/$defs/timestamp" },
-        "valid_until": { "$ref": "#/$defs/timestamp" },
-        "revocation_ref": { "type": "string", "minLength": 1 }
+        "key_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "algorithm": {
+          "const": "Ed25519"
+        },
+        "format": {
+          "const": "spki-pem"
+        },
+        "public_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "valid_from": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "valid_until": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "revocation_ref": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "issuer": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["issuer_id", "display_name", "issuer_type", "identifiers", "keys", "extensions"],
+      "required": [
+        "issuer_id",
+        "display_name",
+        "issuer_type",
+        "identifiers",
+        "keys",
+        "extensions"
+      ],
       "properties": {
-        "issuer_id": { "type": "string", "minLength": 1 },
-        "display_name": { "type": "string", "minLength": 1 },
+        "issuer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        },
         "issuer_type": {
-          "enum": ["AI_AGENT", "GATEWAY", "SERVICE", "ORGANIZATION", "SYSTEM", "PAYMENT_PROVIDER", "OTHER"]
+          "enum": [
+            "AI_AGENT",
+            "GATEWAY",
+            "SERVICE",
+            "ORGANIZATION",
+            "SYSTEM",
+            "PAYMENT_PROVIDER",
+            "OTHER"
+          ]
         },
         "identifiers": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["scheme", "value"],
+            "required": [
+              "scheme",
+              "value"
+            ],
             "properties": {
-              "scheme": { "type": "string", "minLength": 1 },
-              "value": { "type": "string", "minLength": 1 }
+              "scheme": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
             }
-          }
+          },
+          "uniqueItems": true
         },
         "keys": {
           "type": "array",
-          "items": { "$ref": "#/$defs/key" }
+          "items": {
+            "$ref": "#/$defs/key"
+          }
         },
-        "extensions": { "$ref": "#/$defs/extensions" }
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
       }
     },
     "entityRef": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["entity_type", "entity_id"],
+      "required": [
+        "entity_type",
+        "entity_id"
+      ],
       "properties": {
-        "entity_type": { "type": "string", "minLength": 1 },
-        "entity_id": { "type": "string", "minLength": 1 },
-        "display_name": { "type": "string" }
+        "entity_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entity_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display_name": {
+          "type": "string"
+        }
       }
     },
     "event": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "event_id", "phase", "event_type", "status", "occurred_at", "recorded_at",
-        "source_class", "issuer_ref", "actor", "subject", "claim", "evidence_refs",
-        "parent_event_digests", "extensions", "object_digest"
+        "event_id",
+        "phase",
+        "event_type",
+        "status",
+        "occurred_at",
+        "recorded_at",
+        "source_class",
+        "issuer_ref",
+        "actor",
+        "subject",
+        "claim",
+        "evidence_refs",
+        "parent_event_digests",
+        "extensions",
+        "object_digest"
       ],
       "properties": {
-        "event_id": { "type": "string", "minLength": 1 },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
         "phase": {
-          "enum": ["INTENT", "AUTHORIZATION", "DISPATCH", "ACCEPTANCE", "EFFECT", "SETTLEMENT", "TERMINATION"]
+          "enum": [
+            "INTENT",
+            "AUTHORIZATION",
+            "DISPATCH",
+            "ACCEPTANCE",
+            "EFFECT",
+            "SETTLEMENT",
+            "TERMINATION"
+          ]
         },
         "event_type": {
           "type": "string",
           "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)+$"
         },
         "status": {
-          "enum": ["PENDING", "SUCCEEDED", "FAILED", "PARTIAL", "CANCELLED", "REVERSED", "EXPIRED"]
+          "enum": [
+            "PENDING",
+            "SUCCEEDED",
+            "FAILED",
+            "PARTIAL",
+            "CANCELLED",
+            "REVERSED",
+            "EXPIRED"
+          ]
         },
-        "occurred_at": { "$ref": "#/$defs/timestamp" },
-        "recorded_at": { "$ref": "#/$defs/timestamp" },
+        "occurred_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "recorded_at": {
+          "$ref": "#/$defs/timestamp"
+        },
         "source_class": {
-          "enum": ["SELF_CLAIMED", "GATEWAY_OBSERVED", "RECEIVER_ATTESTED", "SYSTEM_OF_RECORD", "INDEPENDENTLY_SETTLED"]
+          "enum": [
+            "SELF_CLAIMED",
+            "GATEWAY_OBSERVED",
+            "RECEIVER_ATTESTED",
+            "SYSTEM_OF_RECORD",
+            "INDEPENDENTLY_SETTLED"
+          ]
         },
-        "issuer_ref": { "type": "string", "minLength": 1 },
-        "actor": { "$ref": "#/$defs/entityRef" },
-        "subject": { "$ref": "#/$defs/entityRef" },
-        "claim": { "type": "object", "additionalProperties": true },
+        "issuer_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor": {
+          "$ref": "#/$defs/entityRef"
+        },
+        "subject": {
+          "$ref": "#/$defs/entityRef"
+        },
+        "claim": {
+          "type": "object",
+          "additionalProperties": true
+        },
         "evidence_refs": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "uniqueItems": true
         },
         "parent_event_digests": {
           "type": "array",
-          "items": { "$ref": "#/$defs/digest" },
+          "items": {
+            "$ref": "#/$defs/digest"
+          },
           "uniqueItems": true
         },
-        "extensions": { "$ref": "#/$defs/extensions" },
-        "object_digest": { "$ref": "#/$defs/digest" }
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "object_digest": {
+          "$ref": "#/$defs/digest"
+        }
       }
     },
     "locator": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["scheme", "value", "retrieval_policy"],
+      "required": [
+        "scheme",
+        "value",
+        "retrieval_policy"
+      ],
       "properties": {
-        "scheme": { "enum": ["opaque", "embedded", "https"] },
-        "value": { "type": "string", "minLength": 1 },
-        "retrieval_policy": { "enum": ["PUBLIC", "AUTHORIZED_ONLY", "LOCAL_ONLY", "UNAVAILABLE"] }
-      }
+        "scheme": {
+          "enum": [
+            "opaque",
+            "embedded",
+            "https"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrieval_policy": {
+          "enum": [
+            "PUBLIC",
+            "AUTHORIZED_ONLY",
+            "LOCAL_ONLY",
+            "UNAVAILABLE"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scheme": {
+                "const": "https"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^https://"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scheme": {
+                "const": "embedded"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "retrieval_policy": {
+                "not": {
+                  "const": "UNAVAILABLE"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "evidence": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "evidence_id", "evidence_type", "media_type", "source_class", "issuer_ref",
-        "claim_scope", "content_digest", "locator", "disclosure", "extensions", "object_digest"
+        "evidence_id",
+        "evidence_type",
+        "media_type",
+        "source_class",
+        "issuer_ref",
+        "claim_scope",
+        "content_digest",
+        "locator",
+        "disclosure",
+        "extensions",
+        "object_digest"
       ],
       "properties": {
-        "evidence_id": { "type": "string", "minLength": 1 },
-        "evidence_type": { "type": "string", "minLength": 1 },
-        "media_type": { "type": "string", "minLength": 1 },
-        "source_class": {
-          "enum": ["SELF_CLAIMED", "GATEWAY_OBSERVED", "RECEIVER_ATTESTED", "SYSTEM_OF_RECORD", "INDEPENDENTLY_SETTLED"]
+        "evidence_id": {
+          "type": "string",
+          "minLength": 1
         },
-        "issuer_ref": { "type": "string", "minLength": 1 },
+        "evidence_type": {
+          "type": "string",
+          "pattern": "^[A-Z0-9]+(?:[._-][A-Z0-9]+)*$"
+        },
+        "media_type": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9!#$&^_.+-]+/[A-Za-z0-9!#$&^_.+-]+(?:\\s*;.*)?$"
+        },
+        "source_class": {
+          "enum": [
+            "SELF_CLAIMED",
+            "GATEWAY_OBSERVED",
+            "RECEIVER_ATTESTED",
+            "SYSTEM_OF_RECORD",
+            "INDEPENDENTLY_SETTLED"
+          ]
+        },
+        "issuer_ref": {
+          "type": "string",
+          "minLength": 1
+        },
         "claim_scope": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "minItems": 1,
           "uniqueItems": true
         },
-        "content_digest": { "$ref": "#/$defs/digest" },
-        "locator": { "$ref": "#/$defs/locator" },
-        "disclosure": { "enum": ["PUBLIC", "RESTRICTED", "PRIVATE", "COMMITMENT_ONLY"] },
-        "extensions": { "$ref": "#/$defs/extensions" },
-        "object_digest": { "$ref": "#/$defs/digest" }
+        "content_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "locator": {
+          "$ref": "#/$defs/locator"
+        },
+        "disclosure": {
+          "enum": [
+            "PUBLIC",
+            "RESTRICTED",
+            "PRIVATE",
+            "COMMITMENT_ONLY"
+          ]
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "object_digest": {
+          "$ref": "#/$defs/digest"
+        }
       }
     },
     "relationship": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["relationship_id", "relationship_type", "from_ref", "to_ref", "extensions", "object_digest"],
+      "required": [
+        "relationship_id",
+        "relationship_type",
+        "from_ref",
+        "to_ref",
+        "extensions",
+        "object_digest"
+      ],
       "properties": {
-        "relationship_id": { "type": "string", "minLength": 1 },
-        "relationship_type": {
-          "enum": ["SUPPORTS", "CONTRADICTS", "SUPERSEDES", "REVERSES", "CORRESPONDS_TO"]
+        "relationship_id": {
+          "type": "string",
+          "minLength": 1
         },
-        "from_ref": { "type": "string", "minLength": 1 },
-        "to_ref": { "type": "string", "minLength": 1 },
-        "extensions": { "$ref": "#/$defs/extensions" },
-        "object_digest": { "$ref": "#/$defs/digest" }
+        "relationship_type": {
+          "enum": [
+            "SUPPORTS",
+            "CONTRADICTS",
+            "SUPERSEDES",
+            "REVERSES",
+            "CORRESPONDS_TO"
+          ]
+        },
+        "from_ref": {
+          "type": "string",
+          "pattern": "^(?:event|evidence|issuer):[^:\\s]+$"
+        },
+        "to_ref": {
+          "type": "string",
+          "pattern": "^(?:event|evidence|issuer):[^:\\s]+$"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "object_digest": {
+          "$ref": "#/$defs/digest"
+        }
       }
     },
     "target": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["target_type", "digest"],
+      "required": [
+        "target_type",
+        "digest"
+      ],
       "properties": {
-        "target_type": { "enum": ["BUNDLE_PAYLOAD", "OUTCOME_EVENT", "EVIDENCE_ITEM", "RELATIONSHIP"] },
-        "target_id": { "type": "string", "minLength": 1 },
-        "digest": { "$ref": "#/$defs/digest" }
+        "target_type": {
+          "enum": [
+            "BUNDLE_PAYLOAD",
+            "OUTCOME_EVENT",
+            "EVIDENCE_ITEM",
+            "RELATIONSHIP"
+          ]
+        },
+        "target_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
       },
       "allOf": [
         {
-          "if": { "properties": { "target_type": { "const": "BUNDLE_PAYLOAD" } } },
-          "then": { "not": { "required": ["target_id"] } },
-          "else": { "required": ["target_id"] }
+          "if": {
+            "properties": {
+              "target_type": {
+                "const": "BUNDLE_PAYLOAD"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "target_id"
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "target_id"
+            ]
+          }
         }
       ]
     },
@@ -200,39 +502,115 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "proof_id", "proof_type", "target", "issuer_ref", "verification_method",
-        "created_at", "algorithm", "proof_value"
+        "proof_id",
+        "proof_type",
+        "target",
+        "issuer_ref",
+        "verification_method",
+        "created_at",
+        "algorithm",
+        "proof_value"
       ],
       "properties": {
-        "proof_id": { "type": "string", "minLength": 1 },
-        "proof_type": { "const": "SIGNATURE" },
-        "target": { "$ref": "#/$defs/target" },
-        "issuer_ref": { "type": "string", "minLength": 1 },
-        "verification_method": { "type": "string", "minLength": 3 },
-        "created_at": { "$ref": "#/$defs/timestamp" },
-        "algorithm": { "const": "Ed25519" },
-        "proof_value": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" }
+        "proof_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "proof_type": {
+          "const": "SIGNATURE"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "issuer_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verification_method": {
+          "type": "string",
+          "minLength": 3
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "algorithm": {
+          "const": "Ed25519"
+        },
+        "proof_value": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "minLength": 1
+        }
       }
     },
     "payload": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "spec_version", "profile", "bundle_id", "action_id", "created_at", "issuers",
-        "events", "evidence", "relationships", "predecessor_bundle_digests", "extensions"
+        "spec_version",
+        "profile",
+        "bundle_id",
+        "action_id",
+        "created_at",
+        "issuers",
+        "events",
+        "evidence",
+        "relationships",
+        "predecessor_bundle_digests",
+        "extensions"
       ],
       "properties": {
-        "spec_version": { "const": "0.1" },
-        "profile": { "const": "TP-JSON-0.1" },
-        "bundle_id": { "type": "string", "minLength": 1 },
-        "action_id": { "type": "string", "minLength": 1 },
-        "created_at": { "$ref": "#/$defs/timestamp" },
-        "issuers": { "type": "array", "items": { "$ref": "#/$defs/issuer" } },
-        "events": { "type": "array", "items": { "$ref": "#/$defs/event" } },
-        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
-        "relationships": { "type": "array", "items": { "$ref": "#/$defs/relationship" } },
-        "predecessor_bundle_digests": { "type": "array", "items": { "$ref": "#/$defs/digest" } },
-        "extensions": { "$ref": "#/$defs/extensions" }
+        "spec_version": {
+          "const": "0.1"
+        },
+        "profile": {
+          "const": "TP-JSON-0.1"
+        },
+        "bundle_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "issuers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/issuer"
+          }
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/event"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relationship"
+          }
+        },
+        "predecessor_bundle_digests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/digest"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
       }
     }
   }

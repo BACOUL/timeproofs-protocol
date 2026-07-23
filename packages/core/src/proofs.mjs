@@ -6,11 +6,13 @@ function base64urlEncode(bytes) {
   return Buffer.from(bytes).toString('base64url');
 }
 
-function base64urlDecode(value) {
-  if (typeof value !== 'string' || !/^[A-Za-z0-9_-]+$/u.test(value)) {
+function base64urlDecodeCanonical(value) {
+  if (typeof value !== 'string' || value.length === 0 || !/^[A-Za-z0-9_-]+$/u.test(value) || value.includes('=')) {
     throw new TypeError('INVALID_BASE64URL');
   }
-  return Buffer.from(value, 'base64url');
+  const decoded = Buffer.from(value, 'base64url');
+  if (decoded.length === 0 || decoded.toString('base64url') !== value) throw new TypeError('INVALID_BASE64URL');
+  return decoded;
 }
 
 export function resolveTarget(bundle, target) {
@@ -58,6 +60,7 @@ export function createSignatureProof({
     targetDigest: resolved.digest
   });
   const privateKey = createPrivateKey(privateKeyPem);
+  if (privateKey.asymmetricKeyType !== 'ed25519') throw new TypeError('PRIVATE_KEY_NOT_ED25519');
   const signature = sign(null, input, privateKey);
   return {
     proof_id: proofId,
@@ -76,25 +79,21 @@ export function createSignatureProof({
 
 export function verifySignatureProof(bundle, proof, issuer) {
   const resolved = resolveTarget(bundle, proof.target);
-  if (!resolved) {
-    return { valid: false, code: 'PROOF_TARGET_NOT_FOUND' };
-  }
-  if (!digestEquals(resolved.digest, proof.target.digest)) {
-    return { valid: false, code: 'PROOF_TARGET_DIGEST_MISMATCH' };
-  }
-  const separator = proof.verification_method.lastIndexOf('#');
-  if (separator <= 0) return { valid: false, code: 'INVALID_VERIFICATION_METHOD' };
+  if (!resolved) return { valid: false, code: 'PROOF_TARGET_NOT_FOUND' };
+  if (!digestEquals(resolved.digest, proof.target.digest)) return { valid: false, code: 'PROOF_TARGET_DIGEST_MISMATCH' };
+
+  const separator = typeof proof.verification_method === 'string' ? proof.verification_method.lastIndexOf('#') : -1;
+  if (separator <= 0 || separator === proof.verification_method.length - 1) return { valid: false, code: 'INVALID_VERIFICATION_METHOD' };
   const issuerId = proof.verification_method.slice(0, separator);
   const keyId = proof.verification_method.slice(separator + 1);
-  if (issuerId !== proof.issuer_ref || issuer?.issuer_id !== issuerId) {
-    return { valid: false, code: 'PROOF_ISSUER_MISMATCH' };
-  }
+  if (issuerId !== proof.issuer_ref || issuer?.issuer_id !== issuerId) return { valid: false, code: 'PROOF_ISSUER_MISMATCH' };
+
   const key = issuer.keys?.find((candidate) => candidate.key_id === keyId);
   if (!key) return { valid: false, code: 'VERIFICATION_KEY_NOT_FOUND' };
-  if (proof.algorithm !== 'Ed25519' || key.algorithm !== 'Ed25519') {
-    return { valid: false, code: 'UNSUPPORTED_SIGNATURE_ALGORITHM' };
-  }
+  if (proof.algorithm !== 'Ed25519' || key.algorithm !== 'Ed25519') return { valid: false, code: 'UNSUPPORTED_SIGNATURE_ALGORITHM' };
   if (key.format !== 'spki-pem') return { valid: false, code: 'UNSUPPORTED_PUBLIC_KEY_FORMAT' };
+  if (key.valid_from && Date.parse(proof.created_at) < Date.parse(key.valid_from)) return { valid: false, code: 'PROOF_CREATED_BEFORE_KEY_VALIDITY' };
+  if (key.valid_until && Date.parse(proof.created_at) > Date.parse(key.valid_until)) return { valid: false, code: 'PROOF_CREATED_AFTER_KEY_VALIDITY' };
 
   try {
     const input = buildSignatureInput({
@@ -104,7 +103,8 @@ export function verifySignatureProof(bundle, proof, issuer) {
       targetDigest: proof.target.digest
     });
     const publicKey = createPublicKey(key.public_key);
-    const signature = base64urlDecode(proof.proof_value);
+    if (publicKey.asymmetricKeyType !== 'ed25519') return { valid: false, code: 'PUBLIC_KEY_INVALID' };
+    const signature = base64urlDecodeCanonical(proof.proof_value);
     const valid = verify(null, input, publicKey, signature);
     return valid ? { valid: true, code: 'SIGNATURE_VALID' } : { valid: false, code: 'SIGNATURE_INVALID' };
   } catch (error) {

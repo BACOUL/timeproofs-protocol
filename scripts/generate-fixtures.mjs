@@ -382,14 +382,25 @@ await writeJson('examples/refund/refund-pending.bundle.json', pending);
 await writeJson('examples/refund/refund-verified.bundle.json', verified);
 await writeJson('examples/refund/refund-contradicted.bundle.json', contradicted);
 
+const invalidManifest = {};
+async function writeInvalid(fileName, bundleOrText, expectedCode) {
+  const relativePath = `test-vectors/invalid/${fileName}`;
+  if (typeof bundleOrText === 'string') {
+    await writeFile(resolve(root, relativePath), bundleOrText.endsWith('\n') ? bundleOrText : `${bundleOrText}\n`, 'utf8');
+  } else {
+    await writeJson(relativePath, bundleOrText);
+  }
+  invalidManifest[fileName] = expectedCode;
+}
+
 const digestMismatch = clone(pending);
 digestMismatch.payload.events[2].claim.amount = '80.00';
-await writeJson('test-vectors/invalid/digest-mismatch.bundle.json', digestMismatch);
+await writeInvalid('digest-mismatch.bundle.json', digestMismatch, 'OBJECT_DIGEST_MISMATCH');
 
 const signatureMismatch = clone(verified);
 const firstSignature = signatureMismatch.proofs[0].proof_value;
 signatureMismatch.proofs[0].proof_value = `${firstSignature[0] === 'A' ? 'B' : 'A'}${firstSignature.slice(1)}`;
-await writeJson('test-vectors/invalid/signature-mismatch.bundle.json', signatureMismatch);
+await writeInvalid('signature-mismatch.bundle.json', signatureMismatch, 'SIGNATURE_INVALID');
 
 const unresolvedParent = makeCommon('tpb_refund_bad_parent_001').bundle;
 const createdIndex = unresolvedParent.payload.events.findIndex((item) => item.event_id === 'tpe_refund_created');
@@ -406,10 +417,57 @@ addProof(unresolvedParent, {
   issuerRef: 'gateway.example', keyId: 'gateway-test-01', privateKeyPem: keys.gateway.privateKey,
   proofId: 'tpp_bad_parent_bundle', createdAt: '2026-07-23T14:32:09Z'
 });
-await writeJson('test-vectors/invalid/unresolved-parent.bundle.json', unresolvedParent);
+await writeInvalid('unresolved-parent.bundle.json', unresolvedParent, 'PARENT_EVENT_NOT_FOUND');
 
-await writeFile(resolve(root, 'test-vectors/invalid/duplicate-key.json'), '{"payload":{"bundle_id":"first","bundle_id":"second"},"proofs":[]}\n', 'utf8');
-await writeFile(resolve(root, 'test-vectors/invalid/extra-top-level-member.json'), JSON.stringify({ ...pending, unexpected: true }, null, 2) + '\n', 'utf8');
+await writeInvalid('duplicate-key.json', '{"payload":{"bundle_id":"first","bundle_id":"second"},"proofs":[]}\n', 'DUPLICATE_PROPERTY');
+await writeInvalid('extra-top-level-member.json', JSON.stringify({ ...pending, unexpected: true }, null, 2) + '\n', 'TOP_LEVEL_MEMBERS_INVALID');
+
+const eventExtraMember = clone(unprovable);
+eventExtraMember.proofs = [];
+eventExtraMember.payload.events[0].unexpected = true;
+eventExtraMember.payload.events[0].object_digest = calculateObjectDigest(eventExtraMember.payload.events[0]);
+await writeInvalid('event-extra-member.bundle.json', eventExtraMember, 'EVENT_MEMBERS_INVALID');
+
+const invalidLocator = clone(pending);
+invalidLocator.proofs = invalidLocator.proofs.filter((proof) => proof.target.target_type !== 'BUNDLE_PAYLOAD');
+invalidLocator.payload.evidence[0].locator.scheme = 's3';
+invalidLocator.payload.evidence[0].object_digest = calculateObjectDigest(invalidLocator.payload.evidence[0]);
+await writeInvalid('invalid-locator.bundle.json', invalidLocator, 'LOCATOR_SCHEME_INVALID');
+
+const invalidDisclosure = clone(pending);
+invalidDisclosure.proofs = invalidDisclosure.proofs.filter((proof) => proof.target.target_type !== 'BUNDLE_PAYLOAD');
+invalidDisclosure.payload.evidence[0].disclosure = 'SECRET';
+invalidDisclosure.payload.evidence[0].object_digest = calculateObjectDigest(invalidDisclosure.payload.evidence[0]);
+await writeInvalid('invalid-disclosure.bundle.json', invalidDisclosure, 'DISCLOSURE_INVALID');
+
+const relationshipMissing = clone(pending);
+relationshipMissing.proofs = relationshipMissing.proofs.filter((proof) => proof.target.target_type !== 'BUNDLE_PAYLOAD');
+relationshipMissing.payload.relationships[0].to_ref = 'event:missing-event';
+relationshipMissing.payload.relationships[0].object_digest = calculateObjectDigest(relationshipMissing.payload.relationships[0]);
+await writeInvalid('relationship-target-missing.bundle.json', relationshipMissing, 'RELATIONSHIP_TO_NOT_FOUND');
+
+const duplicateObjectId = clone(pending);
+duplicateObjectId.proofs = duplicateObjectId.proofs.filter((proof) => proof.target.target_type !== 'BUNDLE_PAYLOAD');
+duplicateObjectId.payload.relationships[0].relationship_id = duplicateObjectId.payload.events[0].event_id;
+duplicateObjectId.payload.relationships[0].object_digest = calculateObjectDigest(duplicateObjectId.payload.relationships[0]);
+await writeInvalid('duplicate-object-id.bundle.json', duplicateObjectId, 'DUPLICATE_OBJECT_ID');
+
+const invalidPayloadTimestamp = clone(pending);
+invalidPayloadTimestamp.proofs = invalidPayloadTimestamp.proofs.filter((proof) => proof.target.target_type !== 'BUNDLE_PAYLOAD');
+invalidPayloadTimestamp.payload.created_at = '2026-02-30T14:32:08Z';
+await writeInvalid('invalid-payload-timestamp.bundle.json', invalidPayloadTimestamp, 'CREATED_AT_INVALID');
+
+const proofTargetMismatch = clone(verified);
+proofTargetMismatch.proofs[0].target.digest.value = '0'.repeat(64);
+await writeInvalid('proof-target-digest-mismatch.bundle.json', proofTargetMismatch, 'PROOF_TARGET_DIGEST_MISMATCH');
+
+const invalidKeyInterval = clone(pending);
+invalidKeyInterval.proofs = [];
+invalidKeyInterval.payload.issuers[2].keys[0].valid_from = '2026-08-01T00:00:00Z';
+invalidKeyInterval.payload.issuers[2].keys[0].valid_until = '2026-07-01T00:00:00Z';
+await writeInvalid('invalid-key-interval.bundle.json', invalidKeyInterval, 'KEY_VALIDITY_INTERVAL_INVALID');
+
+await writeJson('test-vectors/invalid/manifest.json', invalidManifest);
 
 const canonicalInput = {
   z: 3,
@@ -419,6 +477,35 @@ const canonicalInput = {
 };
 await writeJson('test-vectors/canonicalization/input.json', canonicalInput);
 await writeFile(resolve(root, 'test-vectors/canonicalization/expected.txt'), `${canonicalize(canonicalInput)}\n`, 'utf8');
+
+const canonicalVectors = [
+  {
+    id: 'unicode-preserved-and-utf16-sorted',
+    input: { z: 'last', 'é': 'precomposed', 'é': 'decomposed', '😀': 'face', a: 'first' },
+    expected: '{"a":"first","é":"decomposed","z":"last","é":"precomposed","😀":"face"}'
+  },
+  {
+    id: 'ecmascript-number-serialization',
+    input: [333333333.33333329, 1E30, 4.50, 2e-3, 0.000000000000000000000000001, -0],
+    expected: '[333333333.3333333,1e+30,4.5,0.002,1e-27,0]'
+  },
+  {
+    id: 'arrays-nested-objects-and-null',
+    input: { z: null, a: [3, { b: true, a: false }], m: { d: null, c: [] } },
+    expected: '{"a":[3,{"a":false,"b":true}],"m":{"c":[],"d":null},"z":null}'
+  },
+  {
+    id: 'null-member-is-present',
+    input: { a: 1, b: null },
+    expected: '{"a":1,"b":null}'
+  },
+  {
+    id: 'member-is-omitted',
+    input: { a: 1 },
+    expected: '{"a":1}'
+  }
+];
+await writeJson('test-vectors/canonicalization/vectors.json', canonicalVectors);
 
 for (const [name, bundle] of Object.entries({ pending, verified, contradicted, unprovable })) {
   const verification = verifyBundle(bundle);

@@ -1,0 +1,648 @@
+{
+  "spec_version": "0.1",
+  "profile": "TP-JSON-0.1",
+  "fields": [
+    {
+      "path": "$",
+      "normative_section": "5",
+      "required": "yes",
+      "semantics": "Evidence Bundle envelope containing exactly payload and proofs."
+    },
+    {
+      "path": "$.payload",
+      "normative_section": "6",
+      "required": "yes",
+      "semantics": "Immutable evidence-bearing payload. Its canonical form is the payload digest target."
+    },
+    {
+      "path": "$.proofs",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "Array of cryptographic proofs excluded from the payload digest."
+    },
+    {
+      "path": "$.payload.spec_version",
+      "normative_section": "6.1",
+      "required": "yes",
+      "semantics": "Exact protocol specification version string."
+    },
+    {
+      "path": "$.payload.profile",
+      "normative_section": "6.2",
+      "required": "yes",
+      "semantics": "Exact serialization and cryptographic profile identifier."
+    },
+    {
+      "path": "$.payload.bundle_id",
+      "normative_section": "6.3",
+      "required": "yes",
+      "semantics": "Opaque identifier of one immutable bundle revision."
+    },
+    {
+      "path": "$.payload.action_id",
+      "normative_section": "6.4",
+      "required": "yes",
+      "semantics": "Opaque identifier of the logical action across revisions."
+    },
+    {
+      "path": "$.payload.created_at",
+      "normative_section": "6.5",
+      "required": "yes",
+      "semantics": "UTC time at which this payload revision was created."
+    },
+    {
+      "path": "$.payload.issuers",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Issuer and verification-key descriptions referenced by the bundle."
+    },
+    {
+      "path": "$.payload.events",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Outcome Events in non-authoritative array order."
+    },
+    {
+      "path": "$.payload.evidence",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Evidence Items referenced by events or relationships."
+    },
+    {
+      "path": "$.payload.relationships",
+      "normative_section": "10",
+      "required": "yes",
+      "semantics": "Typed relationships between resolvable bundle objects."
+    },
+    {
+      "path": "$.payload.predecessor_bundle_digests",
+      "normative_section": "6.6",
+      "required": "yes",
+      "semantics": "Direct predecessor payload digests for immutable revision history."
+    },
+    {
+      "path": "$.payload.extensions",
+      "normative_section": "11",
+      "required": "yes",
+      "semantics": "Namespaced protocol-specific payload extensions.",
+      "open_children": true
+    },
+    {
+      "path": "$.payload.issuers[]",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "One issuer description."
+    },
+    {
+      "path": "$.payload.issuers[].issuer_id",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Bundle-local issuer identifier used by issuer_ref and verification_method."
+    },
+    {
+      "path": "$.payload.issuers[].display_name",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Human-readable issuer label with no trust semantics."
+    },
+    {
+      "path": "$.payload.issuers[].issuer_type",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Coarse issuer category."
+    },
+    {
+      "path": "$.payload.issuers[].identifiers",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Externally meaningful issuer identifiers."
+    },
+    {
+      "path": "$.payload.issuers[].identifiers[]",
+      "normative_section": "7",
+      "required": "no",
+      "semantics": "One scheme/value identifier."
+    },
+    {
+      "path": "$.payload.issuers[].identifiers[].scheme",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Identifier scheme name."
+    },
+    {
+      "path": "$.payload.issuers[].identifiers[].value",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Identifier value interpreted by its scheme."
+    },
+    {
+      "path": "$.payload.issuers[].keys",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Verification keys declared by the issuer."
+    },
+    {
+      "path": "$.payload.issuers[].keys[]",
+      "normative_section": "7",
+      "required": "no",
+      "semantics": "One public verification key."
+    },
+    {
+      "path": "$.payload.issuers[].keys[].key_id",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Identifier unique within the issuer."
+    },
+    {
+      "path": "$.payload.issuers[].keys[].algorithm",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Key algorithm; Ed25519 in v0.1."
+    },
+    {
+      "path": "$.payload.issuers[].keys[].format",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Public-key encoding; spki-pem in v0.1."
+    },
+    {
+      "path": "$.payload.issuers[].keys[].public_key",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "SPKI PEM public key material."
+    },
+    {
+      "path": "$.payload.issuers[].keys[].valid_from",
+      "normative_section": "7",
+      "required": "no",
+      "semantics": "Optional inclusive start of declared key validity."
+    },
+    {
+      "path": "$.payload.issuers[].keys[].valid_until",
+      "normative_section": "7",
+      "required": "no",
+      "semantics": "Optional inclusive end of declared key validity."
+    },
+    {
+      "path": "$.payload.issuers[].keys[].revocation_ref",
+      "normative_section": "7",
+      "required": "no",
+      "semantics": "Opaque reference to external key-status information."
+    },
+    {
+      "path": "$.payload.issuers[].extensions",
+      "normative_section": "7",
+      "required": "yes",
+      "semantics": "Namespaced issuer extensions.",
+      "open_children": true
+    },
+    {
+      "path": "$.payload.events[].actor",
+      "normative_section": "8.4",
+      "required": "yes",
+      "semantics": "Entity Reference identifying the event actor."
+    },
+    {
+      "path": "$.payload.events[].actor.entity_type",
+      "normative_section": "8.4",
+      "required": "yes",
+      "semantics": "Application-defined entity category."
+    },
+    {
+      "path": "$.payload.events[].actor.entity_id",
+      "normative_section": "8.4",
+      "required": "yes",
+      "semantics": "Opaque entity identifier in the producer context."
+    },
+    {
+      "path": "$.payload.events[].actor.display_name",
+      "normative_section": "8.4",
+      "required": "no",
+      "semantics": "Optional human-readable label with no identity authority."
+    },
+    {
+      "path": "$.payload.events[].subject",
+      "normative_section": "8.4",
+      "required": "yes",
+      "semantics": "Entity Reference identifying the event subject."
+    },
+    {
+      "path": "$.payload.events[].subject.entity_type",
+      "normative_section": "8.4",
+      "required": "yes",
+      "semantics": "Application-defined entity category."
+    },
+    {
+      "path": "$.payload.events[].subject.entity_id",
+      "normative_section": "8.4",
+      "required": "yes",
+      "semantics": "Opaque entity identifier in the producer context."
+    },
+    {
+      "path": "$.payload.events[].subject.display_name",
+      "normative_section": "8.4",
+      "required": "no",
+      "semantics": "Optional human-readable label with no identity authority."
+    },
+    {
+      "path": "$.payload.events[]",
+      "normative_section": "8",
+      "required": "no",
+      "semantics": "One immutable Outcome Event."
+    },
+    {
+      "path": "$.payload.events[].event_id",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Identifier unique among addressable payload objects."
+    },
+    {
+      "path": "$.payload.events[].phase",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Universal lifecycle phase."
+    },
+    {
+      "path": "$.payload.events[].event_type",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Lower-case domain-specific observation type."
+    },
+    {
+      "path": "$.payload.events[].status",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Status of this event, not the whole action."
+    },
+    {
+      "path": "$.payload.events[].occurred_at",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Claimed time the observed event occurred."
+    },
+    {
+      "path": "$.payload.events[].recorded_at",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Time the issuer recorded the event."
+    },
+    {
+      "path": "$.payload.events[].source_class",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Origin class of the event claim."
+    },
+    {
+      "path": "$.payload.events[].issuer_ref",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Reference to a payload issuer."
+    },
+    {
+      "path": "$.payload.events[].claim",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Domain-defined JSON claim object.",
+      "open_children": true
+    },
+    {
+      "path": "$.payload.events[].evidence_refs",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Unique Evidence Item IDs supporting this event."
+    },
+    {
+      "path": "$.payload.events[].parent_event_digests",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Unique causal parent object digests."
+    },
+    {
+      "path": "$.payload.events[].extensions",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Namespaced event extensions.",
+      "open_children": true
+    },
+    {
+      "path": "$.payload.events[].object_digest",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "Digest of the event with object_digest omitted."
+    },
+    {
+      "path": "$.payload.events[].object_digest.algorithm",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "sha-256."
+    },
+    {
+      "path": "$.payload.events[].object_digest.value",
+      "normative_section": "8",
+      "required": "yes",
+      "semantics": "64 lower-case hexadecimal digest value."
+    },
+    {
+      "path": "$.payload.evidence[]",
+      "normative_section": "9",
+      "required": "no",
+      "semantics": "One immutable Evidence Item metadata object."
+    },
+    {
+      "path": "$.payload.evidence[].evidence_id",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Identifier unique among addressable payload objects."
+    },
+    {
+      "path": "$.payload.evidence[].evidence_type",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Upper-case namespaced evidence artifact type."
+    },
+    {
+      "path": "$.payload.evidence[].media_type",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Media type of the referenced content."
+    },
+    {
+      "path": "$.payload.evidence[].source_class",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Origin class of the evidence content."
+    },
+    {
+      "path": "$.payload.evidence[].issuer_ref",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Reference to the issuer describing or supplying the evidence."
+    },
+    {
+      "path": "$.payload.evidence[].claim_scope",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Non-empty unique event types the evidence may support."
+    },
+    {
+      "path": "$.payload.evidence[].content_digest",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Digest of the external or embedded evidence bytes under its content profile."
+    },
+    {
+      "path": "$.payload.evidence[].content_digest.algorithm",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "sha-256."
+    },
+    {
+      "path": "$.payload.evidence[].content_digest.value",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "64 lower-case hexadecimal digest value."
+    },
+    {
+      "path": "$.payload.evidence[].locator",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Retrieval metadata that is not part of the evidence content."
+    },
+    {
+      "path": "$.payload.evidence[].locator.scheme",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Locator scheme: opaque, embedded, or https."
+    },
+    {
+      "path": "$.payload.evidence[].locator.value",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Locator value interpreted by the scheme."
+    },
+    {
+      "path": "$.payload.evidence[].locator.retrieval_policy",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Access expectation for retrieving the evidence."
+    },
+    {
+      "path": "$.payload.evidence[].disclosure",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Disclosure classification."
+    },
+    {
+      "path": "$.payload.evidence[].extensions",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Namespaced Evidence Item extensions.",
+      "open_children": true
+    },
+    {
+      "path": "$.payload.evidence[].object_digest",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "Digest of Evidence Item metadata with object_digest omitted."
+    },
+    {
+      "path": "$.payload.evidence[].object_digest.algorithm",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "sha-256."
+    },
+    {
+      "path": "$.payload.evidence[].object_digest.value",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "64 lower-case hexadecimal digest value."
+    },
+    {
+      "path": "$.payload.relationships[]",
+      "normative_section": "10",
+      "required": "no",
+      "semantics": "One typed relationship."
+    },
+    {
+      "path": "$.payload.relationships[].relationship_id",
+      "normative_section": "10",
+      "required": "yes",
+      "semantics": "Identifier unique among addressable payload objects."
+    },
+    {
+      "path": "$.payload.relationships[].relationship_type",
+      "normative_section": "10",
+      "required": "yes",
+      "semantics": "Base relationship semantic."
+    },
+    {
+      "path": "$.payload.relationships[].from_ref",
+      "normative_section": "10",
+      "required": "yes",
+      "semantics": "Typed source reference."
+    },
+    {
+      "path": "$.payload.relationships[].to_ref",
+      "normative_section": "10",
+      "required": "yes",
+      "semantics": "Typed destination reference."
+    },
+    {
+      "path": "$.payload.relationships[].extensions",
+      "normative_section": "10",
+      "required": "yes",
+      "semantics": "Namespaced relationship extensions.",
+      "open_children": true
+    },
+    {
+      "path": "$.payload.relationships[].object_digest",
+      "normative_section": "10",
+      "required": "yes",
+      "semantics": "Digest of relationship with object_digest omitted."
+    },
+    {
+      "path": "$.payload.relationships[].object_digest.algorithm",
+      "normative_section": "10",
+      "required": "yes",
+      "semantics": "sha-256."
+    },
+    {
+      "path": "$.payload.relationships[].object_digest.value",
+      "normative_section": "10",
+      "required": "yes",
+      "semantics": "64 lower-case hexadecimal digest value."
+    },
+    {
+      "path": "$.payload.predecessor_bundle_digests[]",
+      "normative_section": "6.6",
+      "required": "no",
+      "semantics": "One direct predecessor payload SHA-256 digest."
+    },
+    {
+      "path": "$.payload.predecessor_bundle_digests[].algorithm",
+      "normative_section": "6.6",
+      "required": "yes",
+      "semantics": "sha-256."
+    },
+    {
+      "path": "$.payload.predecessor_bundle_digests[].value",
+      "normative_section": "6.6",
+      "required": "yes",
+      "semantics": "64 lower-case hexadecimal digest value."
+    },
+    {
+      "path": "$.proofs[]",
+      "normative_section": "14",
+      "required": "no",
+      "semantics": "One cryptographic Proof."
+    },
+    {
+      "path": "$.proofs[].proof_id",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "Identifier unique in the proofs array."
+    },
+    {
+      "path": "$.proofs[].proof_type",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "Proof kind; SIGNATURE in v0.1."
+    },
+    {
+      "path": "$.proofs[].target",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "Precisely identifies the signed digest target."
+    },
+    {
+      "path": "$.proofs[].target.target_type",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "Target class."
+    },
+    {
+      "path": "$.proofs[].target.target_id",
+      "normative_section": "14",
+      "required": "conditional",
+      "semantics": "Required except for BUNDLE_PAYLOAD, where it is forbidden."
+    },
+    {
+      "path": "$.proofs[].target.digest",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "Digest declared by the signer for the target."
+    },
+    {
+      "path": "$.proofs[].target.digest.algorithm",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "sha-256."
+    },
+    {
+      "path": "$.proofs[].target.digest.value",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "64 lower-case hexadecimal digest value."
+    },
+    {
+      "path": "$.proofs[].issuer_ref",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "Reference to the proof issuer."
+    },
+    {
+      "path": "$.proofs[].verification_method",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "Exact issuer_id#key_id verification method."
+    },
+    {
+      "path": "$.proofs[].created_at",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "UTC time at which the proof was created."
+    },
+    {
+      "path": "$.proofs[].algorithm",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "Signature algorithm; Ed25519 in v0.1."
+    },
+    {
+      "path": "$.proofs[].proof_value",
+      "normative_section": "14",
+      "required": "yes",
+      "semantics": "Canonical unpadded base64url Ed25519 signature bytes."
+    },
+    {
+      "path": "$.payload.events[].evidence_refs[]",
+      "normative_section": "8.6",
+      "required": "no",
+      "semantics": "One Evidence Item identifier referenced by the event."
+    },
+    {
+      "path": "$.payload.events[].parent_event_digests[]",
+      "normative_section": "8.7",
+      "required": "no",
+      "semantics": "One causal parent Event object digest."
+    },
+    {
+      "path": "$.payload.events[].parent_event_digests[].algorithm",
+      "normative_section": "8.7",
+      "required": "yes",
+      "semantics": "sha-256."
+    },
+    {
+      "path": "$.payload.events[].parent_event_digests[].value",
+      "normative_section": "8.7",
+      "required": "yes",
+      "semantics": "64 lower-case hexadecimal digest value."
+    },
+    {
+      "path": "$.payload.evidence[].claim_scope[]",
+      "normative_section": "9",
+      "required": "yes",
+      "semantics": "One lower-case namespaced event type covered by the evidence."
+    }
+  ]
+}

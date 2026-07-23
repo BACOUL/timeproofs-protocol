@@ -2,10 +2,10 @@
 
 | Component | Version | Status |
 |---|---:|---|
-| Evidence Bundle abstract model | 0.1 | Draft implementation profile |
-| TP-JSON profile | 0.1 | Experimental |
+| Evidence Bundle abstract model | 0.1 | Normatively coherent experimental draft |
+| TP-JSON profile | 0.1 | Coherent reference profile; independent implementation pending |
 | Outcome Event vocabulary | 0.1 | Skeleton |
-| Structural verification | 0.1 | Reference implementation available |
+| Structural verification | 0.1 | Reference implementation aligned with schemas and stable codes |
 | Signature model | 0.1 | Ed25519 experimental profile |
 | Refund verdict rules | refund-v0.1 | Experimental, non-normative |
 | TP-COSE profile | — | Not started |

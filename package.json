@@ -9,12 +9,14 @@
   ],
   "scripts": {
     "fixtures": "node scripts/generate-fixtures.mjs",
-    "test": "node scripts/generate-project-views.mjs && node tests/run-tests.mjs && node scripts/validate-project-os.mjs",
+    "test": "node scripts/generate-project-views.mjs && node scripts/generate-protocol-docs.mjs && node tests/run-tests.mjs && node scripts/validate-protocol-alignment.mjs && node scripts/validate-project-os.mjs",
     "verify:examples": "node packages/cli/bin/timeproofs.mjs verify test-vectors/valid/refund-verified.bundle.json --json",
     "verdict:examples": "node packages/cli/bin/timeproofs.mjs verdict test-vectors/valid/refund-verified.bundle.json --ruleset refund-v0.1 --json",
     "project:generate": "node scripts/generate-project-views.mjs",
     "project:validate": "node scripts/validate-project-os.mjs",
-    "test:protocol": "node tests/run-tests.mjs"
+    "test:protocol": "node tests/run-tests.mjs",
+    "protocol:generate": "node scripts/generate-protocol-docs.mjs",
+    "protocol:validate": "node scripts/validate-protocol-alignment.mjs"
   },
   "engines": {
     "node": ">=22"

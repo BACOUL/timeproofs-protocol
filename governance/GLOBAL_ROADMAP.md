@@ -82,6 +82,11 @@ Primary workstreams: WS03, WS07, WS12, WS14, WS16, WS17.
 
 Status: IN PROGRESS
 
+Milestone progress:
+
+- `P3-M1 Stripe refund connector and Relay foundation`: DONE on 2026-07-23;
+- `P3-M2 Relay packaging and Stripe test-mode walkthrough`: IN PROGRESS.
+
 Acceleration decision: Stripe refund connector work originally scheduled for P5 is pulled into P3 so the protocol immediately produces a runnable product.
 
 Objectives:

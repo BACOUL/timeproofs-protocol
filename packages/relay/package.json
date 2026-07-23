@@ -1,0 +1,11 @@
+{
+  "name": "@timeproofs/relay",
+  "version": "0.1.0-alpha.0",
+  "type": "module",
+  "private": true,
+  "exports": "./src/index.mjs",
+  "bin": {
+    "timeproofs-relay": "bin/timeproofs-relay.mjs"
+  },
+  "license": "Apache-2.0"
+}

@@ -484,3 +484,120 @@ The machine-readable authority is `spec/field-semantics-v0.1.json`. The table be
 | `$.payload.events[].parent_event_digests[].algorithm` | `yes` | 8.7 | sha-256. |
 | `$.payload.events[].parent_event_digests[].value` | `yes` | 8.7 | 64 lower-case hexadecimal digest value. |
 | `$.payload.evidence[].claim_scope[]` | `yes` | 9 | One lower-case namespaced event type covered by the evidence. |
+
+<!-- FIELD-PATH-APPENDIX:START -->
+
+## Appendix A — Normative field path registry
+
+The following paths form the complete field surface accepted by the v0.1 schema. The machine-readable authority is `spec/field-semantics-v0.1.json`. Open extension descendants are permitted only where the registry marks the parent as open.
+
+| Path | Section | Required | Semantics |
+|---|---:|---|---|
+| `$` | 5 | yes | Evidence Bundle envelope containing exactly payload and proofs. |
+| `$.payload` | 6 | yes | Immutable evidence-bearing payload. Its canonical form is the payload digest target. |
+| `$.proofs` | 14 | yes | Array of cryptographic proofs excluded from the payload digest. |
+| `$.payload.spec_version` | 6.1 | yes | Exact protocol specification version string. |
+| `$.payload.profile` | 6.2 | yes | Exact serialization and cryptographic profile identifier. |
+| `$.payload.bundle_id` | 6.3 | yes | Opaque identifier of one immutable bundle revision. |
+| `$.payload.action_id` | 6.4 | yes | Opaque identifier of the logical action across revisions. |
+| `$.payload.created_at` | 6.5 | yes | UTC time at which this payload revision was created. |
+| `$.payload.issuers` | 7 | yes | Issuer and verification-key descriptions referenced by the bundle. |
+| `$.payload.events` | 8 | yes | Outcome Events in non-authoritative array order. |
+| `$.payload.evidence` | 9 | yes | Evidence Items referenced by events or relationships. |
+| `$.payload.relationships` | 10 | yes | Typed relationships between resolvable bundle objects. |
+| `$.payload.predecessor_bundle_digests` | 6.6 | yes | Direct predecessor payload digests for immutable revision history. |
+| `$.payload.extensions` | 11 | yes | Namespaced protocol-specific payload extensions. |
+| `$.payload.issuers[]` | 7 | yes | One issuer description. |
+| `$.payload.issuers[].issuer_id` | 7 | yes | Bundle-local issuer identifier used by issuer_ref and verification_method. |
+| `$.payload.issuers[].display_name` | 7 | yes | Human-readable issuer label with no trust semantics. |
+| `$.payload.issuers[].issuer_type` | 7 | yes | Coarse issuer category. |
+| `$.payload.issuers[].identifiers` | 7 | yes | Externally meaningful issuer identifiers. |
+| `$.payload.issuers[].identifiers[]` | 7 | no | One scheme/value identifier. |
+| `$.payload.issuers[].identifiers[].scheme` | 7 | yes | Identifier scheme name. |
+| `$.payload.issuers[].identifiers[].value` | 7 | yes | Identifier value interpreted by its scheme. |
+| `$.payload.issuers[].keys` | 7 | yes | Verification keys declared by the issuer. |
+| `$.payload.issuers[].keys[]` | 7 | no | One public verification key. |
+| `$.payload.issuers[].keys[].key_id` | 7 | yes | Identifier unique within the issuer. |
+| `$.payload.issuers[].keys[].algorithm` | 7 | yes | Key algorithm; Ed25519 in v0.1. |
+| `$.payload.issuers[].keys[].format` | 7 | yes | Public-key encoding; spki-pem in v0.1. |
+| `$.payload.issuers[].keys[].public_key` | 7 | yes | SPKI PEM public key material. |
+| `$.payload.issuers[].keys[].valid_from` | 7 | no | Optional inclusive start of declared key validity. |
+| `$.payload.issuers[].keys[].valid_until` | 7 | no | Optional inclusive end of declared key validity. |
+| `$.payload.issuers[].keys[].revocation_ref` | 7 | no | Opaque reference to external key-status information. |
+| `$.payload.issuers[].extensions` | 7 | yes | Namespaced issuer extensions. |
+| `$.payload.events[].actor` | 8.4 | yes | Entity Reference identifying the event actor. |
+| `$.payload.events[].actor.entity_type` | 8.4 | yes | Application-defined entity category. |
+| `$.payload.events[].actor.entity_id` | 8.4 | yes | Opaque entity identifier in the producer context. |
+| `$.payload.events[].actor.display_name` | 8.4 | no | Optional human-readable label with no identity authority. |
+| `$.payload.events[].subject` | 8.4 | yes | Entity Reference identifying the event subject. |
+| `$.payload.events[].subject.entity_type` | 8.4 | yes | Application-defined entity category. |
+| `$.payload.events[].subject.entity_id` | 8.4 | yes | Opaque entity identifier in the producer context. |
+| `$.payload.events[].subject.display_name` | 8.4 | no | Optional human-readable label with no identity authority. |
+| `$.payload.events[]` | 8 | no | One immutable Outcome Event. |
+| `$.payload.events[].event_id` | 8 | yes | Identifier unique among addressable payload objects. |
+| `$.payload.events[].phase` | 8 | yes | Universal lifecycle phase. |
+| `$.payload.events[].event_type` | 8 | yes | Lower-case domain-specific observation type. |
+| `$.payload.events[].status` | 8 | yes | Status of this event, not the whole action. |
+| `$.payload.events[].occurred_at` | 8 | yes | Claimed time the observed event occurred. |
+| `$.payload.events[].recorded_at` | 8 | yes | Time the issuer recorded the event. |
+| `$.payload.events[].source_class` | 8 | yes | Origin class of the event claim. |
+| `$.payload.events[].issuer_ref` | 8 | yes | Reference to a payload issuer. |
+| `$.payload.events[].claim` | 8 | yes | Domain-defined JSON claim object. |
+| `$.payload.events[].evidence_refs` | 8 | yes | Unique Evidence Item IDs supporting this event. |
+| `$.payload.events[].parent_event_digests` | 8 | yes | Unique causal parent object digests. |
+| `$.payload.events[].extensions` | 8 | yes | Namespaced event extensions. |
+| `$.payload.events[].object_digest` | 8 | yes | Digest of the event with object_digest omitted. |
+| `$.payload.events[].object_digest.algorithm` | 8 | yes | sha-256. |
+| `$.payload.events[].object_digest.value` | 8 | yes | 64 lower-case hexadecimal digest value. |
+| `$.payload.evidence[]` | 9 | no | One immutable Evidence Item metadata object. |
+| `$.payload.evidence[].evidence_id` | 9 | yes | Identifier unique among addressable payload objects. |
+| `$.payload.evidence[].evidence_type` | 9 | yes | Upper-case namespaced evidence artifact type. |
+| `$.payload.evidence[].media_type` | 9 | yes | Media type of the referenced content. |
+| `$.payload.evidence[].source_class` | 9 | yes | Origin class of the evidence content. |
+| `$.payload.evidence[].issuer_ref` | 9 | yes | Reference to the issuer describing or supplying the evidence. |
+| `$.payload.evidence[].claim_scope` | 9 | yes | Non-empty unique event types the evidence may support. |
+| `$.payload.evidence[].content_digest` | 9 | yes | Digest of the external or embedded evidence bytes under its content profile. |
+| `$.payload.evidence[].content_digest.algorithm` | 9 | yes | sha-256. |
+| `$.payload.evidence[].content_digest.value` | 9 | yes | 64 lower-case hexadecimal digest value. |
+| `$.payload.evidence[].locator` | 9 | yes | Retrieval metadata that is not part of the evidence content. |
+| `$.payload.evidence[].locator.scheme` | 9 | yes | Locator scheme: opaque, embedded, or https. |
+| `$.payload.evidence[].locator.value` | 9 | yes | Locator value interpreted by the scheme. |
+| `$.payload.evidence[].locator.retrieval_policy` | 9 | yes | Access expectation for retrieving the evidence. |
+| `$.payload.evidence[].disclosure` | 9 | yes | Disclosure classification. |
+| `$.payload.evidence[].extensions` | 9 | yes | Namespaced Evidence Item extensions. |
+| `$.payload.evidence[].object_digest` | 9 | yes | Digest of Evidence Item metadata with object_digest omitted. |
+| `$.payload.evidence[].object_digest.algorithm` | 9 | yes | sha-256. |
+| `$.payload.evidence[].object_digest.value` | 9 | yes | 64 lower-case hexadecimal digest value. |
+| `$.payload.relationships[]` | 10 | no | One typed relationship. |
+| `$.payload.relationships[].relationship_id` | 10 | yes | Identifier unique among addressable payload objects. |
+| `$.payload.relationships[].relationship_type` | 10 | yes | Base relationship semantic. |
+| `$.payload.relationships[].from_ref` | 10 | yes | Typed source reference. |
+| `$.payload.relationships[].to_ref` | 10 | yes | Typed destination reference. |
+| `$.payload.relationships[].extensions` | 10 | yes | Namespaced relationship extensions. |
+| `$.payload.relationships[].object_digest` | 10 | yes | Digest of relationship with object_digest omitted. |
+| `$.payload.relationships[].object_digest.algorithm` | 10 | yes | sha-256. |
+| `$.payload.relationships[].object_digest.value` | 10 | yes | 64 lower-case hexadecimal digest value. |
+| `$.payload.predecessor_bundle_digests[]` | 6.6 | no | One direct predecessor payload SHA-256 digest. |
+| `$.payload.predecessor_bundle_digests[].algorithm` | 6.6 | yes | sha-256. |
+| `$.payload.predecessor_bundle_digests[].value` | 6.6 | yes | 64 lower-case hexadecimal digest value. |
+| `$.proofs[]` | 14 | no | One cryptographic Proof. |
+| `$.proofs[].proof_id` | 14 | yes | Identifier unique in the proofs array. |
+| `$.proofs[].proof_type` | 14 | yes | Proof kind; SIGNATURE in v0.1. |
+| `$.proofs[].target` | 14 | yes | Precisely identifies the signed digest target. |
+| `$.proofs[].target.target_type` | 14 | yes | Target class. |
+| `$.proofs[].target.target_id` | 14 | conditional | Required except for BUNDLE_PAYLOAD, where it is forbidden. |
+| `$.proofs[].target.digest` | 14 | yes | Digest declared by the signer for the target. |
+| `$.proofs[].target.digest.algorithm` | 14 | yes | sha-256. |
+| `$.proofs[].target.digest.value` | 14 | yes | 64 lower-case hexadecimal digest value. |
+| `$.proofs[].issuer_ref` | 14 | yes | Reference to the proof issuer. |
+| `$.proofs[].verification_method` | 14 | yes | Exact issuer_id#key_id verification method. |
+| `$.proofs[].created_at` | 14 | yes | UTC time at which the proof was created. |
+| `$.proofs[].algorithm` | 14 | yes | Signature algorithm; Ed25519 in v0.1. |
+| `$.proofs[].proof_value` | 14 | yes | Canonical unpadded base64url Ed25519 signature bytes. |
+| `$.payload.events[].evidence_refs[]` | 8.6 | no | One Evidence Item identifier referenced by the event. |
+| `$.payload.events[].parent_event_digests[]` | 8.7 | no | One causal parent Event object digest. |
+| `$.payload.events[].parent_event_digests[].algorithm` | 8.7 | yes | sha-256. |
+| `$.payload.events[].parent_event_digests[].value` | 8.7 | yes | 64 lower-case hexadecimal digest value. |
+| `$.payload.evidence[].claim_scope[]` | 9 | yes | One lower-case namespaced event type covered by the evidence. |
+
+<!-- FIELD-PATH-APPENDIX:END -->

@@ -28,7 +28,7 @@ This repository contains the open protocol foundation and reference implementati
 - **Evidence Bundle** — a signed, portable set of events, evidence references, issuers, causal relationships, and proofs.
 - **Structural Verifier** — checks shape, digests, references, signatures, and graph integrity.
 - **Verdict Engine** — applies a separately versioned ruleset to verified evidence.
-- **Outcome Evidence Packet** — future human-readable rendering of the same machine-verifiable record.
+- **Outcome Evidence Packet** — deterministic human-readable rendering generated from the same machine-verifiable record.
 - **Outcome Ledger** — future long-term chronology across bundle revisions.
 
 ## Current status
@@ -44,11 +44,14 @@ Implemented now:
 - structural verification with `VALID`, `INVALID`, and `INCOMPLETE` outcomes;
 - experimental refund verdict rules;
 - valid and invalid test vectors;
+- a registered base Outcome Event vocabulary with collision-resistant extensions;
+- four machine-derived printable Outcome Evidence Packets;
+- an anonymous local comprehension experiment and validation report tooling;
 - a static refund demonstration site.
 
 Not yet stable:
 
-- the full event vocabulary;
+- independent Python interoperability;
 - the public extension registry;
 - long-term key discovery and revocation;
 - external evidence retrieval;

@@ -240,6 +240,32 @@ await test('reference implementation passes the complete conformance harness', a
   assert.equal(report.failed, 0);
 });
 
+
+await test('Outcome Evidence Packets are derived from current machine results', async () => {
+  const index = await loadBundle('site/packets/index.json');
+  assert.equal(index.packets.length, 4);
+  for (const scenario of ['pending', 'verified', 'contradicted', 'unprovable']) {
+    const packet = await loadBundle(`site/packets/refund-${scenario}.packet.json`);
+    const bundle = await loadBundle(`site/data/refund-${scenario}.bundle.json`);
+    const verification = verifyBundle(bundle);
+    const verdict = evaluateBundle(bundle, 'refund-v0.1');
+    assert.equal(packet.generated_from.bundle_id, bundle.payload.bundle_id);
+    assert.equal(JSON.stringify(packet.generated_from.payload_digest), JSON.stringify(verification.payload_digest));
+    assert.equal(packet.structural_status, verification.status);
+    assert.equal(packet.verdict, verdict.verdict);
+    assert.equal(packet.lifecycle.length, bundle.payload.events.length);
+    assert.match(await load(`site/packets/refund-${scenario}.html`), new RegExp(packet.generated_from.bundle_id, 'u'));
+  }
+});
+
+await test('comprehension experiment remains local and anonymous by design', async () => {
+  const html = await load('site/index.html');
+  const app = await load('site/app.js');
+  assert.match(html, /Product comprehension test/u);
+  assert.match(app, /personal_data_collected:\s*false/u);
+  assert.doesNotMatch(app, /fetch\([^)]*(validation|response|analytics)/u);
+});
+
 await test('CLI returns a machine-readable VERIFIED verdict', async () => {
   const result = spawnSync(
     process.execPath,

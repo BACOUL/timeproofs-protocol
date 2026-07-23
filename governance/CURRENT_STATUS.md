@@ -8,9 +8,9 @@ As of: 2026-07-23
 
 - Name: **TimeProofs Outcome Assurance**
 - Stage: `EXPERIMENTAL_FOUNDATION`
-- Current phase: **P1 — Protocol interoperability foundation** (`IN_PROGRESS`)
-- Current milestone: **P1-M4 — Independent Python implementation** (`IN_PROGRESS`)
-- Unique next action: **TP-PROTO-004 — Build independent Python conformance implementation**
+- Current phase: **P2 — Killer outcome demonstration and market validation** (`IN_PROGRESS`)
+- Current milestone: **P2-M2 — External comprehension and demand validation** (`IN_PROGRESS`)
+- Unique next action: **TP-MARKET-001 — Deploy the validation preview and collect first external product evidence**
 
 ## Completed foundation
 
@@ -25,11 +25,13 @@ As of: 2026-07-23
 - Evidence Bundle v0.1 normative fields, schemas, verifier, stable codes, and test vectors aligned
 - Outcome Event v0.1 normative vocabulary, extension namespaces, relationship semantics, and refund/email/appointment profiles aligned
 - Implementation-independent v0.1 conformance manifest, runner contract, fixture integrity hashes, and reference harness completed
+- Machine-derived printable Outcome Evidence Packets and an anonymous local comprehension experiment completed for four refund outcomes
 
 ## Current blockers
 
-- The GitHub repository BACOUL/timeproofs-protocol must be created and this prepared history pushed.
-- No second independent implementation exists yet.
+- The GitHub repository BACOUL/timeproofs-protocol must be created and this prepared history pushed before public preview deployment.
+- No external comprehension, integration-demand, or willingness-to-pay evidence has been collected yet.
+- No second independent implementation exists yet; G1 remains incomplete but no longer blocks the validation preview.
 - The protocol and cryptographic design have not received independent security review.
 - No external system-of-record connector has been validated on a real sandbox workflow.
 
@@ -38,8 +40,8 @@ As of: 2026-07-23
 | ID | Workstream | Status |
 |---|---|---|
 | WS01_VISION | Vision, category, positioning, brand | ACTIVE |
-| WS02_PROTOCOL | Open protocol and interoperability | ACTIVE |
-| WS03_PRODUCT | Product software and developer experience | PLANNED |
+| WS02_PROTOCOL | Open protocol and interoperability | PAUSED |
+| WS03_PRODUCT | Product software and developer experience | ACTIVE |
 | WS04_AGENT_INTEGRATIONS | Agent frameworks and action protocols | WATCHING |
 | WS05_AGENTIC_COMMERCE | Agentic commerce and in-chat transactions | WATCHING |
 | WS06_NON_COMMERCE | Non-commerce consequential actions | PLANNED |
@@ -48,15 +50,15 @@ As of: 2026-07-23
 | WS09_STANDARDS | Standards and research | ACTIVE |
 | WS10_SECURITY | Security and cryptographic assurance | ACTIVE |
 | WS11_PRIVACY_LEGAL | Privacy, legal, and regulatory readiness | PLANNED |
-| WS12_SITE | Global website and trust surfaces | PLANNED |
+| WS12_SITE | Global website and trust surfaces | ACTIVE |
 | WS13_SEO | Global SEO and topical authority | PLANNED |
 | WS14_GEO_AI_FIRST | GEO and AI-first discoverability | PLANNED |
 | WS15_INTERNATIONAL | Internationalization and localization | PLANNED |
 | WS16_BUSINESS | Business model, pricing, and revenue | DISCOVERY |
-| WS17_DISTRIBUTION | Distribution and adoption | PLANNED |
+| WS17_DISTRIBUTION | Distribution and adoption | ACTIVE |
 | WS18_OPERATIONS | Operations, reliability, and evolution | PLANNED |
 
-Status counts: ACTIVE=6, PLANNED=9, WATCHING=2, DISCOVERY=1.
+Status counts: ACTIVE=8, PAUSED=1, WATCHING=2, PLANNED=6, DISCOVERY=1.
 
 ## Release gates
 
@@ -64,10 +66,10 @@ Status counts: ACTIVE=6, PLANNED=9, WATCHING=2, DISCOVERY=1.
 |---|---|---|
 | G0_OS | Global operating system | PASS |
 | G1_PROTOCOL | Interoperable protocol alpha | IN_PROGRESS |
-| G2_DEMO | Killer outcome demonstration | NOT_STARTED |
+| G2_DEMO | Killer outcome demonstration | IN_PROGRESS |
 | G3_DEVELOPER | Five-minute developer integration | NOT_STARTED |
 | G4_SERVICE | Managed service security and operations | NOT_STARTED |
-| G5_MARKET | External adoption and payment evidence | NOT_STARTED |
+| G5_MARKET | External adoption and payment evidence | IN_PROGRESS |
 | G6_GLOBAL | Global public launch | NOT_STARTED |
 
 ## Required reading

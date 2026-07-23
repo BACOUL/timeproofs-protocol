@@ -104,3 +104,20 @@ A verifier MUST reject at least the following:
 \`commerce.refund.created\` records creation of a refund business object. It MUST NOT be interpreted as \`commerce.refund.settled\`. Likewise, mail acceptance is not delivery, and appointment creation is not necessarily final confirmation.
 `;
 await writeFile(resolve(root, 'spec/OUTCOME_EVENT_VOCABULARY_V0_1.md'), vocabularyContent, 'utf8');
+
+const fieldRegistry = JSON.parse(await readFile(resolve(root, 'spec/field-semantics-v0.1.json'), 'utf8'));
+const evidenceSpecPath = resolve(root, 'spec/TIMEPROOFS_EVIDENCE_BUNDLE_SPEC_V0_1.md');
+const appendixStart = '<!-- FIELD-PATH-APPENDIX:START -->';
+const appendixEnd = '<!-- FIELD-PATH-APPENDIX:END -->';
+const fieldRows = fieldRegistry.fields.map((entry) => `| \`${entry.path}\` | ${entry.normative_section} | ${entry.required} | ${entry.semantics} |`);
+const appendix = `${appendixStart}\n\n## Appendix A — Normative field path registry\n\nThe following paths form the complete field surface accepted by the v0.1 schema. The machine-readable authority is \`spec/field-semantics-v0.1.json\`. Open extension descendants are permitted only where the registry marks the parent as open.\n\n| Path | Section | Required | Semantics |\n|---|---:|---|---|\n${fieldRows.join('\n')}\n\n${appendixEnd}`;
+let evidenceSpec = await readFile(evidenceSpecPath, 'utf8');
+const startIndex = evidenceSpec.indexOf(appendixStart);
+const endIndex = evidenceSpec.indexOf(appendixEnd);
+if (startIndex >= 0 && endIndex >= startIndex) {
+  evidenceSpec = `${evidenceSpec.slice(0, startIndex).trimEnd()}\n\n${appendix}\n`;
+} else {
+  evidenceSpec = `${evidenceSpec.trimEnd()}\n\n${appendix}\n`;
+}
+await writeFile(evidenceSpecPath, evidenceSpec, 'utf8');
+console.log(`Generated normative field path appendix (${fieldRows.length} paths).`);

@@ -1,0 +1,52 @@
+{
+  "packet_version": "0.1-experimental",
+  "generated_from": {
+    "bundle_id": "tpb_refund_unprovable_001",
+    "action_id": "tpa_refund_demo_001",
+    "payload_digest": {
+      "algorithm": "sha-256",
+      "value": "91e8f5039090b111d0f222f2e4166f68f5c562c0a1281e14e3fa88c6d0f92241"
+    },
+    "ruleset": "refund-v0.1"
+  },
+  "scenario": "unprovable",
+  "title": "Agent claims completion without external evidence",
+  "plain_language_summary": "The agent signed its own completion claim, but no receiver, system of record, or settlement provider supports it.",
+  "structural_status": "INCOMPLETE",
+  "verdict": "UNPROVABLE",
+  "verdict_label": "Outcome unprovable",
+  "reasons": [
+    {
+      "code": "NO_SUFFICIENT_SIGNED_SYSTEM_EVIDENCE",
+      "explanation": "Only a weak or self-claimed completion statement is available."
+    }
+  ],
+  "missing_evidence": [
+    "Receiver, system-of-record, or independent settlement evidence.",
+    "One or more completeness elements required by the structural verifier."
+  ],
+  "evidence_basis": {
+    "issuers": 4,
+    "events": 1,
+    "evidence_items": 0,
+    "valid_proofs": 2
+  },
+  "lifecycle": [
+    {
+      "event_id": "tpe_refund_claimed_complete",
+      "label": "Funds settled",
+      "event_type": "commerce.refund.settled",
+      "phase": "SETTLEMENT",
+      "status": "SUCCEEDED",
+      "occurred_at": "2026-07-23T14:31:54Z",
+      "source_class": "SELF_CLAIMED",
+      "issuer_ref": "agent.example",
+      "signed": true
+    }
+  ],
+  "limitations": [
+    "This packet is generated from synthetic test evidence. No real payment occurred.",
+    "A valid signature proves integrity and provenance of a claim, not universal factual or legal truth.",
+    "The verdict is recalculable and may change when later evidence or a new ruleset is applied."
+  ]
+}

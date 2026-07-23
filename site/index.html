@@ -35,6 +35,7 @@
         <div class="hero-actions">
           <a class="button primary" href="#demo">Explore the refund demo</a>
           <a class="button secondary" href="#protocol">Read the protocol model</a>
+          <a class="button secondary" href="#validate">Test the concept</a>
         </div>
         <dl class="hero-facts">
           <div><dt>Evidence</dt><dd>Immutable</dd></div>
@@ -126,11 +127,50 @@
           </aside>
         </div>
 
+        <div class="packet-actions">
+          <a id="packet-link" class="button secondary" href="packets/refund-pending.html">Open printable Evidence Packet</a>
+          <span>Generated from the same machine bundle and verdict shown above.</span>
+        </div>
+
         <details class="machine-details">
           <summary>Inspect machine verification data</summary>
           <pre id="machine-report"></pre>
         </details>
       </div>
+    </section>
+
+
+    <section class="validation-section" id="validate">
+      <div class="section-heading narrow">
+        <p class="eyebrow">Product comprehension test</p>
+        <h2>Can TimeProofs make an AI action outcome immediately understandable?</h2>
+        <p>This anonymous local test stores nothing and sends nothing. It measures whether the four verdicts are clear without technical explanation.</p>
+      </div>
+      <form id="comprehension-test" class="validation-form">
+        <fieldset>
+          <legend>1. A merchant created a refund, but the payment provider has not confirmed settlement. What should the agent display?</legend>
+          <label><input type="radio" name="q1" value="verified" required> Outcome verified</label>
+          <label><input type="radio" name="q1" value="pending"> Verification pending</label>
+          <label><input type="radio" name="q1" value="unprovable"> Outcome unprovable</label>
+        </fieldset>
+        <fieldset>
+          <legend>2. A signed settlement exists, followed by a signed reversal. What is the current outcome?</legend>
+          <label><input type="radio" name="q2" value="verified" required> Still verified</label>
+          <label><input type="radio" name="q2" value="contradicted"> Contradicted by later evidence</label>
+          <label><input type="radio" name="q2" value="pending"> Pending</label>
+        </fieldset>
+        <fieldset>
+          <legend>3. What does a valid TimeProofs signature establish?</legend>
+          <label><input type="radio" name="q3" value="truth" required> The claim is universally true</label>
+          <label><input type="radio" name="q3" value="integrity"> Who signed the claim and that it was not altered</label>
+          <label><input type="radio" name="q3" value="legal"> The action is legally enforceable</label>
+        </fieldset>
+        <div class="validation-actions">
+          <button class="button primary" type="submit">See comprehension score</button>
+          <button class="button secondary" id="download-validation" type="button" disabled>Download anonymous result</button>
+        </div>
+        <output id="validation-result" class="validation-result" aria-live="polite"></output>
+      </form>
     </section>
 
     <section class="protocol-section" id="protocol">
@@ -194,13 +234,13 @@
     <section class="roadmap-section" id="roadmap">
       <div class="section-heading narrow">
         <p class="eyebrow">Execution order</p>
-        <h2>Protocol first. Demonstration second. Managed service last.</h2>
+        <h2>Inspectable evidence first. Market proof before infrastructure.</h2>
       </div>
       <ol class="roadmap-list">
-        <li><strong>Evidence Bundle v0.1</strong><span>Canonical model, schemas, signatures, invalid vectors.</span></li>
-        <li><strong>Refund demonstration</strong><span>Pending, verified, contradicted, and unprovable evidence packets.</span></li>
-        <li><strong>Receiver SDK</strong><span>HTTP and MCP write-action instrumentation.</span></li>
-        <li><strong>Outcome Assurance Cloud</strong><span>Retention, re-verification, registry, connectors, and billing.</span></li>
+        <li><strong>Evidence foundation</strong><span>Canonical model, signatures, verdicts, conformance cases, and explicit limitations.</span></li>
+        <li><strong>Outcome Evidence Packet</strong><span>Pending, verified, contradicted, and unprovable results understandable by non-technical users.</span></li>
+        <li><strong>External validation</strong><span>Comprehension, concrete workflow demand, sandbox commitment, and willingness to pay.</span></li>
+        <li><strong>Reusable connector</strong><span>Only after evidence identifies the first system-of-record integration worth building.</span></li>
       </ol>
     </section>
   </main>

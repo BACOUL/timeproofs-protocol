@@ -6,34 +6,36 @@
   "product_authority": "PRODUCT_MASTER_PLAN.md",
   "stage": "EXPERIMENTAL_FOUNDATION",
   "current_phase": {
-    "id": "P1",
-    "name": "Protocol interoperability foundation",
+    "id": "P2",
+    "name": "Killer outcome demonstration and market validation",
     "status": "IN_PROGRESS"
   },
   "current_milestone": {
-    "id": "P1-M4",
-    "name": "Independent Python implementation",
+    "id": "P2-M2",
+    "name": "External comprehension and demand validation",
     "status": "IN_PROGRESS"
   },
   "next_action": {
-    "id": "TP-PROTO-004",
-    "title": "Build independent Python conformance implementation",
-    "workstream": "WS02_PROTOCOL",
-    "purpose": "Implement TP-JSON-0.1 independently in Python from the normative specifications, registries, fixture bytes, and committed conformance manifest, then reproduce every canonicalization, signature-input, digest, proof, structural status, and stable-code result without calling or translating the Node.js reference implementation.",
+    "id": "TP-MARKET-001",
+    "title": "Deploy the validation preview and collect first external product evidence",
+    "workstream": "WS17_DISTRIBUTION",
+    "purpose": "Put the machine-derived Outcome Evidence Packet in front of independent participants and qualified practitioners, then measure comprehension, integration demand, and willingness to pay before expanding protocol or cloud scope.",
     "acceptance_criteria": [
-      "A standalone Python package implements strict JSON input handling, canonicalization, SHA-256 digests, signature-input construction, Ed25519 proof verification, vocabulary checks, graph checks, and structural results.",
-      "The Python implementation has no runtime or generated-code dependency on Node.js or packages/core.",
-      "A JSON Lines adapter implements conformance/runner-contract-v0.1.json.",
-      "All 35 committed conformance cases pass exactly, including fixture byte hashes and normalized stable-code sets.",
-      "Independence boundaries and the first blind conformance run are documented in acceptance evidence.",
-      "Discrepancies are resolved through specification or implementation review and project state is reconciled before merge."
+      "The experimental static preview is deployed from the committed site without unsupported production, customer, compliance, or standards claims.",
+      "At least 10 independent participants complete the anonymous comprehension experiment; results are retained only with consent and analyzed by the repository script.",
+      "At least 80% of accepted participants score 3/3, or the packet is revised and the experiment is explicitly marked REFINE.",
+      "At least 5 qualified developers, product owners, compliance practitioners, or agent-workflow operators provide structured evidence-gap feedback.",
+      "At least 2 qualified participants identify a concrete reusable workflow and agree to evaluate a sandbox integration, or the wedge/positioning is revised.",
+      "Willingness-to-pay evidence is recorded separately from general interest, including which paid value unit matters: retention, re-verification, connector, contradiction alert, or dispute/audit packet.",
+      "Assumptions, risks, business model, roadmap, and the next connector decision are reconciled from actual evidence without inventing traction."
     ],
     "non_scope": [
-      "Verdict Engine implementation in Python",
-      "Managed cloud service",
-      "Production ACP, UCP, AP2, MCP, or A2A adapters",
-      "Public site migration",
-      "Commercial pricing"
+      "High-volume outbound prospecting",
+      "Public production launch of timeproofs.io",
+      "Claiming protocol interoperability alpha before the Python implementation and security review pass",
+      "Managed cloud infrastructure",
+      "Final public pricing",
+      "Custom consulting work that cannot become a reusable connector"
     ]
   },
   "completed_foundation": [
@@ -47,11 +49,13 @@
     "Global project operating system",
     "Evidence Bundle v0.1 normative fields, schemas, verifier, stable codes, and test vectors aligned",
     "Outcome Event v0.1 normative vocabulary, extension namespaces, relationship semantics, and refund/email/appointment profiles aligned",
-    "Implementation-independent v0.1 conformance manifest, runner contract, fixture integrity hashes, and reference harness completed"
+    "Implementation-independent v0.1 conformance manifest, runner contract, fixture integrity hashes, and reference harness completed",
+    "Machine-derived printable Outcome Evidence Packets and an anonymous local comprehension experiment completed for four refund outcomes"
   ],
   "blockers": [
-    "The GitHub repository BACOUL/timeproofs-protocol must be created and this prepared history pushed.",
-    "No second independent implementation exists yet.",
+    "The GitHub repository BACOUL/timeproofs-protocol must be created and this prepared history pushed before public preview deployment.",
+    "No external comprehension, integration-demand, or willingness-to-pay evidence has been collected yet.",
+    "No second independent implementation exists yet; G1 remains incomplete but no longer blocks the validation preview.",
     "The protocol and cryptographic design have not received independent security review.",
     "No external system-of-record connector has been validated on a real sandbox workflow."
   ],
@@ -64,12 +68,12 @@
     {
       "id": "WS02_PROTOCOL",
       "name": "Open protocol and interoperability",
-      "status": "ACTIVE"
+      "status": "PAUSED"
     },
     {
       "id": "WS03_PRODUCT",
       "name": "Product software and developer experience",
-      "status": "PLANNED"
+      "status": "ACTIVE"
     },
     {
       "id": "WS04_AGENT_INTEGRATIONS",
@@ -114,7 +118,7 @@
     {
       "id": "WS12_SITE",
       "name": "Global website and trust surfaces",
-      "status": "PLANNED"
+      "status": "ACTIVE"
     },
     {
       "id": "WS13_SEO",
@@ -139,7 +143,7 @@
     {
       "id": "WS17_DISTRIBUTION",
       "name": "Distribution and adoption",
-      "status": "PLANNED"
+      "status": "ACTIVE"
     },
     {
       "id": "WS18_OPERATIONS",
@@ -161,7 +165,7 @@
     {
       "id": "G2_DEMO",
       "name": "Killer outcome demonstration",
-      "status": "NOT_STARTED"
+      "status": "IN_PROGRESS"
     },
     {
       "id": "G3_DEVELOPER",
@@ -176,7 +180,7 @@
     {
       "id": "G5_MARKET",
       "name": "External adoption and payment evidence",
-      "status": "NOT_STARTED"
+      "status": "IN_PROGRESS"
     },
     {
       "id": "G6_GLOBAL",

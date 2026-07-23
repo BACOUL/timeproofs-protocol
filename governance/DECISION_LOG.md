@@ -105,3 +105,14 @@ Status: ACCEPTED
 TimeProofs conformance is measured against a versioned, machine-readable manifest that binds fixture bytes and expected canonicalization, signature-input, digest, proof, structural-status, and stable-code outputs. CLI prose, diagnostic paths, error ordering, and source-code organization are non-normative.
 
 The manifest has an integrity sidecar and cannot be regenerated automatically during ordinary CI, preventing an implementation change from silently rewriting its own expected results.
+
+## D-015 — Product validation may precede full protocol-alpha completion
+
+Date: 2026-07-23
+Status: ACCEPTED
+
+The Outcome Evidence Packet, comprehension experiment, and demand validation proceed before the independent Python implementation and external cryptographic review are complete.
+
+This does not pass the interoperable protocol gate and does not permit an interoperability, production, compliance, or legal-validity claim. It prevents protocol overbuilding by requiring visible user comprehension, reusable integration demand, and willingness-to-pay evidence before further protocol breadth or managed infrastructure.
+
+The independent implementation remains required before `G1_PROTOCOL` can pass.

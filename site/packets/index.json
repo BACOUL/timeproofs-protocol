@@ -1,0 +1,41 @@
+{
+  "packet_version": "0.1-experimental",
+  "packets": [
+    {
+      "scenario": "pending",
+      "verdict": "PENDING",
+      "path": "packets/refund-pending.html",
+      "digest": {
+        "algorithm": "sha-256",
+        "value": "47f1ab8ab5d213935e526719733e590deafb605dc0d464097bb0504015e30748"
+      }
+    },
+    {
+      "scenario": "verified",
+      "verdict": "VERIFIED",
+      "path": "packets/refund-verified.html",
+      "digest": {
+        "algorithm": "sha-256",
+        "value": "e63315200ba810d1b0084c869d75594dc9f67383f15948efc9567d354bc33ac2"
+      }
+    },
+    {
+      "scenario": "contradicted",
+      "verdict": "CONTRADICTED",
+      "path": "packets/refund-contradicted.html",
+      "digest": {
+        "algorithm": "sha-256",
+        "value": "8acb01e748e3ea2f891b6ff04ece2339bf92432bd2e4a8ca8fe9c6e3a38fecd9"
+      }
+    },
+    {
+      "scenario": "unprovable",
+      "verdict": "UNPROVABLE",
+      "path": "packets/refund-unprovable.html",
+      "digest": {
+        "algorithm": "sha-256",
+        "value": "91e8f5039090b111d0f222f2e4166f68f5c562c0a1281e14e3fa88c6d0f92241"
+      }
+    }
+  ]
+}

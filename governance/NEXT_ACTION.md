@@ -2,32 +2,34 @@
 
 Generated from `governance/project-state.json`. Do not edit manually.
 
-## TP-PROTO-004 — Build independent Python conformance implementation
+## TP-MARKET-001 — Deploy the validation preview and collect first external product evidence
 
-- Workstream: `WS02_PROTOCOL`
-- Phase: `P1`
-- Milestone: `P1-M4`
+- Workstream: `WS17_DISTRIBUTION`
+- Phase: `P2`
+- Milestone: `P2-M2`
 
 ## Purpose
 
-Implement TP-JSON-0.1 independently in Python from the normative specifications, registries, fixture bytes, and committed conformance manifest, then reproduce every canonicalization, signature-input, digest, proof, structural status, and stable-code result without calling or translating the Node.js reference implementation.
+Put the machine-derived Outcome Evidence Packet in front of independent participants and qualified practitioners, then measure comprehension, integration demand, and willingness to pay before expanding protocol or cloud scope.
 
 ## Acceptance criteria
 
-- A standalone Python package implements strict JSON input handling, canonicalization, SHA-256 digests, signature-input construction, Ed25519 proof verification, vocabulary checks, graph checks, and structural results.
-- The Python implementation has no runtime or generated-code dependency on Node.js or packages/core.
-- A JSON Lines adapter implements conformance/runner-contract-v0.1.json.
-- All 35 committed conformance cases pass exactly, including fixture byte hashes and normalized stable-code sets.
-- Independence boundaries and the first blind conformance run are documented in acceptance evidence.
-- Discrepancies are resolved through specification or implementation review and project state is reconciled before merge.
+- The experimental static preview is deployed from the committed site without unsupported production, customer, compliance, or standards claims.
+- At least 10 independent participants complete the anonymous comprehension experiment; results are retained only with consent and analyzed by the repository script.
+- At least 80% of accepted participants score 3/3, or the packet is revised and the experiment is explicitly marked REFINE.
+- At least 5 qualified developers, product owners, compliance practitioners, or agent-workflow operators provide structured evidence-gap feedback.
+- At least 2 qualified participants identify a concrete reusable workflow and agree to evaluate a sandbox integration, or the wedge/positioning is revised.
+- Willingness-to-pay evidence is recorded separately from general interest, including which paid value unit matters: retention, re-verification, connector, contradiction alert, or dispute/audit packet.
+- Assumptions, risks, business model, roadmap, and the next connector decision are reconciled from actual evidence without inventing traction.
 
 ## Explicit non-scope
 
-- Verdict Engine implementation in Python
-- Managed cloud service
-- Production ACP, UCP, AP2, MCP, or A2A adapters
-- Public site migration
-- Commercial pricing
+- High-volume outbound prospecting
+- Public production launch of timeproofs.io
+- Claiming protocol interoperability alpha before the Python implementation and security review pass
+- Managed cloud infrastructure
+- Final public pricing
+- Custom consulting work that cannot become a reusable connector
 
 ## Completion procedure
 

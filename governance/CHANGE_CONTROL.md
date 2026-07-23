@@ -42,3 +42,19 @@ Before accepting a change, answer:
 - Does it require TimeProofs to become identity, payment, authorization, insurance, or generic observability?
 - Is the advantage durable, or a feature competitors can copy immediately?
 - What evidence will prove or disprove the change quickly?
+
+## CR-001 — Advance product validation before full Python implementation
+
+Date: 2026-07-23
+Decision: **ACCEPT**
+
+1. **Problem or signal:** the technical foundation is strong, while adoption, comprehension, integration demand, and willingness to pay remain almost entirely unvalidated.
+2. **Affected workstreams:** WS02, WS03, WS07, WS12, WS16, WS17.
+3. **Strategic fit:** directly tests whether Outcome Assurance solves a valuable problem without changing the mission or product boundary.
+4. **User value:** validates that people understand request versus real outcome and want the result in an agent workflow.
+5. **Differentiation:** tests the system-of-record evidence and recalculable-verdict position rather than competing on receipt syntax alone.
+6. **Cost:** limited to a static preview, generated Evidence Packets, anonymous comprehension test, and structured interviews.
+7. **Risk impact:** reduces R-004, while G1 remains explicitly incomplete.
+8. **Revenue hypothesis:** retention, re-verification, connectors, contradiction alerts, and dispute/audit packets may carry paid value.
+9. **Effect on next action:** TP-PROTO-004 is paused, not cancelled. TP-MARKET-001 becomes the unique next action.
+10. **Reversible path:** if the packet is unclear or demand is weak, refine or stop before cloud and connector investment.

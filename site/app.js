@@ -100,6 +100,7 @@ async function renderScenario(name) {
   document.querySelector('#bundle-id').textContent = bundle.payload.bundle_id;
   document.querySelector('#structural-status').textContent = verification.status;
   document.querySelector('#ruleset').textContent = verdict.ruleset;
+  document.querySelector('#packet-link').href = `packets/refund-${name}.html`;
   renderTimeline(bundle);
   renderBasis(bundle, verification);
   renderReasons(verdict);
@@ -120,4 +121,43 @@ for (const button of document.querySelectorAll('.scenario-tab')) {
 renderScenario('pending').catch((error) => {
   document.querySelector('#packet-title').textContent = 'Demo data could not be loaded';
   document.querySelector('#machine-report').textContent = error.stack ?? error.message;
+});
+
+
+const validationForm = document.querySelector('#comprehension-test');
+const validationOutput = document.querySelector('#validation-result');
+const downloadValidation = document.querySelector('#download-validation');
+let latestValidationResult = null;
+
+validationForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const values = Object.fromEntries(new FormData(validationForm));
+  const answers = { q1: 'pending', q2: 'contradicted', q3: 'integrity' };
+  const score = Object.entries(answers).reduce((total, [key, expected]) => total + (values[key] === expected ? 1 : 0), 0);
+  const passed = score === 3;
+  latestValidationResult = {
+    experiment: 'timeproofs-outcome-comprehension-v0.1',
+    recorded_at: new Date().toISOString(),
+    score,
+    maximum: 3,
+    passed,
+    answers: values,
+    personal_data_collected: false
+  };
+  validationOutput.className = `validation-result ${passed ? 'passed' : 'needs-work'}`;
+  validationOutput.textContent = passed
+    ? '3/3 — The outcome model is clear in this test.'
+    : `${score}/3 — At least one distinction remains unclear. Review the four scenarios above.`;
+  downloadValidation.disabled = false;
+});
+
+downloadValidation?.addEventListener('click', () => {
+  if (!latestValidationResult) return;
+  const blob = new Blob([`${JSON.stringify(latestValidationResult, null, 2)}
+`], { type: 'application/json' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `timeproofs-comprehension-${Date.now()}.json`;
+  link.click();
+  URL.revokeObjectURL(link.href);
 });

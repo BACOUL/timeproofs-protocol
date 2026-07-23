@@ -21,15 +21,17 @@ Exit gate: `G0_OS = PASS`.
 
 ## Phase P1 — Interoperable protocol alpha
 
-Status: IN PROGRESS
+Status: IN PROGRESS, NON-BLOCKING FOR VALIDATION PREVIEW
 
 Milestone progress:
 
 - `P1-M1 Evidence Bundle v0.1 normative coherence`: DONE on 2026-07-23;
 - `P1-M2 Outcome Event base vocabulary`: DONE on 2026-07-23;
-- `P1-M3 Implementation-independent conformance harness`: DONE on 2026-07-23;
-- `P1-M4 Independent Python implementation`: IN PROGRESS;
+- `P1-M3 implementation-independent conformance harness`: DONE on 2026-07-23;
+- `P1-M4 independent Python implementation`: PAUSED until the first product-validation decision;
 - independent security review: NOT STARTED.
+
+The incomplete G1 gate forbids an interoperability-alpha or production claim, but it does not block a clearly labelled experimental demonstration used to validate product comprehension and demand.
 
 Objectives:
 
@@ -37,7 +39,7 @@ Objectives:
 - align schemas, canonicalization, digests, signatures, relations, errors, and fixtures;
 - complete Outcome Event base vocabulary;
 - document structural verification;
-- produce a second independent implementation plan and compatibility harness.
+- retain the independent implementation and security review as requirements before G1 can pass.
 
 Exit criteria:
 
@@ -48,24 +50,33 @@ Exit criteria:
 
 Primary workstreams: WS02, WS09, WS10.
 
-## Phase P2 — Killer outcome demonstration
+## Phase P2 — Killer outcome demonstration and product validation
 
-Status: NOT STARTED
+Status: IN PROGRESS
+
+Milestone progress:
+
+- `P2-M1 machine-derived Outcome Evidence Packet and local anonymous comprehension test`: DONE on 2026-07-23;
+- `P2-M2 external comprehension, integration-demand, and willingness-to-pay evidence`: IN PROGRESS.
 
 Objectives:
 
-- transform the refund scenarios into a human Outcome Evidence Packet;
+- transform the refund scenarios into human Outcome Evidence Packets;
 - make PENDING, VERIFIED, CONTRADICTED, and UNPROVABLE understandable without technical knowledge;
 - keep every human rendering traceable to the machine bundle;
-- add appointment and email secondary demonstrations.
+- add appointment and email secondary demonstrations;
+- measure comprehension before technical explanation;
+- collect concrete reusable workflow and willingness-to-pay evidence.
 
 Exit criteria:
 
 - users consistently distinguish request, execution, and settlement;
 - the public verifier displays source class, issuer, time, status, and missing evidence;
-- no badge can conceal an incomplete or reversed lifecycle.
+- no badge can conceal an incomplete or reversed lifecycle;
+- at least 10 external comprehension results and 5 qualified workflow interviews are recorded honestly;
+- the connector decision is based on evidence rather than protocol enthusiasm.
 
-Primary workstreams: WS07, WS12, WS14.
+Primary workstreams: WS03, WS07, WS12, WS14, WS16, WS17.
 
 ## Phase P3 — Five-minute developer integration
 

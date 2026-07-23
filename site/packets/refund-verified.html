@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Refund settlement independently confirmed — TimeProofs Outcome Evidence Packet</title>
+  <link rel="stylesheet" href="../packet-styles.css">
+</head>
+<body class="verdict-verified">
+  <main class="packet-page">
+    <header class="packet-identity">
+      <a href="../index.html#demo" class="brand">TimeProofs</a>
+      <span>Outcome Evidence Packet · experimental v0.1</span>
+    </header>
+
+    <section class="outcome-head">
+      <div>
+        <p class="eyebrow">AI action outcome</p>
+        <h1>Refund settlement independently confirmed</h1>
+        <p class="summary">A signed settlement event from an independent payment provider confirms that the funds reached the settlement stage.</p>
+      </div>
+      <div class="verdict-card">
+        <span>Current verdict</span>
+        <strong>Outcome verified</strong>
+        <small>VERIFIED</small>
+      </div>
+    </section>
+
+    <section class="identity-grid">
+      <div><span>Action ID</span><code>tpa_refund_demo_001</code></div>
+      <div><span>Bundle ID</span><code>tpb_refund_verified_001</code></div>
+      <div><span>Structural status</span><strong>VALID</strong></div>
+      <div><span>Ruleset</span><code>refund-v0.1</code></div>
+      <div class="digest"><span>Payload digest</span><code>e63315200ba810d1b0084c869d75594dc9f67383f15948efc9567d354bc33ac2</code></div>
+    </section>
+
+    <section class="content-grid">
+      <div>
+        <h2>Lifecycle evidence</h2>
+        <ol class="event-list">
+    <li>
+      <span class="event-marker" aria-hidden="true"></span>
+      <div>
+        <strong>Refund requested</strong>
+        <span>Self claimed · agent.example · 2026-07-23T14:30:00Z</span>
+      </div>
+      <div class="event-result">
+        <b>SUCCEEDED</b>
+        <small>No event proof</small>
+      </div>
+    </li>
+    <li>
+      <span class="event-marker" aria-hidden="true"></span>
+      <div>
+        <strong>Request dispatched</strong>
+        <span>Gateway observed · gateway.example · 2026-07-23T14:30:03Z</span>
+      </div>
+      <div class="event-result">
+        <b>SUCCEEDED</b>
+        <small>Signed evidence</small>
+      </div>
+    </li>
+    <li>
+      <span class="event-marker" aria-hidden="true"></span>
+      <div>
+        <strong>Refund object created</strong>
+        <span>System of record · merchant.example · 2026-07-23T14:30:05Z</span>
+      </div>
+      <div class="event-result">
+        <b>SUCCEEDED</b>
+        <small>Signed evidence</small>
+      </div>
+    </li>
+    <li>
+      <span class="event-marker" aria-hidden="true"></span>
+      <div>
+        <strong>Funds settled</strong>
+        <span>Independently settled · psp.example · 2026-07-23T14:31:54Z</span>
+      </div>
+      <div class="event-result">
+        <b>SUCCEEDED</b>
+        <small>Signed evidence</small>
+      </div>
+    </li></ol>
+      </div>
+      <aside>
+        <h2>Evidence basis</h2>
+        <dl>
+          <div><dt>Issuers</dt><dd>4</dd></div>
+          <div><dt>Events</dt><dd>4</dd></div>
+          <div><dt>Evidence items</dt><dd>4</dd></div>
+          <div><dt>Valid proofs</dt><dd>4</dd></div>
+        </dl>
+        <h2>Why this verdict?</h2>
+        <ul class="reason-list"><li><strong>SETTLEMENT_CONFIRMED_BY_STRONG_SIGNED_SOURCE</strong><span>A signed settlement event was issued by an independently settling system.</span></li></ul>
+        <h2>Missing evidence</h2>
+        <ul><li>No decisive evidence is currently missing for this ruleset.</li></ul>
+      </aside>
+    </section>
+
+    <section class="limitations">
+      <h2>What this packet does not claim</h2>
+      <ul><li>This packet is generated from synthetic test evidence. No real payment occurred.</li><li>A valid signature proves integrity and provenance of a claim, not universal factual or legal truth.</li><li>The verdict is recalculable and may change when later evidence or a new ruleset is applied.</li></ul>
+    </section>
+
+    <footer>
+      <span>Generated deterministically from the machine Evidence Bundle and verdict output.</span>
+      <a href="refund-verified.packet.json">Inspect packet JSON</a>
+    </footer>
+  </main>
+</body>
+</html>
